@@ -1,0 +1,3 @@
+.navLink {
+    @apply font-normal text-[#000000] hover:text-[#dcb14a];
+}
