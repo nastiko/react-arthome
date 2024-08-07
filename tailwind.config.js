@@ -5,7 +5,12 @@ module.exports = withMT({
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'md-devices': '420px',
+        // => @media (min-width: 420px) { ... }
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),
