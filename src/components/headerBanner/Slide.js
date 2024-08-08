@@ -1,8 +1,24 @@
 import {Link} from 'react-router-dom';
+import {motion} from "framer-motion";
 
 import {GoArrowRight} from "react-icons/go";
 
-export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText}) {
+const MotionWrapper = ({children, delay = 0, className = "", isActive}) => {
+    return (
+        <motion.div
+            initial={{opacity: 0, y: 50}}
+            whileInView={isActive ? { opacity: 1, y: 0 } : {opacity: 0}}
+            transition={{duration: 1, delay, ease: "easeOut"}}
+            viewport={{ once: true, amount: 1 }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText, isActive}) {
+
     return (
         <>
             <div className="relative w-full mx-auto">
@@ -12,16 +28,24 @@ export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText
                                     prose prose-h1:text-[34px] prose-h1:md:text-[60px] prose-h1:text-[#000000] prose-h1:font-medium prose-h1:capitalize prose-h1:mb-0
                                     prose-h6:w-20 prose-h6:text-[#dcb14a] prose-h6:font-medium prose-h6:uppercase prose-h6:mb-[5px]
                                     prose-p:text-[16px] prose-p:leading-[26px] prose-p:text-[#000000]">
-                        <h6>{subTitle}</h6>
-                        <h1>{heading}</h1>
-                        <div className="w-[70px] h-1 bg-[#dcb14a] my-[15px]"></div>
-                        <p>{bannerText}</p>
-                        <Link to="/products" className="no-underline">
-                            <div className="bg-[#000000] w-max flex items-center gap-x-1 px-[32px] py-1">
-                                <h3 className="text-[15px] text-[#ffffff] font-normal capitalize my-0">Shop now</h3>
-                                <GoArrowRight className="text-[#ffffff]"/>
-                            </div>
-                        </Link>
+                        <MotionWrapper delay={0} isActive={isActive}>
+                            <h6>{subTitle}</h6>
+                        </MotionWrapper>
+                        <MotionWrapper delay={0.3} isActive={isActive}>
+                            <h1>{heading}</h1>
+                            <div className="w-[70px] h-1 bg-[#dcb14a] my-[15px]"></div>
+                        </MotionWrapper>
+                        <MotionWrapper delay={0.6} isActive={isActive}>
+                            <p>{bannerText}</p>
+                        </MotionWrapper>
+                        <MotionWrapper delay={0.9} isActive={isActive}>
+                            <Link to="/products" className="no-underline">
+                                <div className="bg-[#000000] w-max flex items-center gap-x-1 px-[32px] py-1">
+                                    <h3 className="text-[15px] text-[#ffffff] font-normal capitalize my-0">Shop now</h3>
+                                    <GoArrowRight className="text-[#ffffff]"/>
+                                </div>
+                            </Link>
+                        </MotionWrapper>
                     </div>
                 </div>
             </div>

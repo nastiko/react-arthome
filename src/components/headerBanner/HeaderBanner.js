@@ -1,6 +1,10 @@
 import Slider from "react-slick";
 import {useState} from "react";
+
+//icons
 import headerBannerData from "./headerBannerData";
+
+//item
 import Slide from "./Slide";
 
 
@@ -10,10 +14,11 @@ export default function HeaderBanner() {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 2000,
+        speed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplaySpeed: 2500,
+        autoplay: true,
+        autoplaySpeed: 3000,
         pauseOnHover: true,
         cssEase: "linear",
         beforeChange: (current, next) => setActiveIndex(next),
@@ -42,10 +47,11 @@ export default function HeaderBanner() {
         <>
             <div className="slider-container">
                 <Slider {...settings}>
-                    {headerBannerData.map(item =>
+                    {headerBannerData.map((item, i) =>
                         <Slide
                             key={item.id}
                             {...item}
+                            isActive={i === activeIndex}
                         />
                     )}
                 </Slider>
