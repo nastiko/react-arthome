@@ -7,9 +7,8 @@ const MotionWrapper = ({children, delay = 0, className = "", isActive}) => {
     return (
         <motion.div
             initial={{opacity: 0, y: 50}}
-            whileInView={isActive ? { opacity: 1, y: 0 } : {opacity: 0}}
+            animate={isActive ? { opacity: 1, y: 0 } : {opacity: 0}}
             transition={{duration: 1, delay, ease: "easeOut"}}
-            viewport={{ once: true, amount: 1 }}
             className={className}
         >
             {children}
@@ -49,7 +48,6 @@ export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
