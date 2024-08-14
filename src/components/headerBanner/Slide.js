@@ -20,8 +20,8 @@ export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText
 
     return (
         <>
-            <div className="relative w-full mx-auto">
-                <img className="w-full h-[416px] md:h-[800px] relative object-center object-cover" src={imageUrl} alt={titleImg}/>
+            <div className="relative w-full mx-auto px-5">
+                <img className="w-full h-[600px] md:h-[800px] relative object-center object-cover" src={imageUrl} alt={titleImg}/>
                 <div className="max-w-screen-xl mx-auto absolute inset-0 flex flex-col justify-center px-5 xl:px-0">
                     <div className="max-w-full md-devices:w-1/2 md:w-2/5
                                     prose prose-h1:text-[34px] prose-h1:md:text-[60px] prose-h1:text-[#000000] prose-h1:font-medium prose-h1:capitalize prose-h1:mb-0
