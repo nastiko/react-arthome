@@ -24,6 +24,7 @@ export default function Header() {
                         </Link>
                     </div>
                     <div className="w-full flex justify-end gap-x-[35px]">
+                        <Link to="/products">All Products</Link>
                         <Link className="relative group cursor-pointer" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
                             <span className="text-[12px] group-hover:text-[#ffffff] bg-[#dcb14a] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5">1</span>
