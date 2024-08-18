@@ -12,7 +12,7 @@ import Logo from "../image/logo.png"
 export default function Header() {
     return (
         <>
-            <header className="bg-[#f4f5f7] h-[90px]">
+            <header className="bg-[#f4f5f7] h-[90px] mx-[15px] mt-[15px]">
                 <nav className="max-w-screen-xl grid grid-cols-2 lg:grid-cols-3 lg:justify-items-center items-center py-5 px-5 2xl:px-0 mx-auto">
                     <div className="hidden lg:flex w-full flex-col gap-6 relative">
                         <Input className="focus:border-b-[#dcb14a] placeholder:text-[16px] px-2.5 pr-10" variant="static" placeholder="Search Anything..."/>
