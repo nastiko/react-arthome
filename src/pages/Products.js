@@ -25,7 +25,7 @@ export default function Products() {
             }
         };
 
-        fetchProducts().then(r => console.log(r));
+        fetchProducts();
     }, []);
 
     if (loading) return <p>Loading products...</p>;
