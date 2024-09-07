@@ -14,10 +14,17 @@ import Products from "./pages/Products";
 import Like from "./pages/Like";
 import AboutUs from "./pages/AboutUs";
 
+//api
+import { getSlides } from "./api";
+
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout/>}>
-          <Route index element={<Homepage />} />
+          <Route
+              index
+              element={<Homepage />}
+              loader={getSlides}
+          />
             <Route path="products" element={<Products />} />
             <Route path="like" element={<Like />} />
 

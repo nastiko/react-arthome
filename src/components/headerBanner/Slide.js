@@ -16,26 +16,27 @@ const MotionWrapper = ({children, delay = 0, className = "", isActive}) => {
     );
 }
 
-export default function Slide({imageUrl, titleImg, subTitle, heading, bannerText, isActive}) {
+export default function Slide({acf, isActive}) {
+    const {slide_image_link, slide_title, slide_subtitle, slide_bannertext} = acf;
 
     return (
         <>
             <div className="relative w-full mx-auto px-[15px]">
-                <img className="w-full h-[600px] md:h-[800px] relative object-center object-cover" src={imageUrl} alt={titleImg}/>
+                <img className="w-full h-[600px] md:h-[800px] relative object-center object-cover" src={slide_image_link} alt={slide_title}/>
                 <div className="max-w-screen-xl mx-auto absolute inset-0 flex flex-col justify-center px-5 xl:px-0">
-                    <div className="max-w-full md-devices:w-1/2 md:w-2/5 px-5 lg:px-0
-                                    prose prose-h1:text-[34px] prose-h1:md:text-[60px] prose-h1:text-[#000000] prose-h1:font-medium prose-h1:capitalize prose-h1:mb-0
+                    <div className="md-devices:w-1/2 md:w-2/5 px-5 xl:px-0
+                                    prose prose-h1:max-w-xs prose-h1:md-devices:max-w-sm prose-h1:text-[34px] prose-h1:md:text-[60px] prose-h1:text-[#000000] prose-h1:font-medium prose-h1:capitalize prose-h1:mb-0
                                     prose-h6:w-20 prose-h6:text-[#dcb14a] prose-h6:font-medium prose-h6:uppercase prose-h6:mb-[5px]
-                                    prose-p:text-[16px] prose-p:leading-[26px] prose-p:text-[#000000]">
+                                    prose-p:max-w-lg prose-p:text-[16px] prose-p:leading-[26px] prose-p:text-[#000000]">
                         <MotionWrapper delay={0} isActive={isActive}>
-                            <h6>{subTitle}</h6>
+                            <h6>{slide_subtitle}</h6>
                         </MotionWrapper>
                         <MotionWrapper delay={0.3} isActive={isActive}>
-                            <h1>{heading}</h1>
+                            <h1>{slide_title}</h1>
                             <div className="w-[70px] h-1 bg-[#dcb14a] my-[15px]"></div>
                         </MotionWrapper>
                         <MotionWrapper delay={0.6} isActive={isActive}>
-                            <p>{bannerText}</p>
+                            <p>{slide_bannertext}</p>
                         </MotionWrapper>
                         <MotionWrapper delay={0.9} isActive={isActive}>
                             <Link to="/products" className="no-underline">

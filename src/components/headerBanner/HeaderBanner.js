@@ -1,15 +1,13 @@
 import Slider from "react-slick";
-import {useState} from "react";
-
-//icons
-import headerBannerData from "./headerBannerData";
+import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 //item
 import Slide from "./Slide";
 
-
 export default function HeaderBanner() {
     const [activeIndex, setActiveIndex] = useState(0);
+    const slides = useLoaderData();
 
     const settings = {
         dots: true,
@@ -47,7 +45,7 @@ export default function HeaderBanner() {
         <>
             <div className="slider-container">
                 <Slider {...settings}>
-                    {headerBannerData.map((item, i) =>
+                    {slides.map((item, i) =>
                         <Slide
                             key={item.id}
                             {...item}
