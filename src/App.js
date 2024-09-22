@@ -13,9 +13,10 @@ import Homepage from "./pages/Homepage";
 import Products from "./pages/Products";
 import Like from "./pages/Like";
 import AboutUs from "./pages/AboutUs";
+import Post from "./pages/Post";
 
 //api
-import { getSlides } from "./api";
+import { getSlides, getPosts } from "./api";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,6 +28,11 @@ const router = createBrowserRouter(
           />
             <Route path="products" element={<Products />} />
             <Route path="like" element={<Like />} />
+            <Route
+                path="post/:id"
+                element={<Post />}
+                loader={({ params }) => getPosts(params.id)}
+            />
 
 
             <Route path="about-us" element={<AboutUs />} />
