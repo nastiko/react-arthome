@@ -39,3 +39,17 @@ export async function getMedia(id) {
         console.error('Failed to fetch slides:', id);
     }
 }
+
+// api users
+export async function getUsers(id) {
+    try {
+        const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/users/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/users";
+        const request = await fetch(url);
+        if (!request.ok) {
+            throw new Error(`HTTP error! Status: ${request.status}`);
+        }
+        return await request.json();
+    } catch {
+        console.error('Failed to fetch users:', id);
+    }
+}

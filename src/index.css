@@ -14,4 +14,16 @@
         padding: 0;
         margin: 0;
     }
+
+    #post-main-content blockquote p {
+        max-width: 100%;
+    }
+
+    #post-main-content blockquote p:before {
+        content: '\f10d';  /* FaQuoteLeft Unicode */
+        font-family: 'Font Awesome 6 Free';  /* Make sure to use Font Awesome */
+        font-weight: 900;  /* For solid icons */
+        font-size: 24px;
+        margin-right: 10px;
+    }
 }
