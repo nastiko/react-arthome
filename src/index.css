@@ -17,13 +17,22 @@
 
     #post-main-content blockquote p {
         max-width: 100%;
+        position: relative;
+        margin-left: 15rem;
+    }
+
+    @media screen and (max-width:768px) {
+        #post-main-content blockquote p {
+            margin-left: 25px;
+        }
     }
 
     #post-main-content blockquote p:before {
-        content: '\f10d';  /* FaQuoteLeft Unicode */
-        font-family: 'Font Awesome 6 Free';  /* Make sure to use Font Awesome */
-        font-weight: 900;  /* For solid icons */
-        font-size: 24px;
-        margin-right: 10px;
+        content: '\275D';
+        font-size: 36px;
+        position: absolute;
+        top: -20px;
+        left: -2rem;
+        padding-right: 2rem;
     }
 }

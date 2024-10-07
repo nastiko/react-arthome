@@ -16,7 +16,15 @@ import AboutUs from "./pages/AboutUs";
 import Post from "./pages/Post";
 
 //api
-import { getSlides, getPosts } from "./api";
+import { getSlides, getPosts, getUsers } from "./api";
+
+//combine loaders into one function
+export async function combinedLoader() {
+    const slides = await getSlides();
+    const posts = await getPosts();
+    const users = await getUsers();
+    return {slides, posts, users}
+}
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -24,7 +32,7 @@ const router = createBrowserRouter(
           <Route
               index
               element={<Homepage />}
-              loader={getSlides}
+              loader={combinedLoader}
           />
             <Route path="products" element={<Products />} />
             <Route path="like" element={<Like />} />

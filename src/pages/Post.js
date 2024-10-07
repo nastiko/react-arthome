@@ -10,7 +10,6 @@ import {getUsers} from "../api";
 
 export default function Post() {
     const posts = useLoaderData();
-    //console.log(posts);
     const [featuredImage, setFeaturedImage] = useState(null);
     const [user, setUser] = useState(null);
 
@@ -60,7 +59,7 @@ export default function Post() {
                 </div>
                 <div id="post-main-content"
                      className="max-w-full prose prose-p:max-w-full first:prose-p:md:max-w-[810px] first:prose-p:text-[#000000] prose-p:text-[#ff00ff] first:prose-p:mx-auto
-                                prose-blockquote:max-w-full prose-blockquote:border-0 prose-blockquote:px-0
+                                prose-blockquote:border-0 prose-blockquote:px-0
                                 prose-figure:flex prose-figure:gap-x-[30px] prose-figure:my-0"
                      dangerouslySetInnerHTML={{__html: posts.content.rendered}}></div>
             </div>

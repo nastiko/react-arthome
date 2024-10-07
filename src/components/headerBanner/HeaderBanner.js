@@ -7,7 +7,7 @@ import Slide from "./Slide";
 
 export default function HeaderBanner() {
     const [activeIndex, setActiveIndex] = useState(0);
-    const slides = useLoaderData();
+    const api = useLoaderData();
 
     const settings = {
         dots: true,
@@ -45,7 +45,7 @@ export default function HeaderBanner() {
         <>
             <div className="slider-container">
                 <Slider {...settings}>
-                    {slides.map((item, i) =>
+                    {api.slides.map((item, i) =>
                         <Slide
                             key={item.id}
                             {...item}
