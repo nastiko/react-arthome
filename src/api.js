@@ -23,6 +23,7 @@ export async function getPosts(id) {
         return await request.json();
     } catch (error) {
         console.error('Failed to fetch slides:', error);
+        return null;
     }
 }
 
@@ -37,6 +38,7 @@ export async function getMedia(id) {
         return await request.json();
     } catch {
         console.error('Failed to fetch slides:', id);
+        return null;
     }
 }
 
@@ -51,5 +53,6 @@ export async function getUsers(id) {
         return await request.json();
     } catch {
         console.error('Failed to fetch users:', id);
+        return null;
     }
 }

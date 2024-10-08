@@ -30,7 +30,9 @@ export default function Post() {
     useEffect(() => {
         if (posts.featured_media) {
             getMedia(posts.featured_media).then((media) => {
-                setFeaturedImage(media.guid.rendered);
+                if(media) {
+                    setFeaturedImage(media.source_url);
+                }
             })
         }
     }, [posts.featured_media]);

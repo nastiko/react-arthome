@@ -3,12 +3,12 @@ import {useState} from "react";
 import {useLoaderData} from "react-router-dom";
 
 //icons
-import {GoArrowRight} from "react-icons/go";
+//import {GoArrowRight} from "react-icons/go";
 
 export default function BlocksDefault() {
     const [visibleItemCount, setVisibleItemCount] = useState(3);
     const api = useLoaderData();
-    console.log(api.posts);
+    console.log(api);
 
     const handleLoadMore = () => {
         setVisibleItemCount(prevState => prevState + 3);
