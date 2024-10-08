@@ -8,7 +8,6 @@ import {useLoaderData} from "react-router-dom";
 export default function BlocksDefault() {
     const [visibleItemCount, setVisibleItemCount] = useState(3);
     const api = useLoaderData();
-    console.log(api);
 
     const handleLoadMore = () => {
         setVisibleItemCount(prevState => prevState + 3);

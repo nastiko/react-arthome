@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {motion} from "framer-motion";
 
 //icons
 import {HiPlus} from "react-icons/hi2";
@@ -8,9 +9,46 @@ import {RxSlash} from "react-icons/rx";
 //api
 import {getMedia, getUsers} from "../../api";
 
+const buttonReadMore = {
+    hidden: {opacity: 0, x: 100},
+    visible: {opacity: 1, x: 0},
+};
+
+const indicatorLine = {
+    hidden: {width: 0, backgroundColor: '#cacacf'},
+    visible: {width: 70, backgroundColor: '#dcb14a'},
+}
+
+export const ButtonMotion = ({children, isHovered}) => {
+    return (
+        <motion.div
+            variants={buttonReadMore}
+            animate={isHovered ? 'visible' : 'hidden'}
+            transition={{duration: 0.5, ease: "easeOut"}}
+        >
+            {children}
+        </motion.div>
+    )
+}
+
+export const IndicatorMotion = ({children, isHovered}) => {
+    return (
+        <motion.div
+            style={{ width: 70, height: 3, backgroundColor: '#cacaca', position: 'absolute', top: 0 }}
+            initial="visible"
+            variants={indicatorLine}
+            animate={isHovered ? 'visible' : 'hidden'}
+            transition={{duration: 0.5, ease: "easeInOut"}}
+        >
+            {children}
+        </motion.div>
+    )
+}
+
 export default function BlockItemRender({featured_media, title, date, author, id}) {
     const [featuredImage, setFeaturedImage] = useState(null);
     const [user, setUser] = useState(null);
+    const [isHovered, setIsHovered] = useState(false);
 
     function convertDate(dateStr) {
         const dateObj = new Date(dateStr);
@@ -29,7 +67,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
     useEffect(() => {
         if (featured_media) {
             getMedia(featured_media).then((media) => {
-                if(media) {
+                if (media) {
                     setFeaturedImage(media.source_url);
                 }
             })
@@ -38,43 +76,53 @@ export default function BlockItemRender({featured_media, title, date, author, id
 
     // get name's user via getUsers api
     useEffect(() => {
-        if(author) {
+        if (author) {
             getUsers(author).then((user) => {
                 setUser(user.name);
             })
         }
-    },[author]);
+    }, [author]);
 
     return (
         <>
-            <div className="flex flex-col min-w-full md-devices:min-w-[364px]">
-                <Link to={`/post/${id}`} className="h-full flex flex-col justify-center items-center no-underline">
-                    <div>
-                        <div className="flex-1 w-full md-devices:w-[364px] flex flex-col relative md:ml-0 mx-auto">
-                            <img className="w-full h-[206px] object-cover my-0" src={featuredImage} alt={title.rendered}/>
-                            <div className="flex items-center font-normal leading-7 bg-[#ffffff] absolute right-0 py-[5px] px-[14px]">
-                                <button className="flex items-center gap-x-2">
-                                    <span>Read more</span>
-                                    <HiPlus className="text-[#000000] text-[18px]"/>
-                                </button>
+            <motion.div
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+            >
+                <div className="flex flex-col min-w-full md-devices:min-w-[364px]">
+                    <Link to={`/post/${id}`} className="h-full flex flex-col justify-center items-center no-underline">
+                        <div>
+                            <div className="flex-1 w-full md-devices:w-[364px] flex flex-col relative overflow-hidden md:ml-0 mx-auto">
+                                <img className="w-full h-[206px] object-cover my-0" src={featuredImage} alt={title.rendered}/>
+                                <ButtonMotion isHovered={isHovered}>
+                                    <div className="flex items-center font-normal leading-7 bg-[#ffffff] absolute bottom-0 right-0 py-[5px] px-[14px]">
+                                        <button className="flex items-center gap-x-2">
+                                            <span>Read more</span>
+                                            <HiPlus className="text-[#000000] text-[18px]"/>
+                                        </button>
+                                    </div>
+                                </ButtonMotion>
+                            </div>
+                            <div className="w-full flex-1 flex flex-col justify-center items-center
+                                            prose prose-h6:text-[20px] prose-h6:leading-[26px] prose-h6:text-[#09283A] prose-h6:font-medium prose-h6:tracking-[2px] prose-h6:mt-5
+                                            prose-p:text-[#09283A] prose-p:text-[14px] prose-p:leading-[22px] prose-p:font-light prose-p:my-0">
+                                <div>
+                                    <h6 dangerouslySetInnerHTML={{__html: title.rendered}}></h6>
+                                    <div className="w-[70px] h-[3px] relative bg-[#cacaca] my-[15px]">
+                                        <IndicatorMotion isHovered={isHovered} />
+                                    </div>
+
+                                </div>
+                                <div className="w-full flex items-center gap-x-2">
+                                    <p>{convertDate(date)}</p>
+                                    <RxSlash className="text-[#999999]"/>
+                                    <p>{user}</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="w-full flex-1 flex flex-col justify-center items-center
-                            prose prose-h6:text-[20px] prose-h6:leading-[26px] prose-h6:text-[#09283A] prose-h6:font-medium prose-h6:tracking-[2px] prose-h6:mt-5
-                            prose-p:text-[#09283A] prose-p:text-[14px] prose-p:leading-[22px] prose-p:font-light prose-p:my-0">
-                            <div>
-                                <h6 dangerouslySetInnerHTML={{__html: title.rendered}}></h6>
-                                <div className="w-[70px] h-1 bg-[#dcb14a] my-[15px]"></div>
-                            </div>
-                            <div className="w-full flex items-center gap-x-2">
-                                <p>{convertDate(date)}</p>
-                                <RxSlash className="text-[#999999]"/>
-                                <p>{user}</p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-            </div>
+                    </Link>
+                </div>
+            </motion.div>
         </>
     )
 }
