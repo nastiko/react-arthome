@@ -1,3 +1,34 @@
+import axios from 'axios';
+
+console.log('All Environment Variables:', process.env);
+
+const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
+const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
+
+console.log('Consumer Key:', consumerKey);
+console.log('Consumer Secret:', consumerSecret);
+
+const token = btoa(`${consumerKey}:${consumerSecret}`);
+
+const api = axios.create({
+    baseURL: 'https://ecommerce.anastasia-web.dev/wp-json/wc/v3',
+    headers: {
+        'Authorization': `Basic ${token}`,
+    }
+});
+
+// Function to get all products
+export const getProducts = async () => {
+    try {
+        const response = await api.get('/products');
+        return response.data;
+    } catch (error) {
+        console.log('Error fetching products: ', error);
+        throw error;
+    }
+};
+
+
 // api slides
 export async function getSlides() {
     try {
