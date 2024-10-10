@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-console.log('All Environment Variables:', process.env);
-
 const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
 const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
-
-console.log('Consumer Key:', consumerKey);
-console.log('Consumer Secret:', consumerSecret);
 
 const token = btoa(`${consumerKey}:${consumerSecret}`);
 
@@ -32,12 +27,12 @@ export const getProducts = async () => {
 // api slides
 export async function getSlides() {
     try {
-        const request = await fetch("https://ecommerce.anastasia-web.dev/wp-json/wp/v2/slides");
+        const response = await fetch("https://ecommerce.anastasia-web.dev/wp-json/wp/v2/slides");
 
-        if (!request.ok) {
-            throw new Error(`HTTP error! Status: ${request.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return await request.json();
+        return await response.json();
     } catch (error) {
         console.error('Failed to fetch slides:', error);
     }
@@ -47,11 +42,11 @@ export async function getSlides() {
 export async function getPosts(id) {
     try {
         const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/posts/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/wp/v2/posts";
-        const request = await fetch(url);
-        if (!request.ok) {
-            throw new Error(`HTTP error! Status: ${request.status}`);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return await request.json();
+        return await response.json();
     } catch (error) {
         console.error('Failed to fetch slides:', error);
         return null;
@@ -62,7 +57,22 @@ export async function getPosts(id) {
 export async function getMedia(id) {
     try {
         const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/media/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/wp/v2/media";
-        const request = await fetch(url);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch {
+        console.error('Failed to fetch slides:', id);
+        return null;
+    }
+}
+
+
+/*trying to work on with miragejs*/
+/*export async function getMedia(id) {
+    try {
+        const request = await fetch(`/getMedia/${id}`);
         if (!request.ok) {
             throw new Error(`HTTP error! Status: ${request.status}`);
         }
@@ -71,17 +81,17 @@ export async function getMedia(id) {
         console.error('Failed to fetch slides:', id);
         return null;
     }
-}
+}*/
 
 // api users
 export async function getUsers(id) {
     try {
         const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/users/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/users";
-        const request = await fetch(url);
-        if (!request.ok) {
-            throw new Error(`HTTP error! Status: ${request.status}`);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return await request.json();
+        return await response.json();
     } catch {
         console.error('Failed to fetch users:', id);
         return null;

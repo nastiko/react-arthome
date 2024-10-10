@@ -10,12 +10,13 @@ import RootLayout from "./layout/RootLayout";
 
 //pages
 import Homepage from "./pages/Homepage";
-import Products from "./pages/Products";
+import Products from "./pages/products/Products";
 import Like from "./pages/Like";
 import AboutUs from "./pages/AboutUs";
 import Post from "./pages/Post";
 
 //api
+//import "./server";
 import { getSlides, getPosts, getUsers, getProducts } from "./api";
 
 //combine loaders into one function

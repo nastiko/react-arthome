@@ -12,7 +12,7 @@ export default function Footer({link1, link2, link3, text, author}) {
     return (
         <>
             <div className="flex flex-col gap-y-5">
-                <footer className="max-w-screen-xl grid grid-cols-1 md:grid-cols-3 md:justify-items-center items-center gap-y-2.5 md:mx-auto">
+                <footer className="max-w-screen-xl grid grid-cols-1 md:grid-cols-3 md:justify-items-center items-center gap-y-2.5 px-5 xl:px-0 md:mx-auto">
                     <ul className="order-2 md:order-1 w-full flex justify-start gap-x-5">
                         <li className="shrink-0">
                             <Link className="navLink" to="/about-us">{link1}</Link>

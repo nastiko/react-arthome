@@ -7,12 +7,18 @@ import {IoMdHeartEmpty} from "react-icons/io";
 import {IoBagHandleOutline} from "react-icons/io5";
 
 //logo
-import Logo from "../image/logo.png"
+import Logo from "../image/logo.png";
+import {useLocation} from "react-router-dom";
 
 export default function Header() {
+    let location = useLocation();
+    const isProductPage = location.pathname.includes("/products");
+    //const isSpecialPage = ["/products", "/about", "/contact"].some(path => location.pathname.includes(path));
+
+
     return (
         <>
-            <header className="bg-[#f4f5f7] h-[90px] mx-[15px] mt-[15px]">
+            <header className={` h-[90px] mx-[15px] mt-[15px] ${isProductPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7]'}`}>
                 <nav className="max-w-screen-xl grid grid-cols-2 lg:grid-cols-3 lg:justify-items-center items-center py-5 px-5 2xl:px-0 mx-auto">
                     <div className="hidden lg:flex w-full flex-col gap-6 relative">
                         <Input className="focus:border-b-[#dcb14a] placeholder:text-[16px] px-2.5 pr-10" variant="static" placeholder="Search Anything..."/>
