@@ -13,9 +13,14 @@ const api = axios.create({
 });
 
 // Function to get all products
-export const getProducts = async () => {
+export const getProducts = async (page = 1, perPage = 100) => {
     try {
-        const response = await api.get('/products');
+        const response = await api.get('/products', {
+            params: {
+                page,
+                per_page: perPage,
+            }
+        });
         return response.data;
     } catch (error) {
         console.log('Error fetching products: ', error);

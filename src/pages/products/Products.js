@@ -1,37 +1,44 @@
-import {Link, useLoaderData} from "react-router-dom";
+import {Link, useLoaderData, useSearchParams} from "react-router-dom";
+
+//icons
 import {RxSlash} from "react-icons/rx";
+
+//components for pages
 import ProductCard from "../products/ProductCard";
-import {useState} from "react";
 
 export default function Products() {
     const products = useLoaderData();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+
+    const page = Number(searchParams.get("page")) || 1;
+    const productPerPage = 10;
     console.log(products.length);
 
-    const [currentPage, setCurrentPage] = useState(1);
 
-    const Pagination = ({productPerPage, length}) => {
+    const Pagination = ({productsLength, productPerPage}) => {
         const paginationNumbers = [];
 
-        for (let i = 1; i <= Math.ceil(length / productPerPage) ; i++) {
+        for (let i = 1; i <= Math.ceil(productsLength / productPerPage); i++) {
             paginationNumbers.push(i);
         }
 
         return (
             <>
                 {paginationNumbers.map((pageNumber) => (
-                    <button key={pageNumber}>{pageNumber}</button>
+                    <button className="bg-[#f5f5f5] px-[13px] py-[5px]"
+                        key={pageNumber}
+                        onClick={() => setSearchParams({ page: pageNumber })}>
+                        {pageNumber}
+                    </button>
                 ))}
             </>
         )
     }
 
-    const handlePagination = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    }
-
     return (
         <>
-            <section className="bg-[#f4f5f7] py-[80px]">
+            <section className="py-[80px]">
                 <div className="max-w-screen-xl px-5 xl:px-0 mx-auto">
                     <div className="flex flex-col md:flex-row items-center justify-between">
                         <h1 className="text-[36px] capitalize mb-[15px] md:mb-0">All products</h1>
@@ -56,14 +63,12 @@ export default function Products() {
                         />
                     )}
                 </div>
-                <div>
-                    <Pagination
-                        length={products.length}
-                        productPerPage={5}
-                        handlePagination={handlePagination}
-                    />
-
-
+                <div className="max-w-screen-xl flex justify-center items-center gap-x-4 px-5 xl:px-0 mx-auto my-10">
+                   <Pagination
+                       productsLength={products.length}
+                       productPerPage={productPerPage}
+                       currentPage={page}
+                   />
                 </div>
             </section>
         </>
