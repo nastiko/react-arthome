@@ -89,11 +89,11 @@ export default function BlockItemRender({featured_media, title, date, author, id
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
             >
-                <div className="flex flex-col min-w-full md-devices:min-w-[364px]">
-                    <Link to={`/post/${id}`} className="h-full flex flex-col justify-center items-center no-underline">
+                <div className="flex min-w-full flex-col md-devices:min-w-[364px]">
+                    <Link to={`/post/${id}`} className="flex h-full flex-col items-center justify-center no-underline">
                         <div>
-                            <div className="flex-1 w-full md-devices:w-[364px] flex flex-col relative overflow-hidden md:ml-0 mx-auto">
-                                <img className="w-full h-[206px] object-cover my-0" src={featuredImage} alt={title.rendered}/>
+                            <div className="relative mx-auto flex w-full flex-1 flex-col overflow-hidden md-devices:w-[364px] md:ml-0">
+                                <img className="my-0 w-full object-cover h-[206px]" src={featuredImage} alt={title.rendered}/>
                                 <ButtonMotion isHovered={isHovered}>
                                     <div className="flex items-center font-normal leading-7 bg-[#ffffff] absolute bottom-0 right-0 py-[5px] px-[14px]">
                                         <button className="flex items-center gap-x-2">
@@ -113,7 +113,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
                                     </div>
 
                                 </div>
-                                <div className="w-full flex items-center gap-x-2">
+                                <div className="flex w-full items-center gap-x-2">
                                     <p>{convertDate(date)}</p>
                                     <RxSlash className="text-[#999999]"/>
                                     <p>{user}</p>

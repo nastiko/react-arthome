@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 export default function RootLayout() {
     return(
         <>
-            <div className="flex flex-col h-screen justify-between">
+            <div className="flex h-screen flex-col justify-between">
                 <div>
                     <Header/>
                     <main>

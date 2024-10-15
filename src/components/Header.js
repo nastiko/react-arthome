@@ -19,23 +19,23 @@ export default function Header() {
     return (
         <>
             <header className={` h-[90px] mx-[15px] mt-[15px] ${isProductPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7]'}`}>
-                <nav className="max-w-screen-xl grid grid-cols-2 lg:grid-cols-3 lg:justify-items-center items-center py-5 px-5 2xl:px-0 mx-auto">
-                    <div className="hidden lg:flex w-full flex-col gap-6 relative">
+                <nav className="mx-auto grid max-w-screen-xl grid-cols-2 items-center px-5 py-5 lg:grid-cols-3 lg:justify-items-center 2xl:px-0">
+                    <div className="relative hidden w-full flex-col gap-6 lg:flex">
                         <Input className="focus:border-b-[#dcb14a] placeholder:text-[16px] px-2.5 pr-10" variant="static" placeholder="Search Anything..."/>
                         <IoSearchOutline className="absolute top-0 right-0 text-[20px] mt-3.5 mr-2.5"/>
                     </div>
-                    <div className="w-[120px] h-11 flex items-center">
+                    <div className="flex h-11 items-center w-[120px]">
                         <Link className="" to="/">
                             <img src={Logo} alt="Logo" className="w-full"/>
                         </Link>
                     </div>
-                    <div className="w-full flex justify-end gap-x-[35px]">
+                    <div className="flex w-full justify-end gap-x-[35px]">
                         <Link to="/products">All Products</Link>
-                        <Link className="relative group cursor-pointer" to="/like">
+                        <Link className="relative cursor-pointer group" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
                             <span className="text-[12px] group-hover:text-[#ffffff] bg-[#dcb14a] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5">1</span>
                         </Link>
-                        <div className="relative group cursor-pointer">
+                        <div className="relative cursor-pointer group">
                             <IoBagHandleOutline className="text-[24px] group-hover:text-[#dcb14a]"/>
                             <span className="text-[12px] group-hover:text-[#ffffff] bg-[#dcb14a] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5">1</span>
                         </div>

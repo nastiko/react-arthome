@@ -48,12 +48,12 @@ export default function Post() {
 
     return (
         <>
-            <div className="max-w-screen-xl py-[120px] px-5 xl:px-0 mx-auto">
+            <div className="mx-auto max-w-screen-xl px-5 py-[120px] xl:px-0">
                 <div>
                     <img src={featuredImage} alt={posts.title.rendered}/>
-                    <h2 className="text-[24px] md:text-[30px] font-medium pt-[25px] mb-[15px]"
+                    <h2 className="font-medium text-[24px] pt-[25px] mb-[15px] md:text-[30px]"
                         dangerouslySetInnerHTML={{__html: posts.title.rendered}}></h2>
-                    <div className="w-full max-w-[810px] flex items-center gap-x-2 mx-auto mb-[15px]">
+                    <div className="mx-auto flex w-full items-center gap-x-2 max-w-[810px] mb-[15px]">
                         <p className="text-[14px]">{convertDate(posts.date)}</p>
                         <RxSlash className="text-[#999999]" />
                         <p className="text-[14px]">{user}</p>

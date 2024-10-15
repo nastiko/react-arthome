@@ -13,11 +13,12 @@ const api = axios.create({
 });
 
 // Function to get all products
-export const getProducts = async (page = 1, perPage = 100) => {
+export const getProducts = async (page = 1, perPage = 10) => {
     try {
+        console.log('page infinite:', page);
         const response = await api.get('/products', {
             params: {
-                page,
+                page: page,
                 per_page: perPage,
             }
         });

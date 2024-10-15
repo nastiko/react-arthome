@@ -21,9 +21,9 @@ export default function Slide({acf, isActive}) {
 
     return (
         <>
-            <div className="relative w-full mx-auto px-[15px]">
-                <img className="w-full h-[600px] md:h-[800px] relative object-center object-cover" src={slide_image_link} alt={slide_title}/>
-                <div className="max-w-screen-xl mx-auto absolute inset-0 flex flex-col justify-center px-5 xl:px-0">
+            <div className="relative mx-auto w-full px-[15px]">
+                <img className="relative w-full object-cover object-center h-[600px] md:h-[800px]" src={slide_image_link} alt={slide_title}/>
+                <div className="absolute inset-0 mx-auto flex max-w-screen-xl flex-col justify-center px-5 xl:px-0">
                     <div className="md-devices:w-1/2 md:w-2/5 px-5 xl:px-0
                                     prose prose-h1:max-w-xs prose-h1:md-devices:max-w-sm prose-h1:text-[34px] prose-h1:md:text-[60px] prose-h1:text-[#000000] prose-h1:font-medium prose-h1:capitalize prose-h1:mb-0
                                     prose-h6:w-20 prose-h6:text-[#dcb14a] prose-h6:font-medium prose-h6:uppercase prose-h6:mb-[5px]

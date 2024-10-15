@@ -4,9 +4,9 @@ import {GoArrowRight} from "react-icons/go";
 export default function DecoCollection({imageUrl, title, discount, bannerText}) {
     return (
         <>
-            <div className="relative w-full mx-auto px-[15px]">
-                <img className="w-full h-[600px] md:h-[635px] relative object-center object-cover" src={imageUrl} alt={title}/>
-                <div className="max-w-screen-xl mx-auto absolute inset-0 flex flex-col justify-center px-5 xl:px-0">
+            <div className="relative mx-auto w-full px-[15px]">
+                <img className="relative w-full object-cover object-center h-[600px] md:h-[635px]" src={imageUrl} alt={title}/>
+                <div className="absolute inset-0 mx-auto flex max-w-screen-xl flex-col justify-center px-5 xl:px-0">
                     <div className="max-w-full w-full lg:w-3/5 px-5 lg:px-0
                                     prose-h6:text-[32px] prose-h6:md:text-[36px] prose-h6:md:leading-8 prose-h6:text-[#000000] prose-h6:font-medium prose-h6:capitalize prose-h6:mb-0
                                     prose-p:text-[16px] prose-p:leading-[26px] prose-p:text-[#000000] prose-p:mb-[50px]">
@@ -15,28 +15,28 @@ export default function DecoCollection({imageUrl, title, discount, bannerText}) 
                         <p>{bannerText}</p>
                         <div className="w-full flex items-center justify-between sm:justify-start max-w-full sm:gap-x-[25px] md:gap-x-10 mb-[60px]
                                         prose prose-h4:font-['Prata'] prose-h4:text-[25px] prose-h4:md:text-[48px] prose-h4:font-medium prose-h4:my-0">
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col items-center justify-center">
                                 <h4>0</h4>
                                 <span className="font-medium uppercase">Days</span>
                             </div>
                             <div>
                                 <h4>:</h4>
                             </div>
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col items-center justify-center">
                                 <h4>0</h4>
                                 <span className="font-medium uppercase">Hours</span>
                             </div>
                             <div>
                                 <h4>:</h4>
                             </div>
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col items-center justify-center">
                                 <h4>0</h4>
                                 <span className="font-medium uppercase">Mints</span>
                             </div>
                             <div>
                                 <h4>:</h4>
                             </div>
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col items-center justify-center">
                                 <h4>0</h4>
                                 <span className="font-medium uppercase">Secs</span>
                             </div>

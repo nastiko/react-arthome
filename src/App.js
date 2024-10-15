@@ -37,12 +37,7 @@ const router = createBrowserRouter(
           />
             <Route path="products"
                    element={<Products />}
-                   loader={async ({request}) => {
-                       const url = new URL(request.url);
-                       const page = Number(url.searchParams.get("page")) || 1;
-                       const perPage = 10;
-                       return getProducts(page, perPage)
-                   }}
+                   loader={({ params }) => getProducts()}
             />
             <Route path="like" element={<Like />} />
             <Route
