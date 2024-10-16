@@ -28,6 +28,17 @@ export const getProducts = async (page = 1, perPage = 6) => {
     }
 };
 
+// api id products
+export async function getProductById(id) {
+    try {
+        const response = await api.get(`/products/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch slides:', error);
+        return null;
+    }
+}
+
 
 // api slides
 export async function getSlides() {

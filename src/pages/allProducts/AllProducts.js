@@ -8,11 +8,10 @@ import {getProducts} from "../../api";
 import {RxSlash} from "react-icons/rx";
 
 //components for pages
-import ProductCard from "../products/ProductCard";
+import ProductCard from "./ProductCard";
 
-export default function Products() {
+export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
-    console.log(items);
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
     const [page, setPage] = useState(2); // Page state
@@ -80,10 +79,11 @@ export default function Products() {
                     </div>
                 </div>
                 <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
-                    {items.map((item, index) =>
+                    {items.map((item, i) =>
                         <ProductCard
                             key={item.id}
                             {...item}
+                            i={i}
                         />
                     )}
                 </div>

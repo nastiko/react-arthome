@@ -1,11 +1,12 @@
 import {Link} from "react-router-dom";
 
-export default function ProductCard({images, name, regular_price, sale_price, on_sale}) {
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale}) {
     const imageSample = images[1] ? images[1].src : images[0].src;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+
     return (
         <>
-            <Link to='/'>
+            <Link to={`/products/${id}`}>
                 <div>
                     <div className="relative">
                         <img src={imageSample} alt={name}/>
