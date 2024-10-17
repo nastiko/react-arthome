@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 
 export default function ProductCard({id, images, name, regular_price, sale_price, on_sale}) {
-    const imageSample = images[1] ? images[1].src : images[0].src;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     return (
@@ -9,7 +8,7 @@ export default function ProductCard({id, images, name, regular_price, sale_price
             <Link to={`/products/${id}`}>
                 <div>
                     <div className="relative">
-                        <img src={imageSample} alt={name}/>
+                        <img src={images[1]?.src || images[0]?.src} alt={name}/>
                         {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#f14705] rounded-full absolute top-[15px] left-[15px]">Sale</div>}
                         {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#98d8ca] rounded-full absolute top-[75px] left-[15px]">{discount}%</div>}
                     </div>
