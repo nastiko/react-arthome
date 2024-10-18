@@ -18,7 +18,6 @@ export default function Header() {
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
     const changeBgColor = () => {
-        console.log(window.scrollY);
         if (window.scrollY >= 90) {
             setNavBarBgColor(true);
         } else {

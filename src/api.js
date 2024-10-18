@@ -3,19 +3,27 @@ import axios from 'axios';
 const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
 const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
 
+const URL_WP_BASE = 'https://ecommerce.anastasia-web.dev/wp-json';
+const URL_WC_API_BASE = '/wc/v3';
+const URL_WP_API_BASE = '/wp/v2';
+
 const token = btoa(`${consumerKey}:${consumerSecret}`);
 
-const api = axios.create({
-    baseURL: 'https://ecommerce.anastasia-web.dev/wp-json/wc/v3',
+const wcApi = axios.create({
+    baseURL: `${URL_WP_BASE}${URL_WC_API_BASE}`,
     headers: {
         'Authorization': `Basic ${token}`,
     }
 });
 
+const wpApi = axios.create({
+    baseURL: `${URL_WP_BASE}${URL_WP_API_BASE}`
+});
+
 // Function to get all products
 export const getProducts = async (page = 1, perPage = 6) => {
     try {
-        const response = await api.get('/products', {
+        const response = await wcApi.get('/products', {
             params: {
                 page: page,
                 per_page: perPage,
@@ -31,7 +39,7 @@ export const getProducts = async (page = 1, perPage = 6) => {
 // api id products
 export async function getProductById(id) {
     try {
-        const response = await api.get(`/products/${id}`);
+        const response = await wcApi.get(`/products/${id}`);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch slides:', error);
@@ -43,14 +51,11 @@ export async function getProductById(id) {
 // api slides
 export async function getSlides() {
     try {
-        const response = await fetch("https://ecommerce.anastasia-web.dev/wp-json/wp/v2/slides");
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
+        const response = await wpApi.get('/slides');
+        return response.data;
     } catch (error) {
-        console.error('Failed to fetch slides:', error);
+        console.log('Error fetching products: ', error);
+        throw error;
     }
 }
 
@@ -100,6 +105,12 @@ export async function getMedia(id) {
 }*/
 
 // api users
+/**
+ * Get user by id from WP API
+ *
+ * @param id
+ * @return {Promise<any|null>}
+ */
 export async function getUsers(id) {
     try {
         const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/users/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/users";

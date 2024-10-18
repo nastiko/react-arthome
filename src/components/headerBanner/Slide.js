@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useLoaderData} from 'react-router-dom';
 import {motion} from "framer-motion";
 
 import {GoArrowRight} from "react-icons/go";
@@ -17,7 +17,7 @@ const MotionWrapper = ({children, delay = 0, className = "", isActive}) => {
 }
 
 export default function Slide({acf, isActive}) {
-    const {slide_image_link, slide_title, slide_subtitle, slide_bannertext} = acf;
+    const {slide_id, slide_image_link, slide_title, slide_subtitle, slide_bannertext} = acf;
 
     return (
         <>
@@ -39,7 +39,7 @@ export default function Slide({acf, isActive}) {
                             <p>{slide_bannertext}</p>
                         </MotionWrapper>
                         <MotionWrapper delay={0.9} isActive={isActive}>
-                            <Link to="/products" className="no-underline">
+                            <Link to={`/products/${slide_id}`} className="no-underline">
                                 <div className="bg-[#000000] w-max flex items-center gap-x-1 px-[32px] py-1">
                                     <h3 className="text-[15px] text-[#ffffff] font-normal capitalize my-0">Shop now</h3>
                                     <GoArrowRight className="text-[#ffffff]"/>

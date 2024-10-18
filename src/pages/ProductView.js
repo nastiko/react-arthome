@@ -19,7 +19,6 @@ import { MdOutlineStarPurple500 } from "react-icons/md";
 export default function ProductView() {
     const product = useLoaderData();
     const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions} = product;
-    console.log(product);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const [activeTab, setActiveTab] = useState('tab1');

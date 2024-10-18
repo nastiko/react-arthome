@@ -12,6 +12,7 @@ import ProductCard from "./ProductCard";
 
 export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
+    console.log(items);
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
     const [page, setPage] = useState(2); // Page state

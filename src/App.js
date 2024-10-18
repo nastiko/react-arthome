@@ -25,7 +25,8 @@ export async function combinedLoader() {
     const slides = await getSlides();
     const posts = await getPosts();
     const users = await getUsers();
-    return {slides, posts, users}
+    const product = await getProducts();
+    return {slides, posts, users, product}
 }
 
 const router = createBrowserRouter(
