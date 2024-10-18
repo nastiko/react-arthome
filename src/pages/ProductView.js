@@ -47,11 +47,13 @@ export default function ProductView() {
                     </div>
                 </div>
             </section>
-            <section className="max-w-screen-xl flex gap-x-[25px] px-5 xl:px-0 py-[50px] mx-auto">
-                <div className="relative">
-                    <img src={images[0].src} alt={name}/>
-                    {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#f14705] rounded-full absolute top-[15px] left-[15px]">Sale</div>}
-                    {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#98d8ca] rounded-full absolute top-[75px] left-[15px]">{discount}%</div>}
+            <section className="max-w-screen-xl grid lg:grid-cols-2 gap-[25px] px-5 xl:px-0 py-[50px] mx-auto">
+                <div className="w-full flex justify-center items-center">
+                    <div className="relative">
+                        <img src={images[0].src} alt={name}/>
+                        {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#f14705] rounded-full absolute top-[15px] left-[15px]">Sale</div>}
+                        {on_sale && <div className="w-[45px] h-[45px] flex justify-center items-center text-[#ffffff] bg-[#98d8ca] rounded-full absolute top-[75px] left-[15px]">{discount}%</div>}
+                    </div>
                 </div>
                 <div className="flex flex-col gap-4">
                     <h3 className="text-[30px] font-medium">{name}</h3>
@@ -64,8 +66,8 @@ export default function ProductView() {
                         </>
                     ) : <p className="text-[30px] leading-[31px] text-[#666666]">£{regular_price}</p>}
                     <div dangerouslySetInnerHTML={{__html: short_description}}></div>
-                    <div className="flex gap-x-4 my-4">
-                        <div className="w-[120px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
+                    <div className="grid grid-cols-3 md:grid-cols-[150px_162px_1fr] grid-flow-row-dense gap-x-4 my-4">
+                        <div className="h-[46px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
                             <button className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
                                 <LuMinus className="text-[#666666] text-[16px]"/>
                             </button>
@@ -74,10 +76,10 @@ export default function ProductView() {
                                 <PiPlus className="text-[#666666] text-[16px]"/>
                             </button>
                         </div>
-                        <div>
-                            <button className="bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
+                        <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
+                            <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
                         </div>
-                        <div>
+                        <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
                             <button className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">
                                 <IoMdHeartEmpty className="text-[24px] text-[#666666] group-hover:text-[#dcb14a]"/>
                             </button>
