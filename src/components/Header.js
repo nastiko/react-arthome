@@ -1,5 +1,6 @@
 import {Input} from "@material-tailwind/react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import {useState} from "react";
 
 //icons
 import {IoSearchOutline} from "react-icons/io5";
@@ -8,17 +9,29 @@ import {IoBagHandleOutline} from "react-icons/io5";
 
 //logo
 import Logo from "../image/logo.png";
-import {useLocation} from "react-router-dom";
 
 export default function Header() {
     let location = useLocation();
     const isProductPage = location.pathname.includes("/products");
     //const isSpecialPage = ["/products", "/about", "/contact"].some(path => location.pathname.includes(path));
 
+    // sticky position on scrollY
+    const [navBarBgColor, setNavBarBgColor] = useState(false);
+    const changeBgColor = () => {
+        console.log(window.scrollY);
+        if (window.scrollY >= 90) {
+            setNavBarBgColor(true);
+        } else {
+            setNavBarBgColor(false);
+        }
+    }
+    window.addEventListener('scroll', changeBgColor);
 
     return (
         <>
-            <header className={` h-[90px] mx-[15px] mt-[15px] ${isProductPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7]'}`}>
+            <header className={` h-[90px] mt-[15px] sticky top-0 z-10
+                    ${isProductPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7] mx-[15px]'} 
+                    ${navBarBgColor ? ' bg-[#ffffff] border-[1px] border-t-transparent border-x-transparent border-b-[#dddddd]' : ''}`}>
                 <nav className="mx-auto grid max-w-screen-xl grid-cols-2 items-center px-5 py-5 lg:grid-cols-3 lg:justify-items-center 2xl:px-0">
                     <div className="relative hidden w-full flex-col gap-6 lg:flex">
                         <Input className="focus:border-b-[#dcb14a] placeholder:text-[16px] px-2.5 pr-10" variant="static" placeholder="Search Anything..."/>
