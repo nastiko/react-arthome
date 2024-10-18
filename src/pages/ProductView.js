@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link, useLoaderData} from "react-router-dom";
 import {RxSlash} from "react-icons/rx";
 
@@ -14,12 +14,18 @@ import {
 import {LuMinus} from "react-icons/lu";
 import {PiPlus} from "react-icons/pi";
 import {IoMdHeartEmpty} from "react-icons/io";
+import { MdOutlineStarPurple500 } from "react-icons/md";
 
 export default function ProductView() {
     const product = useLoaderData();
-    const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description} = product;
+    const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions} = product;
     console.log(product);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+
+    const [activeTab, setActiveTab] = useState('tab1');
+    const toggleIsActive = (tab) => {
+        setActiveTab(tab);
+    }
 
     return (
         <>
@@ -87,42 +93,109 @@ export default function ProductView() {
             <section className="border-[1px] border-t-[#dddddd] border-b-transparent border-x-transparent">
                 <Tabs id="product-info"
                       value="tab1"
-                      className="max-w-screen-xl mx-auto">
-                    <TabsHeader className="bg-transparent">
+                      className="max-w-screen-xl py-[95px] px-5 xl:px-0 mx-auto">
+                    <TabsHeader className="flex items-center bg-transparent border-[1px] border-b-[#dddddd] border-t-transparent border-x-transparent rounded-none px-0 pb-5">
                         <Tab value="tab1"
                              key="1"
-                             className="flex flex-row rounded-none shadow-none"
-                             style={{ boxShadow: 'none', borderRadius: '0' }} >
-                            <p>Description</p>
-                            <RxSlash className="text-[#000000]"/>
+                             id="tab"
+                             onClick={() => toggleIsActive('tab1')}>
+                            <p className={activeTab === 'tab1' ? 'text-[#dcb14a]' : 'text-[#000000]'}>Description</p>
+                            <div className="mx-[2px] md:mx-4">
+                                <RxSlash className={activeTab === 'tab1' ? 'text-[#dcb14a]' : 'text-[#000000]'}/>
+                            </div>
                         </Tab>
                         <Tab value="tab2"
                              key="2"
-                             className="rounded-none shadow-none">
-                            <p>Additional information</p>
-                            <RxSlash className="text-[#000000]"/>
+                             id="tab"
+                             onClick={() => toggleIsActive('tab2')}>
+                            <p className={activeTab === 'tab2' ? 'text-[#dcb14a]' : 'text-[#000000]'}>Additional information</p>
+                            <div className="mx-[2px] md:mx-4">
+                                <RxSlash className={activeTab === 'tab2' ? 'text-[#dcb14a]' : 'text-[#000000]'}/>
+                            </div>
                         </Tab>
                         <Tab value="tab3"
                              key="3"
-                             className="rounded-none shadow-none">
-                            <p>Reviews</p>
+                             id="tab"
+                             onClick={() => toggleIsActive('tab3')}>
+                            <p className={activeTab === 'tab3' ? 'text-[#dcb14a]' : 'text-[#000000]'}>Reviews</p>
                         </Tab>
                     </TabsHeader>
                     <TabsBody>
                         <TabPanel value="tab1"
                                   key="1"
-                                  className="grid grid-cols-12 gap-[30px] px-0">
-                            <div className="col-span-8">
+                                  className="grid grid-cols-1 lg:grid-cols-12 justify-items-center items-center gap-[30px] px-0 pt-[30px] pb-0">
+                            <div className="lg:col-span-7 xl:col-span-8 xl:mr-[30px]">
                                 <h2 className="text-[24px] text-[#000000] font-medium mb-[10px]">Description</h2>
                                 <div dangerouslySetInnerHTML={{__html: description}}
-                                     className="text-[#000000]"></div>
+                                     className="text-[#000000] font-normal"></div>
                             </div>
-                            <div className="col-span-4">
-                                <img src={images[0].src} alt={name}/>
+                            <div className="sm:w-[360px] lg:w-full lg:col-span-5 xl:col-span-4">
+                                <img className="w-full" src={images[0].src} alt={name}/>
                             </div>
                         </TabPanel>
-                        <TabPanel value="tab2" key="2">
-                            <p>Content 2</p>
+                        <TabPanel value="tab2"
+                                  key="2"
+                                  className="px-0 pt-[30px] pb-0">
+                            <div>
+                                <p className="text-[#000000] font-medium mb-3.5">Weight: <span className="font-normal">{weight} kg</span></p>
+                                <div className="prose prose-p:text-[#000000] prose-p:my-0 flex gap-1">
+                                    <p className="font-medium">Dimensions:</p>
+                                    <div className="flex gap-2">
+                                        <p className="font-normal">{dimensions?.height}</p>
+                                        <p className="font-normal">x</p>
+                                        <p className="font-normal">{dimensions?.length}</p>
+                                        <p className="font-normal">x</p>
+                                        <p className="font-normal">{dimensions?.width}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel value="tab3"
+                                  key="3" className="px-0 pt-[30px] pb-0">
+                            <h2 className="text-[26px] text-[#000000] font-medium">Be the first to review <span>"{name}"</span></h2>
+                            <p className="text-[#000000] font-normal mb-2">Your rating</p>
+                            <ul className="flex mb-6">
+                                <li>
+                                    <MdOutlineStarPurple500 className="text-[#f5a623]"/>
+                                </li>
+                                <li>
+                                    <MdOutlineStarPurple500 className="text-[#f5a623]"/>
+                                </li>
+                                <li>
+                                    <MdOutlineStarPurple500 className="text-[#f5a623]"/>
+                                </li>
+                                <li>
+                                    <MdOutlineStarPurple500 className="text-[#f5a623]"/>
+                                </li>
+                                <li>
+                                    <MdOutlineStarPurple500 className="text-[#f5a623]"/>
+                                </li>
+                            </ul>
+                            <form action="#">
+                                <label className="flex flex-col text-[#000000] font-normal">
+                                    Your review *
+                                    <textarea name="postContent"
+                                              rows={4}
+                                              cols={40}
+                                              className="border-[1px] border-[#dddddd] p-2.5 mt-1 focus:outline-0"
+                                    />
+                                </label>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 my-6 sm:my-10">
+                                    <label className="w-full flex flex-col text-[#000000] font-normal">
+                                        Name *
+                                        <input name="postTitle"
+                                               className="border-[1px] border-[#dddddd] p-2.5 mt-1 focus:outline-0"/>
+                                    </label>
+                                    <label className="w-full flex flex-col text-[#000000] font-normal">
+                                        Email *
+                                        <input name="postEmail"
+                                               className="border-[1px] border-[#dddddd] p-2.5 mt-1 focus:outline-0"/>
+                                    </label>
+                                </div>
+                                <button className="bg-[#000000] text-[#ffffff] px-[28px] py-1">Submit</button>
+
+
+                            </form>
                         </TabPanel>
                     </TabsBody>
                 </Tabs>

@@ -1,0 +1,7 @@
+#tab {
+    @apply w-max px-0;
+}
+
+#tab div {
+    @apply flex flex-row items-center rounded-none shadow-none border-0 relative;
+}

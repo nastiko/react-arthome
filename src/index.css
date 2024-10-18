@@ -3,6 +3,7 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 @import "./apply/navLink.css";
+@import "./apply/tab.css";
 
 @tailwind base;
 @tailwind components;
