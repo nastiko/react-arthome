@@ -7,7 +7,7 @@ import {HiPlus} from "react-icons/hi2";
 import {RxSlash} from "react-icons/rx";
 
 //api
-import {getMedia, getUsers} from "../../api";
+import {getMediaById, getUsersById} from "../../api";
 
 const buttonReadMore = {
     hidden: {opacity: 0, x: 100},
@@ -66,7 +66,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
     // get Featured media via getMedia api
     useEffect(() => {
         if (featured_media) {
-            getMedia(featured_media).then((media) => {
+            getMediaById(featured_media).then((media) => {
                 if (media) {
                     setFeaturedImage(media.source_url);
                 }
@@ -77,7 +77,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
     // get name's user via getUsers api
     useEffect(() => {
         if (author) {
-            getUsers(author).then((user) => {
+            getUsersById(author).then((user) => {
                 setUser(user.name);
             })
         }
@@ -105,7 +105,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
                             </div>
                             <div className="w-full flex-1 flex flex-col justify-center items-center
                                             prose prose-h6:text-[20px] prose-h6:leading-[26px] prose-h6:text-[#09283A] prose-h6:font-medium prose-h6:tracking-[2px] prose-h6:mt-5
-                                            prose-p:text-[#09283A] prose-p:text-[14px] prose-p:leading-[22px] prose-p:font-light prose-p:my-0">
+                                            prose-p:text-[#09283A] prose-p:text-[14px] prose-p:leading-[22px] prose-p:font-normal prose-p:my-0">
                                 <div>
                                     <h6 dangerouslySetInnerHTML={{__html: title.rendered}}></h6>
                                     <div className="w-[70px] h-[3px] relative bg-[#cacaca] my-[15px]">

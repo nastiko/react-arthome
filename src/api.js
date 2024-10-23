@@ -20,7 +20,14 @@ const wpApi = axios.create({
     baseURL: `${URL_WP_BASE}${URL_WP_API_BASE}`
 });
 
-// Function to get all products
+
+/**
+ * Get products from WC API
+ *
+ * @param page
+ * @param perPage
+ * @return {Promise<any>}
+ */
 export const getProducts = async (page = 1, perPage = 6) => {
     try {
         const response = await wcApi.get('/products', {
@@ -36,7 +43,13 @@ export const getProducts = async (page = 1, perPage = 6) => {
     }
 };
 
-// api id products
+
+/**
+ * Get products by id from WC API
+ *
+ * @param id
+ * @return {Promise<any|null>}
+ */
 export async function getProductById(id) {
     try {
         const response = await wcApi.get(`/products/${id}`);
@@ -48,7 +61,22 @@ export async function getProductById(id) {
 }
 
 
-// api slides
+export async function getProductByFeatured() {
+    try {
+        const response = await wcApi.get(`products?featured=true`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch slides:', error);
+        return null;
+    }
+}
+
+
+/**
+ * Get all slides from WP API
+ *
+ * @return {Promise<any>}
+ */
 export async function getSlides() {
     try {
         const response = await wpApi.get('/slides');
@@ -59,68 +87,66 @@ export async function getSlides() {
     }
 }
 
-// api posts
-export async function getPosts(id) {
+/**
+ * Get all posts from WP API
+ *
+ * @return {Promise<any>}
+ */
+export async function getPosts() {
     try {
-        const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/posts/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/wp/v2/posts";
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
+        const response = await wpApi.get('/posts');
+        return response.data;
     } catch (error) {
-        console.error('Failed to fetch slides:', error);
-        return null;
+        console.log('Error fetching products: ', error);
+        throw error;
     }
 }
 
-// api media
-export async function getMedia(id) {
+/**
+ * Get posts by id from WP API
+ *
+ * @param id
+ * @return {Promise<any>}
+ */
+export async function getPostsById(id) {
     try {
-        const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/media/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/wp/v2/media";
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
-    } catch {
-        console.error('Failed to fetch slides:', id);
-        return null;
+        const response = await wpApi.get(`/posts/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error fetching products: ', error);
+        throw error;
     }
 }
 
-
-/*trying to work on with miragejs*/
-/*export async function getMedia(id) {
+/**
+ * Get media by id from WP API
+ *
+ * @param id
+ * @return {Promise<any>}
+ */
+export async function getMediaById(id) {
     try {
-        const request = await fetch(`/getMedia/${id}`);
-        if (!request.ok) {
-            throw new Error(`HTTP error! Status: ${request.status}`);
-        }
-        return await request.json();
-    } catch {
-        console.error('Failed to fetch slides:', id);
-        return null;
+        const response = await wpApi.get(`media/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error fetching products: ', error);
+        throw error;
     }
-}*/
+}
 
-// api users
 /**
  * Get user by id from WP API
  *
  * @param id
  * @return {Promise<any|null>}
  */
-export async function getUsers(id) {
+
+export async function getUsersById(id) {
     try {
-        const url = id ? `https://ecommerce.anastasia-web.dev/wp-json/wp/v2/users/${id}` : "https://ecommerce.anastasia-web.dev/wp-json/users";
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return await response.json();
-    } catch {
-        console.error('Failed to fetch users:', id);
-        return null;
+        const response = await wpApi.get(`users/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error fetching products: ', error);
+        throw error;
     }
 }

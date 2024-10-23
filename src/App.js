@@ -18,15 +18,20 @@ import ProductView from "./pages/ProductView";
 
 //api
 //import "./server";
-import {getSlides, getPosts, getUsers, getProducts, getProductById} from "./api";
+import {getSlides, getPosts, getPostsById, getProducts, getProductById, getProductByFeatured} from "./api";
 
-//combine loaders into one function
+
+/**
+ * Combine loader into one function
+ *
+ * @return {Promise<{slides: *, product: *, posts: *}>}
+ */
 export async function combinedLoader() {
     const slides = await getSlides();
     const posts = await getPosts();
-    const users = await getUsers();
     const product = await getProducts();
-    return {slides, posts, users, product}
+    const featured = await getProductByFeatured();
+    return {slides, posts, product, featured}
 }
 
 const router = createBrowserRouter(
@@ -36,6 +41,11 @@ const router = createBrowserRouter(
                 index
                 element={<Homepage/>}
                 loader={combinedLoader}
+            />
+            <Route
+                path="post/:id"
+                element={<Post/>}
+                loader={({ params }) => getPostsById(params.id)}
             />
 
             <Route path="products"
@@ -48,13 +58,6 @@ const router = createBrowserRouter(
             />
 
             <Route path="like" element={<Like/>}/>
-            <Route
-                path="post/:id"
-                element={<Post/>}
-                loader={({params}) => getPosts(params.id)}
-            />
-
-
             <Route path="about-us" element={<AboutUs/>}/>
         </Route>
     )
