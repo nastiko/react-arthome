@@ -1,7 +1,7 @@
 import HeaderBanner from "../components/headerBanner/HeaderBanner";
 import FeaturedProduct from "../components/featuredProduct/FeaturedProduct";
 import DecoCollection from "../components/decoCollection/DecoCollection";
-import BlocksDefault from "../components/blocksDefault/BlocksDefault";
+import BlocksDefault from "../views/blocksDefault/BlocksDefault";
 
 export default function Homepage() {
     return (

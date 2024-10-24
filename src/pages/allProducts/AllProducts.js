@@ -2,7 +2,7 @@ import {Link, useLoaderData} from "react-router-dom";
 import {useCallback, useEffect, useRef, useState} from "react";
 
 //api
-import {getProducts} from "../../api";
+import {getProducts} from "../../models/productModel";
 
 //icons
 import {RxSlash} from "react-icons/rx";

@@ -5,8 +5,8 @@ import {useEffect, useState} from "react";
 import {RxSlash} from "react-icons/rx";
 
 //api
-import {getMediaById} from "../api";
-import {getUsersById} from "../api";
+import { getMediaById } from "../models/mediaModel";
+import { getUsersById } from "../models/userModel";
 
 export default function Post() {
     const data = useLoaderData();

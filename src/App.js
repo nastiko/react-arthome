@@ -18,7 +18,9 @@ import ProductView from "./pages/ProductView";
 
 //api
 //import "./server";
-import {getSlides, getPosts, getPostsById, getProducts, getProductById, getProductByFeatured} from "./api";
+import { getSlides } from "./models/slidesModel";
+import { getPosts, getPostsById } from "./models/postModel";
+import { getProducts, getProductById, getProductByFeatured } from "./models/productModel";
 
 
 /**
