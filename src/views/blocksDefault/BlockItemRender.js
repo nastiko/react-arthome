@@ -7,8 +7,8 @@ import {HiPlus} from "react-icons/hi2";
 import {RxSlash} from "react-icons/rx";
 
 //api
-import { getUsersById } from "../../models/userModel";
-import { getMediaById } from "../../models/mediaModel";
+import {getUsersById} from "../../models/userModel";
+import {getMediaById} from "../../models/mediaModel";
 
 const buttonReadMore = {
     hidden: {opacity: 0, x: 100},
@@ -20,11 +20,10 @@ const indicatorLine = {
     visible: {width: 70, backgroundColor: '#dcb14a'},
 }
 
-export const ButtonMotion = ({children, isHovered}) => {
+const ButtonMotion = ({children}) => {
     return (
         <motion.div
             variants={buttonReadMore}
-            animate={isHovered ? 'visible' : 'hidden'}
             transition={{duration: 0.5, ease: "easeOut"}}
         >
             {children}
@@ -32,14 +31,13 @@ export const ButtonMotion = ({children, isHovered}) => {
     )
 }
 
-export const IndicatorMotion = ({children, isHovered}) => {
+const IndicatorMotion = ({children}) => {
     return (
         <motion.div
-            style={{ width: 70, height: 3, backgroundColor: '#cacaca', position: 'absolute', top: 0 }}
-            initial="visible"
             variants={indicatorLine}
-            animate={isHovered ? 'visible' : 'hidden'}
-            transition={{duration: 0.5, ease: "easeInOut"}}
+            style={{width: 0, height: 3, backgroundColor: '#cacaca', position: 'absolute', top: 0}}
+            transition={{duration: 0.5, ease: "easeIn"}}
+            whileHover={{width: 70, backgroundColor: '#dcb14a'}}
         >
             {children}
         </motion.div>
@@ -49,7 +47,6 @@ export const IndicatorMotion = ({children, isHovered}) => {
 export default function BlockItemRender({featured_media, title, date, author, id}) {
     const [featuredImage, setFeaturedImage] = useState(null);
     const [user, setUser] = useState(null);
-    const [isHovered, setIsHovered] = useState(false);
 
     function convertDate(dateStr) {
         const dateObj = new Date(dateStr);
@@ -87,15 +84,15 @@ export default function BlockItemRender({featured_media, title, date, author, id
     return (
         <>
             <motion.div
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
+                initial="hidden"
+                whileHover="visible"
             >
                 <div className="flex min-w-full flex-col md-devices:min-w-[364px]">
                     <Link to={`/post/${id}`} className="flex h-full flex-col items-center justify-center no-underline">
                         <div>
                             <div className="relative mx-auto flex w-full flex-1 flex-col overflow-hidden md-devices:w-[364px] md:ml-0">
                                 <img className="my-0 w-full object-cover h-[206px]" src={featuredImage} alt={title.rendered}/>
-                                <ButtonMotion isHovered={isHovered}>
+                                <ButtonMotion>
                                     <div className="flex items-center font-normal leading-7 bg-[#ffffff] absolute bottom-0 right-0 py-[5px] px-[14px]">
                                         <button className="flex items-center gap-x-2">
                                             <span>Read more</span>
@@ -110,7 +107,7 @@ export default function BlockItemRender({featured_media, title, date, author, id
                                 <div>
                                     <h6 dangerouslySetInnerHTML={{__html: title.rendered}}></h6>
                                     <div className="w-[70px] h-[3px] relative bg-[#cacaca] my-[15px]">
-                                        <IndicatorMotion isHovered={isHovered} />
+                                        <IndicatorMotion/>
                                     </div>
 
                                 </div>
