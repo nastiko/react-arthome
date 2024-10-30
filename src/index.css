@@ -36,4 +36,9 @@
         left: -2rem;
         padding-right: 2rem;
     }
+
+    /*.wp-block-group-is-layout-constrained > div {
+        display: flex;
+        flex-direction: row;
+    }*/
 }

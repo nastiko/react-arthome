@@ -1,20 +1,21 @@
-import axios from 'axios';
-
-const URL_WP_BASE = 'https://ecommerce.anastasia-web.dev/wp-json';
-const URL_WP_API_BASE = '/wp/v2';
-
-const wpApi = axios.create({
-    baseURL: `${URL_WP_BASE}${URL_WP_API_BASE}`
-});
+import { wpApi } from "../api";
 
 /**
  * Get all posts from WP API
  *
+ * @param page
+ * @param perPage
  * @return {Promise<any>}
  */
-export async function getPosts() {
+export async function getPosts(page = 1, perPage = 3) {
     try {
-        const response = await wpApi.get('/posts');
+        const response = await wpApi.get('/posts', {
+            params: {
+                page: page,
+                per_page: perPage
+            }
+        });
+
         return response.data;
     } catch (error) {
         console.log('Error fetching products: ', error);

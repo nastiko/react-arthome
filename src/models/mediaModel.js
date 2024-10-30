@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const URL_WP_BASE = 'https://ecommerce.anastasia-web.dev/wp-json';
-const URL_WP_API_BASE = '/wp/v2';
-
-const wpApi = axios.create({
-    baseURL: `${URL_WP_BASE}${URL_WP_API_BASE}`
-});
+import { wpApi } from "../api";
 
 /**
  * Get media by id from WP API

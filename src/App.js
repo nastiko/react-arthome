@@ -15,12 +15,14 @@ import Like from "./pages/Like";
 import AboutUs from "./pages/AboutUs";
 import Post from "./pages/Post";
 import ProductView from "./pages/ProductView";
+import NotFound from "./pages/NotFound";
 
 //api
 //import "./server";
-import { getSlides } from "./models/slidesModel";
-import { getPosts, getPostsById } from "./models/postModel";
-import { getProducts, getProductById, getProductByFeatured } from "./models/productModel";
+import {getSlides} from "./models/slidesModel";
+import {getPosts, getPostsById} from "./models/postModel";
+import {getProducts, getProductById, getProductByFeatured} from "./models/productModel";
+import {getAllPages} from "./models/pagesModel";
 
 
 /**
@@ -47,7 +49,7 @@ const router = createBrowserRouter(
             <Route
                 path="post/:id"
                 element={<Post/>}
-                loader={({ params }) => getPostsById(params.id)}
+                loader={({params}) => getPostsById(params.id)}
             />
 
             <Route path="products"
@@ -60,7 +62,14 @@ const router = createBrowserRouter(
             />
 
             <Route path="like" element={<Like/>}/>
-            <Route path="about-us" element={<AboutUs/>}/>
+            <Route path="/:slug"
+                   element={<AboutUs/>}
+                   loader={({params}) => getAllPages(params.slug)}
+            />
+
+            <Route path="*"
+                   element={<NotFound/>}
+            />
         </Route>
     )
 )
