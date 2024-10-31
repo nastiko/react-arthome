@@ -12,8 +12,7 @@ import Logo from "../image/logo.png";
 
 export default function Header() {
     let location = useLocation();
-    const isProductPage = location.pathname.includes("/products");
-    //const isSpecialPage = ["/products", "/about", "/contact"].some(path => location.pathname.includes(path));
+    const isSpecialPage = ["/products", "/about-us"].some(path => location.pathname.includes(path));
 
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
@@ -29,7 +28,7 @@ export default function Header() {
     return (
         <>
             <header className={` h-[90px] mt-[15px] sticky top-0 z-10
-                    ${isProductPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7] mx-[15px]'} 
+                    ${isSpecialPage ? 'bg-[#ffffff]' : 'bg-[#f4f5f7] mx-[15px]'} 
                     ${navBarBgColor ? ' bg-[#ffffff] border-[1px] border-t-transparent border-x-transparent border-b-[#dddddd]' : ''}`}>
                 <nav className="mx-auto grid max-w-screen-xl grid-cols-2 items-center px-5 py-5 lg:grid-cols-3 lg:justify-items-center 2xl:px-0">
                     <div className="relative hidden w-full flex-col gap-6 lg:flex">
