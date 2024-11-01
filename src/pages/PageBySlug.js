@@ -1,7 +1,9 @@
 import {useLoaderData} from "react-router-dom";
 
-import AboutUs from "./AboutUs";
-import NotFound from "./NotFound";
+// pages
+import AboutUs from "./pageBySlug/AboutUs";
+import ContactUs from "./pageBySlug/ContactUs";
+import NotFound from "./pageBySlug/NotFound";
 
 export default function PageBySlug() {
     const data = useLoaderData();
@@ -9,6 +11,9 @@ export default function PageBySlug() {
     switch(data[0].slug) {
         case 'about-us': {
             return <AboutUs />;
+        }
+        case 'contact-us': {
+            return <ContactUs />;
         }
         case 'not-found': {
             return <NotFound/>;

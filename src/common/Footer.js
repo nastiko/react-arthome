@@ -21,7 +21,7 @@ export default function Footer({link1, link2, link3, text, author}) {
                             <Link className="navLink" to="/about-us">{link2}</Link>
                         </li>
                         <li className="shrink-0">
-                            <Link className="navLink" to="/about-us">{link3}</Link>
+                            <Link className="navLink" to="/page/contact-us">{link3}</Link>
                         </li>
                     </ul>
                     <div className="order-1 flex h-11 items-center w-[120px] md:order-2">

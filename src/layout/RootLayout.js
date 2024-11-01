@@ -15,7 +15,7 @@ export default function RootLayout() {
                 <Footer
                     link1="Term & Condition"
                     link2="Policy"
-                    link3="Map"
+                    link3="Contact Us"
                     author="© 2024 Anastasia Hrynkevich."
                     text="Follow us on social"
                 />

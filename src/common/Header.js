@@ -12,7 +12,7 @@ import Logo from "../image/logo.png";
 
 export default function Header() {
     let location = useLocation();
-    const isSpecialPage = ["/products", "/about-us"].some(path => location.pathname.includes(path));
+    const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
 
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
@@ -42,6 +42,7 @@ export default function Header() {
                     </div>
                     <div className="flex w-full justify-end gap-x-[35px]">
                         <Link to="/products">All Products</Link>
+                        <Link to="/page/about-us">About Us</Link>
                         <Link className="relative cursor-pointer group" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
                             <span className="text-[12px] group-hover:text-[#ffffff] bg-[#dcb14a] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5">1</span>

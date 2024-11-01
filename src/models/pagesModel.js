@@ -77,3 +77,26 @@ export function extractNotFoundData(data) {
         featuredImageAlt: data[0]?.block_data?.[0].attrs.alt
     }
 }
+
+export function extractContactUsData(data) {
+    return {
+        hoursTime: {
+            title: data[0]?.block_data?.[0].innerBlocks?.[0].attrs.content,
+            daily: data[0]?.block_data?.[0].innerBlocks?.[1].attrs.content,
+            weekend: data[0]?.block_data?.[0].innerBlocks?.[2].attrs.content
+        },
+        phone:  {
+            title: data[0]?.block_data?.[1].innerBlocks?.[0].attrs.content,
+            number: data[0]?.block_data?.[1].innerBlocks?.[1].attrs.content
+        },
+        email: {
+            title: data[0]?.block_data?.[2].innerBlocks?.[0].attrs.content,
+            email: data[0]?.block_data?.[2].innerBlocks?.[1].attrs.content
+        },
+        address: {
+            title: data[0]?.block_data?.[3].innerBlocks?.[0].attrs.content,
+            address: data[0]?.block_data?.[3].innerBlocks?.[1].attrs.content
+        },
+        map: data[0]?.block_data?.[4].attrs?.content
+    }
+}

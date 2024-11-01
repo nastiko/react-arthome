@@ -1,5 +1,5 @@
 import {Link, useLoaderData} from "react-router-dom";
-import {extractAboutUsData} from "../models/pagesModel";
+import {extractAboutUsData} from "../../models/pagesModel";
 import {motion} from "framer-motion";
 
 // icons
