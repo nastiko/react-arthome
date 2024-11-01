@@ -2,7 +2,7 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
     RouterProvider,
-    Route
+    Route, redirect
 } from "react-router-dom";
 
 //layout
@@ -12,10 +12,9 @@ import RootLayout from "./layout/RootLayout";
 import Homepage from "./pages/Homepage";
 import AllProducts from "./pages/allProducts/AllProducts";
 import Like from "./pages/Like";
-import AboutUs from "./pages/AboutUs";
 import Post from "./pages/Post";
 import ProductView from "./pages/ProductView";
-import NotFound from "./pages/NotFound";
+import PageBySlug from "./pages/PageBySlug";
 
 //api
 //import "./server";
@@ -46,6 +45,7 @@ const router = createBrowserRouter(
                 element={<Homepage/>}
                 loader={combinedLoader}
             />
+
             <Route
                 path="post/:id"
                 element={<Post/>}
@@ -62,13 +62,15 @@ const router = createBrowserRouter(
             />
 
             <Route path="like" element={<Like/>}/>
-            <Route path="/:slug"
-                   element={<AboutUs/>}
+
+
+            <Route path="page/:slug"
+                   element={<PageBySlug/>}
                    loader={({params}) => getAllPages(params.slug)}
             />
 
             <Route path="*"
-                   element={<NotFound/>}
+                   loader={() =>redirect("/page/not-found")}
             />
         </Route>
     )
