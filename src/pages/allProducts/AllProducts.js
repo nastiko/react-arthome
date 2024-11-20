@@ -1,5 +1,5 @@
 import {Link, useLoaderData} from "react-router-dom";
-import {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 //api
 import {getProducts} from "../../models/productModel";
@@ -62,12 +62,12 @@ export default function AllProducts() {
 
     return (
         <>
-            <section className="py-[80px]">
-                <div className="mx-auto max-w-screen-xl px-5 xl:px-0">
+            <section className="bg-[#f4f5f7]">
+                <div className="max-w-screen-xl px-5 xl:px-0 py-[80px] mx-auto">
                     <div className="flex flex-col items-center justify-between md:flex-row">
-                        <h1 className="capitalize text-[36px] mb-[15px] md:mb-0">All products</h1>
-                        <ul className="flex items-center gap-x-2">
-                            <li>
+                        <h1 className="capitalize text-[36px] font-medium mb-[15px] md:mb-0">All products</h1>
+                        <ul className="flex items-center gap-x-2 text-[14px] uppercase">
+                            <li className="font-medium">
                                 <Link to={`/`}>Home</Link>
                             </li>
                             <li>
@@ -79,6 +79,8 @@ export default function AllProducts() {
                         </ul>
                     </div>
                 </div>
+            </section>
+            <section className="py-[80px]">
                 <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
                     {items.map((item, i) =>
                         <ProductCard
