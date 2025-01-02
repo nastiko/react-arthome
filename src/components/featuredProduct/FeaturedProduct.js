@@ -3,7 +3,6 @@ import {useLoaderData} from "react-router-dom";
 
 export default function FeaturedProduct() {
     const data = useLoaderData();
-    console.log(data.featured)
     return (
         <>
             <div>

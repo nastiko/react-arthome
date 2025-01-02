@@ -4,6 +4,7 @@ import {
     RouterProvider,
     Route, redirect
 } from "react-router-dom";
+import {useEffect} from "react";
 
 //layout
 import RootLayout from "./layout/RootLayout";
@@ -29,11 +30,14 @@ import {getAllPages} from "./models/pagesModel";
  *
  * @return {Promise<{slides: *, product: *, posts: *}>}
  */
-export async function combinedLoader() {
-    const slides = await getSlides();
-    const posts = await getPosts();
-    const product = await getProducts();
-    const featured = await getProductByFeatured();
+
+const combinedLoader = async () => {
+    const [slides, posts, product, featured] = await Promise.all([
+        getSlides(),
+        getPosts(),
+        getProducts(),
+        getProductByFeatured(),
+    ]);
     return {slides, posts, product, featured}
 }
 
@@ -70,7 +74,7 @@ const router = createBrowserRouter(
             />
 
             <Route path="*"
-                   loader={() =>redirect("/page/not-found")}
+                   loader={() => redirect("/page/not-found")}
             />
         </Route>
     )

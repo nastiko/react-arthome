@@ -15,6 +15,18 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
     let location = useLocation();
     const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
 
+    const toggleMenu = () => {
+        if (isOpenBasket) {
+            setIsOpenMenu(false);
+            console.log('Basket is open, closing menu');
+        } else {
+            // If the basket is not open, toggle the menu as normal.
+            setIsOpenMenu(!isOpenMenu);
+            console.log(isOpenMenu ? 'Menu opened' : 'Menu closed');
+        }
+    };
+
+
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
     const changeBgColor = () => {
@@ -51,7 +63,8 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
                         <BasketOffCanvas isOpenBasket={isOpenBasket}
                                          setIsOpenBasket={setIsOpenBasket}
                         />
-                        <MenuOffCanvas isOpenMenu={isOpenMenu}
+                        <MenuOffCanvas onclick={toggleMenu}
+                                       isOpenMenu={isOpenMenu}
                                        setIsOpenMenu={setIsOpenMenu}/>
                     </div>
                 </nav>
