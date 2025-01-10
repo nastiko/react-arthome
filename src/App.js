@@ -4,7 +4,6 @@ import {
     RouterProvider,
     Route, redirect
 } from "react-router-dom";
-import {useEffect} from "react";
 
 //layout
 import RootLayout from "./layout/RootLayout";

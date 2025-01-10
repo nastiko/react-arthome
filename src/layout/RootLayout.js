@@ -9,10 +9,7 @@ export default function RootLayout() {
 
     return(
         <>
-            {isOpenBasket && (
-                <div className="bg-[#000000] bg-opacity-50 w-full h-full fixed inset-0 z-10"></div>
-            )}
-            <div className={`flex h-screen flex-col justify-between ${isOpenBasket || isOpenMenu ? 'overflow-hidden' : ''}`}>
+            <div className={`flex h-screen flex-col justify-between`}>
                 <div>
                     <Header isOpenBasket={isOpenBasket}
                             setIsOpenBasket={setIsOpenBasket}
