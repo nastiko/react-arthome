@@ -15,18 +15,6 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
     let location = useLocation();
     const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
 
-    const toggleMenu = () => {
-        if (isOpenBasket) {
-            setIsOpenMenu(false);
-            console.log('Basket is open, closing menu');
-        } else {
-            // If the basket is not open, toggle the menu as normal.
-            setIsOpenMenu(!isOpenMenu);
-            console.log(isOpenMenu ? 'Menu opened' : 'Menu closed');
-        }
-    };
-
-
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
     const changeBgColor = () => {
@@ -60,12 +48,16 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
                             <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
                         </Link>
-                        <BasketOffCanvas isOpenBasket={isOpenBasket}
-                                         setIsOpenBasket={setIsOpenBasket}
+                        <BasketOffCanvas
+                            isOpenBasket={isOpenBasket}
+                            setIsOpenBasket={setIsOpenBasket}
+                            isOpenMenu={isOpenMenu}
+                            setIsOpenMenu={setIsOpenMenu}
                         />
-                        <MenuOffCanvas onclick={toggleMenu}
-                                       isOpenMenu={isOpenMenu}
-                                       setIsOpenMenu={setIsOpenMenu}/>
+                        <MenuOffCanvas
+                            isOpenMenu={isOpenMenu}
+                            setIsOpenMenu={setIsOpenMenu}
+                        />
                     </div>
                 </nav>
             </header>

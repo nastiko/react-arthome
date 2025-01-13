@@ -7,7 +7,7 @@ export default function RootLayout() {
     const [isOpenBasket, setIsOpenBasket] = useState(false);
     const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-    return(
+    return (
         <>
             <div className={`flex h-screen flex-col justify-between`}>
                 <div>
@@ -17,7 +17,7 @@ export default function RootLayout() {
                             setIsOpenMenu={setIsOpenMenu}
                     />
                     <main>
-                        <Outlet />
+                        <Outlet/>
                     </main>
                 </div>
                 <Footer

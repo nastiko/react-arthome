@@ -1,14 +1,19 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
 import {NavLink} from "react-router-dom";
 
-export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket}) {
+export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu}) {
+
+    const  handleOpenMenu=() => {
+        setIsOpenBasket(true);
+        setIsOpenMenu(false);
+    }
 
     document.body.style.overflow = isOpenBasket ? 'hidden' : '';
 
     return (
         <>
             <div>
-                <div onClick={() => setIsOpenBasket(true)} className="relative cursor-pointer group z-10">
+                <div onClick={handleOpenMenu} className="relative cursor-pointer group z-10">
                     <IoBagHandleOutline className={`${isOpenBasket ? '' : 'group-hover:text-[#dcb14a]'} text-[24px]`}/>
                     <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
                 </div>

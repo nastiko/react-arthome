@@ -11,19 +11,28 @@ import {
 } from "@material-tailwind/react";
 
 // icons
-import {LuMinus} from "react-icons/lu";
-import {PiPlus} from "react-icons/pi";
+import { AiOutlineMinus } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
-import { MdOutlineStarPurple500 } from "react-icons/md";
+import {MdOutlineStarPurple500} from "react-icons/md";
 
 export default function ProductView() {
     const product = useLoaderData();
-    const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions} = product;
+    const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const [activeTab, setActiveTab] = useState('tab1');
     const toggleIsActive = (tab) => {
         setActiveTab(tab);
+    }
+
+    const [isQty, setIsQty] = useState(1);
+    const increaseItem = () => {
+        setIsQty(prev => prev === stock_quantity ? stock_quantity : prev + 1);
+    }
+
+    const decreaseItem = () => {
+        setIsQty(prev => prev <= 1 ? 1 : prev - 1);
     }
 
     return (
@@ -65,24 +74,29 @@ export default function ProductView() {
                         </>
                     ) : <p className="text-[30px] leading-[31px] text-[#666666]">£{regular_price}</p>}
                     <div dangerouslySetInnerHTML={{__html: short_description}}></div>
-                    <div className="grid grid-cols-3 md:grid-cols-[150px_162px_1fr] grid-flow-row-dense gap-x-4 my-4">
-                        <div className="h-[46px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
-                            <button className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
-                                <LuMinus className="text-[#666666] text-[16px]"/>
-                            </button>
-                            <input className="w-[50px] text-center placeholder:text-[#000000] focus:outline-0" type="text" placeholder="1"/>
-                            <button className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 right-[4px]">
-                                <PiPlus className="text-[#666666] text-[16px]"/>
-                            </button>
+                    <div className="flex flex-col">
+                        <div className="md:h-[46px] grid grid-cols-3 md:grid-cols-[150px_162px_1fr] grid-rows-1 grid-flow-row-dense gap-x-4 mt-4 mb-2">
+                            <div className="h-[46px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
+                                <button onClick={() => decreaseItem()} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
+                                    <AiOutlineMinus className={`${isQty <= 1 ? 'text-[#666666]' : 'text-[#000000]'} text-[16px]`}/>
+                                </button>
+                                <input className="w-[50px] text-center placeholder:text-[#000000] focus:outline-0" type="text" placeholder={`${isQty}`}/>
+                                <button onClick={() => increaseItem()} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 right-[4px]">
+                                    <AiOutlinePlus className={`${isQty >= 1 && isQty < stock_quantity ? 'text-[#000000]' : 'text-[#666666]'} text-[16px]`}/>
+                                </button>
+                            </div>
+                            <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
+                                <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
+                            </div>
+                            <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
+                                <button className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">
+                                    <IoMdHeartEmpty className="text-[24px] text-[#666666] group-hover:text-[#dcb14a]"/>
+                                </button>
+                            </div>
                         </div>
-                        <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
-                            <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
-                        </div>
-                        <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
-                            <button className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">
-                                <IoMdHeartEmpty className="text-[24px] text-[#666666] group-hover:text-[#dcb14a]"/>
-                            </button>
-                        </div>
+                        {isQty === stock_quantity && (
+                            <p className="text-[12px] text-[#ff3860]">We have max {stock_quantity} items in our stock.</p>
+                        )}
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="font-medium">SKU: <span className="text-[#666666]">{sku}</span></p>

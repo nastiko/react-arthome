@@ -24,6 +24,9 @@ export default function ProductCard({id, images, name, regular_price, sale_price
                         ) : <p className="text-[18px] leading-[31px] text-[#666666]">£{regular_price}</p>}
                     </div>
                 </div>
+                <div>
+                    <button>Add To Cart</button>
+                </div>
             </Link>
         </>
     )
