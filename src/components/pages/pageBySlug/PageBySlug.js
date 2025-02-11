@@ -1,9 +1,9 @@
 import {useLoaderData} from "react-router-dom";
 
 // pages
-import AboutUs from "./pageBySlug/AboutUs";
-import ContactUs from "./pageBySlug/ContactUs";
-import NotFound from "./pageBySlug/NotFound";
+import AboutUs from "./AboutUs";
+import ContactUs from "./ContactUs";
+import NotFound from "./NotFound";
 
 export default function PageBySlug() {
     const data = useLoaderData();

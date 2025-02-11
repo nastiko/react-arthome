@@ -7,8 +7,8 @@ import {HiPlus} from "react-icons/hi2";
 import {RxSlash} from "react-icons/rx";
 
 //api
-import {getUsersById} from "../../models/userModel";
-import {getMediaById} from "../../models/mediaModel";
+import {getUsersById} from "../../../../models/userModel";
+import {getMediaById} from "../../../../models/mediaModel";
 
 const buttonReadMore = {
     hidden: {opacity: 0, x: 100},

@@ -1,7 +1,7 @@
 import BlockItemRender from "./BlockItemRender";
 import React, {useState} from "react";
 import {useLoaderData} from "react-router-dom";
-import {getPosts} from "../../models/postModel";
+import {getPosts} from "../../../../models/postModel";
 
 export default function BlocksDefault() {
     const [posts, setPosts] = useState(useLoaderData().posts);

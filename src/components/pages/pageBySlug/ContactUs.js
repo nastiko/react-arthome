@@ -1,5 +1,5 @@
 import {Link, useLoaderData} from "react-router-dom";
-import {extractContactUsData} from "../../models/pagesModel";
+import {extractContactUsData} from "../../../models/pagesModel";
 
 // icons
 import { MdOutlineTimer } from "react-icons/md";

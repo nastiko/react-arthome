@@ -6,7 +6,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 
 //logo
-import Logo from "../image/logo.png";
+import Logo from "../../image/logo.png";
 
 export default function Footer({link1, link2, link3, text, author}) {
     return (

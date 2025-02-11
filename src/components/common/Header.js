@@ -9,7 +9,7 @@ import {IoSearchOutline} from "react-icons/io5";
 import {IoMdHeartEmpty} from "react-icons/io";
 
 //logo
-import Logo from "../image/logo.png";
+import Logo from "../../image/logo.png";
 
 export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu}) {
     let location = useLocation();
@@ -51,7 +51,6 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
                         <BasketOffCanvas
                             isOpenBasket={isOpenBasket}
                             setIsOpenBasket={setIsOpenBasket}
-                            isOpenMenu={isOpenMenu}
                             setIsOpenMenu={setIsOpenMenu}
                         />
                         <MenuOffCanvas

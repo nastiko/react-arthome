@@ -18,14 +18,16 @@ import {MdOutlineStarPurple500} from "react-icons/md";
 
 export default function ProductView() {
     const product = useLoaderData();
-    const {images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
+    const {id, images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
+    //tabs
     const [activeTab, setActiveTab] = useState('tab1');
     const toggleIsActive = (tab) => {
         setActiveTab(tab);
     }
 
+    //qty
     const [isQty, setIsQty] = useState(1);
     const increaseItem = () => {
         setIsQty(prev => prev === stock_quantity ? stock_quantity : prev + 1);
@@ -34,6 +36,12 @@ export default function ProductView() {
     const decreaseItem = () => {
         setIsQty(prev => prev <= 1 ? 1 : prev - 1);
     }
+
+    //add to cart
+    const addToCart = () => {
+        console.log(id)
+    }
+
 
     return (
         <>
@@ -86,7 +94,7 @@ export default function ProductView() {
                                 </button>
                             </div>
                             <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
-                                <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
+                                <button onClick={() => addToCart()} className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
                             </div>
                             <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
                                 <button className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">

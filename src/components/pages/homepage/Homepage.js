@@ -1,7 +1,7 @@
-import HeaderBanner from "../components/headerBanner/HeaderBanner";
-import FeaturedProduct from "../components/featuredProduct/FeaturedProduct";
-import DecoCollection from "../components/decoCollection/DecoCollection";
-import BlocksDefault from "../views/blocksDefault/BlocksDefault";
+import HeaderBanner from "./headerBanner/HeaderBanner";
+import FeaturedProduct from "./featuredProduct/FeaturedProduct";
+import DecoCollection from "./decoCollection/DecoCollection";
+import BlocksDefault from "./blocksDefault/BlocksDefault";
 
 export default function Homepage() {
 

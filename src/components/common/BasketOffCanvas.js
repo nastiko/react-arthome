@@ -1,14 +1,37 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
 import {NavLink} from "react-router-dom";
+import AddToCart from "./AddToCart";
+import {useEffect, useState} from "react";
+import {getProductById} from "../../models/productModel";
 
-export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu}) {
-
-    const  handleOpenMenu=() => {
+export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, setIsOpenMenu}) {
+    const handleOpenMenu=() => {
         setIsOpenBasket(true);
         setIsOpenMenu(false);
     }
 
     document.body.style.overflow = isOpenBasket ? 'hidden' : '';
+
+    const [productById, setProductById] = useState([]);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+
+    useEffect(() => {
+        if (!selectedProductId) return;
+        const fetchProductById = async () => {
+            try {
+                const data = await getProductById(selectedProductId);
+                setProductById(data)
+
+            } catch (error) {
+                console.log('Error fetching products: ', error);
+                throw error;
+            }
+        }
+
+        fetchProductById();
+    }, [selectedProductId]);
+
+    console.log(productById);
 
     return (
         <>
@@ -32,7 +55,9 @@ export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, isOpenMe
                         </div>
                         {/*list of products*/}
                         <nav className="flex flex-col px-5 prose prose-a:text-base prose-a:font-normal prose-a:capitalize prose-a:no-underline prose-a:mb-4">
-                            <NavLink onClick={() => setIsOpenBasket(false)} to="/products" className="hover:text-[#ff00ff]">Products here</NavLink>
+                            <NavLink onClick={() => setIsOpenBasket(false)} to={`/products/${selectedProductId}`}>
+                                <AddToCart />
+                            </NavLink>
                         </nav>
                     </nav>
                 </div>

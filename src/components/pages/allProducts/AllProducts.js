@@ -2,7 +2,7 @@ import {Link, useLoaderData} from "react-router-dom";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 
 //api
-import {getProducts} from "../../models/productModel";
+import {getProducts} from "../../../models/productModel";
 
 //icons
 import {RxSlash} from "react-icons/rx";
@@ -58,6 +58,7 @@ export default function AllProducts() {
             }
         };
     }, [fetchProduct, hasMore, loader]);
+
 
     return (
         <>
