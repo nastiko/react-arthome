@@ -12,8 +12,6 @@ export default function RootLayout() {
         setCartItems(prev => [...prev, obj]);
     }
 
-    console.log(cartItems);
-
     return (
         <>
             <div className={`flex h-screen flex-col justify-between`}>
