@@ -1,44 +1,21 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
 import {NavLink} from "react-router-dom";
 import AddToCart from "./AddToCart";
-import {useEffect, useState} from "react";
-import {getProductById} from "../../models/productModel";
 
-export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, setIsOpenMenu}) {
-    const handleOpenMenu=() => {
+export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, setIsOpenMenu, items = []}) {
+    const handleOpenMenu = () => {
         setIsOpenBasket(true);
         setIsOpenMenu(false);
     }
 
     document.body.style.overflow = isOpenBasket ? 'hidden' : '';
 
-    const [productById, setProductById] = useState([]);
-    const [selectedProductId, setSelectedProductId] = useState(null);
-
-    useEffect(() => {
-        if (!selectedProductId) return;
-        const fetchProductById = async () => {
-            try {
-                const data = await getProductById(selectedProductId);
-                setProductById(data)
-
-            } catch (error) {
-                console.log('Error fetching products: ', error);
-                throw error;
-            }
-        }
-
-        fetchProductById();
-    }, [selectedProductId]);
-
-    console.log(productById);
-
     return (
         <>
             <div>
                 <div onClick={handleOpenMenu} className="relative cursor-pointer group z-10">
                     <IoBagHandleOutline className={`${isOpenBasket ? '' : 'group-hover:text-[#dcb14a]'} text-[24px]`}/>
-                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
+                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{items.length > 0 ? items.length : 0}</span>
                 </div>
 
                 {/*Right Offcanvas Basket*/}
@@ -55,8 +32,16 @@ export default function BasketOffCanvas({isOpenBasket, setIsOpenBasket, setIsOpe
                         </div>
                         {/*list of products*/}
                         <nav className="flex flex-col px-5 prose prose-a:text-base prose-a:font-normal prose-a:capitalize prose-a:no-underline prose-a:mb-4">
-                            <NavLink onClick={() => setIsOpenBasket(false)} to={`/products/${selectedProductId}`}>
-                                <AddToCart />
+                            <NavLink onClick={() => setIsOpenBasket(false)} to={""}>
+                                {items.length > 0 ? (
+                                    items.map((obj) =>
+                                        <AddToCart
+                                            key={obj.id}
+                                            {...obj}
+                                        />
+                                    )
+                                ) : <h6>Your basket is empty</h6>
+                                }
                             </NavLink>
                         </nav>
                     </nav>

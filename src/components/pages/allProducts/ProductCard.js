@@ -1,19 +1,11 @@
 import {Link} from "react-router-dom";
 
-export default function ProductCard({id, images, name, regular_price, sale_price, on_sale}) {
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, onCart}) {
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
-    /*const storedItems = JSON.parse(localStorage.getItem('products'));
-    const [products, setProducts] = useState(storedItems);
-
-
-
-    useEffect(() => {
-        localStorage.setItem('products', JSON.stringify(products));
-        console.log(products);
-    }, [products]);*/
-
-
+    const onClickCard = () => {
+        onCart({id, images, name, regular_price, sale_price});
+    }
 
     return (
         <>
@@ -39,10 +31,9 @@ export default function ProductCard({id, images, name, regular_price, sale_price
                     </div>
                 </Link>
                 <div>
-                    <button>Add To Cart</button>
+                    <button onClick={onClickCard}>Add To Cart</button>
                 </div>
             </div>
         </>
     )
-
 }

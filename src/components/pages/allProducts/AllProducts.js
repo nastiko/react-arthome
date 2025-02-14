@@ -1,4 +1,4 @@
-import {Link, useLoaderData} from "react-router-dom";
+import {Link, useLoaderData, useOutletContext} from "react-router-dom";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 
 //api
@@ -12,6 +12,9 @@ import ProductCard from "./ProductCard";
 
 export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
+
+    const {onAddToCart} = useOutletContext();
+
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
     const [page, setPage] = useState(2); // Page state
@@ -29,20 +32,21 @@ export default function AllProducts() {
             const data = await getProducts(page, 6);
             setItems(prevItems => [...prevItems, ...data]);
             setPage(prevPage => prevPage + 1);
-            if(data.length === 0) {setHasMore(false);}
+            if (data.length === 0) {
+                setHasMore(false);
+            }
 
         } catch (error) {
             setError("Error fetching products");
-        }
-        finally {
+        } finally {
             setIsLoading(false);
         }
-    },[isLoading, page]);
+    }, [isLoading, page]);
 
     // Observer to detect when the loader (at the bottom) is visible
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting && hasMore) {
+            if (entries[0].isIntersecting && hasMore) {
                 fetchProduct();
             }
         }, {threshold: [0, 0.5, 1]});
@@ -87,6 +91,7 @@ export default function AllProducts() {
                             key={item.id}
                             {...item}
                             i={i}
+                            onCart={(obj) => onAddToCart(obj)}
                         />
                     )}
                 </div>

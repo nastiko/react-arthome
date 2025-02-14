@@ -11,7 +11,7 @@ import {IoMdHeartEmpty} from "react-icons/io";
 //logo
 import Logo from "../../image/logo.png";
 
-export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu}) {
+export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu, cartItems}) {
     let location = useLocation();
     const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
 
@@ -52,6 +52,7 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
                             isOpenBasket={isOpenBasket}
                             setIsOpenBasket={setIsOpenBasket}
                             setIsOpenMenu={setIsOpenMenu}
+                            items={cartItems}
                         />
                         <MenuOffCanvas
                             isOpenMenu={isOpenMenu}

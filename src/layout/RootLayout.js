@@ -6,6 +6,13 @@ import {useState} from "react";
 export default function RootLayout() {
     const [isOpenBasket, setIsOpenBasket] = useState(false);
     const [isOpenMenu, setIsOpenMenu] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+
+    const onAddToCart = (obj) => {
+        setCartItems(prev => [...prev, obj]);
+    }
+
+    console.log(cartItems);
 
     return (
         <>
@@ -15,9 +22,10 @@ export default function RootLayout() {
                             setIsOpenBasket={setIsOpenBasket}
                             isOpenMenu={isOpenMenu}
                             setIsOpenMenu={setIsOpenMenu}
+                            cartItems={cartItems}
                     />
                     <main>
-                        <Outlet/>
+                        <Outlet context={{onAddToCart}}/>
                     </main>
                 </div>
                 <Footer
