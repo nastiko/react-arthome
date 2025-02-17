@@ -1,5 +1,5 @@
-import {Link, useLoaderData, useOutletContext} from "react-router-dom";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import {Link, useLoaderData} from "react-router-dom";
+import React, {useCallback, useEffect, useRef, useState, useContext} from "react";
 
 //api
 import {getProducts} from "../../../models/productModel";
@@ -9,11 +9,12 @@ import {RxSlash} from "react-icons/rx";
 
 //components for pages
 import ProductCard from "./ProductCard";
+import Context from "../../../Context";
 
 export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
 
-    const {onAddToCart} = useOutletContext();
+    const value = useContext(Context);
 
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
@@ -91,7 +92,7 @@ export default function AllProducts() {
                             key={item.id}
                             {...item}
                             i={i}
-                            onCart={(obj) => onAddToCart(obj)}
+                            onCart={(obj) => value.onAddToCart(obj)}
                         />
                     )}
                 </div>

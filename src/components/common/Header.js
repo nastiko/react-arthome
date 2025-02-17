@@ -2,7 +2,7 @@ import BasketOffCanvas from "./BasketOffCanvas";
 import MenuOffCanvas from "./MenuOffCanvas";
 import {Input} from "@material-tailwind/react";
 import {Link, useLocation} from "react-router-dom";
-import {useState} from "react";
+import {useState, useContext} from "react";
 
 //icons
 import {IoSearchOutline} from "react-icons/io5";
@@ -10,9 +10,12 @@ import {IoMdHeartEmpty} from "react-icons/io";
 
 //logo
 import Logo from "../../image/logo.png";
+import Context from "../../Context";
 
-export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIsOpenMenu, cartItems}) {
+export default function Header() {
+    const value = useContext(Context);
     let location = useLocation();
+
     const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
 
     // sticky position on scrollY
@@ -46,18 +49,10 @@ export default function Header({isOpenBasket, setIsOpenBasket, isOpenMenu, setIs
                         <Link className="hidden md:block" to="/page/about-us">About Us</Link>
                         <Link className="relative cursor-pointer group z-10" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
-                            <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
+                            <span className={`${value.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
                         </Link>
-                        <BasketOffCanvas
-                            isOpenBasket={isOpenBasket}
-                            setIsOpenBasket={setIsOpenBasket}
-                            setIsOpenMenu={setIsOpenMenu}
-                            items={cartItems}
-                        />
-                        <MenuOffCanvas
-                            isOpenMenu={isOpenMenu}
-                            setIsOpenMenu={setIsOpenMenu}
-                        />
+                        <BasketOffCanvas />
+                        <MenuOffCanvas />
                     </div>
                 </nav>
             </header>

@@ -1,39 +1,62 @@
 import {Outlet} from "react-router-dom";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import Context from "../Context";
 
 export default function RootLayout() {
     const [isOpenBasket, setIsOpenBasket] = useState(false);
     const [isOpenMenu, setIsOpenMenu] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
+
+    const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    const [cartItems, setCartItems] = useState(storedItems);
+    //const [removeCartItems, setRemoveCartItems] = useState(storedItems);
+
 
     const onAddToCart = (obj) => {
         setCartItems(prev => [...prev, obj]);
     }
 
+    useEffect(() => {
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    /*const onRemoveCartItem = (obj) => {
+        if(cartItems.length > 0) {
+            localStorage.removeItem("cartItems");
+            console.log(obj)
+        }
+    }*/
+
+    const value = {
+        cartItems,
+        onAddToCart,
+        isOpenBasket,
+        setIsOpenBasket,
+        isOpenMenu,
+        setIsOpenMenu
+    }
+
     return (
         <>
-            <div className={`flex h-screen flex-col justify-between`}>
-                <div>
-                    <Header isOpenBasket={isOpenBasket}
-                            setIsOpenBasket={setIsOpenBasket}
-                            isOpenMenu={isOpenMenu}
-                            setIsOpenMenu={setIsOpenMenu}
-                            cartItems={cartItems}
+            <Context.Provider value={value}>
+                <div className={`flex h-screen flex-col justify-between`}>
+                    <div>
+                        <Header />
+                        <main>
+                            <Outlet />
+                        </main>
+                    </div>
+                    <Footer
+                        link1="Term & Condition"
+                        link2="Policy"
+                        link3="Contact Us"
+                        author="© 2024 Anastasia Hrynkevich."
+                        text="Follow us on social"
                     />
-                    <main>
-                        <Outlet context={{onAddToCart}}/>
-                    </main>
                 </div>
-                <Footer
-                    link1="Term & Condition"
-                    link2="Policy"
-                    link3="Contact Us"
-                    author="© 2024 Anastasia Hrynkevich."
-                    text="Follow us on social"
-                />
-            </div>
+            </Context.Provider>
         </>
     )
 }
