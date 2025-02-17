@@ -13,6 +13,8 @@ export default function RootLayout() {
     const [cartItems, setCartItems] = useState(storedItems);
     //const [removeCartItems, setRemoveCartItems] = useState(storedItems);
 
+    console.log('storedItems', storedItems);
+
 
     const onAddToCart = (obj) => {
         setCartItems(prev => [...prev, obj]);
@@ -22,16 +24,19 @@ export default function RootLayout() {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-    /*const onRemoveCartItem = (obj) => {
+   /* const onRemoveCartItem = (obj) => {
         if(cartItems.length > 0) {
-            localStorage.removeItem("cartItems");
-            console.log(obj)
+            console.log('obj', obj);
+            localStorage.removeItem("cartItems", JSON.stringify(obj));
+            //console.log(cartItems);
         }
     }*/
 
     const value = {
         cartItems,
         onAddToCart,
+        //removeCartItems,
+        //onRemoveCartItem,
         isOpenBasket,
         setIsOpenBasket,
         isOpenMenu,
