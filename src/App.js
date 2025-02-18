@@ -11,7 +11,7 @@ import RootLayout from "./layout/RootLayout";
 //pages
 import Homepage from "./components/pages/homepage/Homepage";
 import AllProducts from "./components/pages/allProducts/AllProducts";
-import Like from "./components/pages/Like";
+import Like from "./components/pages/favourite/Like";
 import Post from "./components/pages/Post";
 import ProductView from "./components/pages/ProductView";
 import PageBySlug from "./components/pages/pageBySlug/PageBySlug";

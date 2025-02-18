@@ -1,15 +1,17 @@
 import {NavLink} from "react-router-dom";
 import {useContext} from "react";
+import Context from "../../Context";
+
+//icons
 import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
 import {IoCloseSharp} from "react-icons/io5";
-import Context from "../../Context";
 
 export default function AddToCart({id, images, name, regular_price, sale_price, setIsOpenBasket}) {
     const value = useContext(Context)
 
-    /*const removeCartItem = () => {
-        value.onRemoveCartItem({id, name, regular_price, sale_price});
-    }*/
+    const removeCartItem = () => {
+        value.setCartItems((prev) => prev.filter((item) => item.id !== id));
+    }
 
     return (
         <>
@@ -36,7 +38,7 @@ export default function AddToCart({id, images, name, regular_price, sale_price, 
                     </div>
                 </div>
                 <div className="flex flex-col justify-between items-end">
-                    {/*<IoCloseSharp onClick={removeCartItem} className="text-[20px] text-[#cacaca] cursor-pointer"/>*/}
+                    <IoCloseSharp onClick={removeCartItem} className="text-[20px] text-[#cacaca] cursor-pointer"/>
                     <p className="my-0">£{sale_price ? sale_price : regular_price}</p>
                 </div>
             </div>

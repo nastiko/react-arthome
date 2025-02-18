@@ -9,34 +9,35 @@ export default function RootLayout() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
 
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    const storedFavouriteItems = JSON.parse(localStorage.getItem("favoriteItems")) || [];
 
     const [cartItems, setCartItems] = useState(storedItems);
-    //const [removeCartItems, setRemoveCartItems] = useState(storedItems);
-
-    console.log('storedItems', storedItems);
+    const [favouriteItems, setFavouriteItems] = useState(storedFavouriteItems);
 
 
     const onAddToCart = (obj) => {
         setCartItems(prev => [...prev, obj]);
     }
 
+    const onAddToFavourite = (obj) => {
+        setFavouriteItems(prev => [...prev, obj]);
+    }
+
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-   /* const onRemoveCartItem = (obj) => {
-        if(cartItems.length > 0) {
-            console.log('obj', obj);
-            localStorage.removeItem("cartItems", JSON.stringify(obj));
-            //console.log(cartItems);
-        }
-    }*/
+    useEffect(() => {
+        localStorage.setItem("favoriteItems", JSON.stringify(favouriteItems));
+    }, [favouriteItems]);
 
     const value = {
         cartItems,
+        setCartItems,
         onAddToCart,
-        //removeCartItems,
-        //onRemoveCartItem,
+        favouriteItems,
+        setFavouriteItems,
+        onAddToFavourite,
         isOpenBasket,
         setIsOpenBasket,
         isOpenMenu,

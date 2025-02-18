@@ -16,7 +16,7 @@ export default function Header() {
     const value = useContext(Context);
     let location = useLocation();
 
-    const isSpecialPage = ["/products", "/about-us", "/contact-us"].some(path => location.pathname.includes(path));
+    const isSpecialPage = ["/products", "/about-us", "/contact-us", "/like"].some(path => location.pathname.includes(path));
 
     // sticky position on scrollY
     const [navBarBgColor, setNavBarBgColor] = useState(false);
@@ -49,7 +49,7 @@ export default function Header() {
                         <Link className="hidden md:block" to="/page/about-us">About Us</Link>
                         <Link className="relative cursor-pointer group z-10" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
-                            <span className={`${value.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>1</span>
+                            <span className={`${value.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{value.favouriteItems?.length > 0 ? value.favouriteItems?.length : 0}</span>
                         </Link>
                         <BasketOffCanvas />
                         <MenuOffCanvas />

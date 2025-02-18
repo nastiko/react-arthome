@@ -93,6 +93,7 @@ export default function AllProducts() {
                             {...item}
                             i={i}
                             onCart={(obj) => value.onAddToCart(obj)}
+                            onFavouriteCard={(obj) => value.onAddToFavourite(obj)}
                         />
                     )}
                 </div>
