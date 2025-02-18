@@ -5,6 +5,7 @@ import Context from "../../Context";
 
 export default function BasketOffCanvas() {
     const value = useContext(Context);
+
     const handleOpenMenu = () => {
         value.setIsOpenBasket(true);
         value.setIsOpenMenu(false);
@@ -30,7 +31,7 @@ export default function BasketOffCanvas() {
                                     ${value.isOpenBasket ? 'transition-all opacity-100 duration-500 translate-x-0 bg-[#ffffff]' : 'transition-all opacity-0 duration-500 translate-x-full'}`}>
                         <div className="flex justify-between items-center py-4 pr-5">
                             <h2 className="text-[25px] leading-[30px]">Your cart</h2>
-                            <IoCloseSharp onClick={() => value.setIsOpenBasket(false)} className="text-[25px] text-[#cacaca] cursor-pointer hover:text-[#ff00ff]"/>
+                            <IoCloseSharp onClick={() => value.setIsOpenBasket(false)} className="text-[25px] text-[#cacaca] cursor-pointer"/>
                         </div>
                         {/*list of products*/}
                         <nav className="flex flex-col gap-y-8 overflow-auto my-[30px]
@@ -43,7 +44,7 @@ export default function BasketOffCanvas() {
                                         setIsOpenBasket={value.setIsOpenBasket}
                                     />
                                 )
-                            ) : <h6>Your basket is empty</h6>
+                            ) : <h6 className="text-[20px] font-normal">Your cart is currently empty.</h6>
                             }
                         </nav>
                     </nav>
