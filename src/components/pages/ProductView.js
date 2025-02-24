@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Link, useLoaderData} from "react-router-dom";
 import {RxSlash} from "react-icons/rx";
 
@@ -10,16 +10,21 @@ import {
     TabPanel,
 } from "@material-tailwind/react";
 
+import Context from "../../Context";
+
 // icons
 import { AiOutlineMinus } from "react-icons/ai";
 import { AiOutlinePlus } from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
 import {MdOutlineStarPurple500} from "react-icons/md";
+import {IoMdHeart} from "react-icons/io";
 
 export default function ProductView() {
     const product = useLoaderData();
+    const value = useContext(Context);
     const {id, images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+    const isFavourite = value.favouriteItems.some(item => item.id === id);
 
     //tabs
     const [activeTab, setActiveTab] = useState('tab1');
@@ -35,6 +40,10 @@ export default function ProductView() {
 
     const decreaseItem = () => {
         setIsQty(prev => prev <= 1 ? 1 : prev - 1);
+    }
+
+    const onClickFavouriteCard = () => {
+        value.ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
     //add to cart
@@ -97,8 +106,12 @@ export default function ProductView() {
                                 <button onClick={() => addToCart()} className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
                             </div>
                             <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
-                                <button className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">
-                                    <IoMdHeartEmpty className="text-[24px] text-[#666666] group-hover:text-[#dcb14a]"/>
+                                <button onClick={onClickFavouriteCard} className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">
+                                    {isFavourite ?
+                                        (<IoMdHeart className={`w-[22px] h-[22px] text-[16px] text-[#dcb14a]`}/>)
+                                        :
+                                        (<IoMdHeartEmpty className={`w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a]`}/>)
+                                    }
                                 </button>
                             </div>
                         </div>
