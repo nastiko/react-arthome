@@ -13,14 +13,21 @@ export default function RootLayout() {
 
     const [cartItems, setCartItems] = useState(storedItems);
     const [favouriteItems, setFavouriteItems] = useState(storedFavouriteItems);
+    const [isFavouriteIcon, setIsFavouriteIcon] = useState(false);
 
 
     const onAddToCart = (obj) => {
         setCartItems(prev => [...prev, obj]);
     }
 
-    const onAddToFavourite = (obj) => {
-        setFavouriteItems(prev => [...prev, obj]);
+    const ifExists = (obj) => {
+        if (favouriteItems.find((item) => item.id === obj.id)) {
+            setFavouriteItems(prev => prev.filter((item) => item.id !== obj.id));
+            setIsFavouriteIcon(false);
+        } else {
+            setFavouriteItems(prev => [...prev, obj]);
+            setIsFavouriteIcon(true);
+        }
     }
 
     useEffect(() => {
@@ -37,7 +44,8 @@ export default function RootLayout() {
         onAddToCart,
         favouriteItems,
         setFavouriteItems,
-        onAddToFavourite,
+        isFavouriteIcon,
+        ifExists,
         isOpenBasket,
         setIsOpenBasket,
         isOpenMenu,
@@ -49,9 +57,9 @@ export default function RootLayout() {
             <Context.Provider value={value}>
                 <div className={`flex h-screen flex-col justify-between`}>
                     <div>
-                        <Header />
+                        <Header/>
                         <main>
-                            <Outlet />
+                            <Outlet/>
                         </main>
                     </div>
                     <Footer

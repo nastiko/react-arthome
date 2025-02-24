@@ -1,19 +1,24 @@
 import {Link} from "react-router-dom";
+import {useContext} from "react";
+import Context from "../../../Context";
 
 //icons
 import {IoBagHandleOutline} from "react-icons/io5";
 import {AiOutlinePlus} from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
+import {IoMdHeart} from "react-icons/io";
 
-export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, onCart, onFavouriteCard}) {
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale}) {
+    const value = useContext(Context);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+    const isFavourite = value.favouriteItems.some(item => item.id === id);
 
     const onClickCard = () => {
-        onCart({id, images, name, regular_price, sale_price});
+        value.onAddToCart({id, images, name, regular_price, sale_price});
     }
 
     const onClickFavouriteCard = () => {
-        onFavouriteCard({id, images, name, regular_price, sale_price, on_sale});
+        value.ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
     return (
@@ -43,7 +48,11 @@ export default function ProductCard({id, images, name, regular_price, sale_price
                             <div className="group/color">
                                 <button onClick={onClickFavouriteCard} className="w-[45px] h-[45px] flex items-center justify-center bg-[#ffffff] rounded-full transition-all duration-5000 delay-200 ease-in-out
                                         transform translate-y-20 duration-[.5s] opacity-0 group-hover/block:translate-y-0 group-hover/block:opacity-100">
-                                    <IoMdHeartEmpty className="w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2"/>
+                                    {isFavourite ?
+                                        (<IoMdHeart className={`w-[22px] h-[22px] text-[16px] text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2`}/>)
+                                        :
+                                        (<IoMdHeartEmpty className={`w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2`}/>)
+                                    }
                                 </button>
                             </div>
                         </div>

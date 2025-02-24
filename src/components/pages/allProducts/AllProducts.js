@@ -1,5 +1,5 @@
 import {Link, useLoaderData} from "react-router-dom";
-import React, {useCallback, useEffect, useRef, useState, useContext} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 //api
 import {getProducts} from "../../../models/productModel";
@@ -9,12 +9,9 @@ import {RxSlash} from "react-icons/rx";
 
 //components for pages
 import ProductCard from "./ProductCard";
-import Context from "../../../Context";
 
 export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
-
-    const value = useContext(Context);
 
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
@@ -92,8 +89,6 @@ export default function AllProducts() {
                             key={item.id}
                             {...item}
                             i={i}
-                            onCart={(obj) => value.onAddToCart(obj)}
-                            onFavouriteCard={(obj) => value.onAddToFavourite(obj)}
                         />
                     )}
                 </div>
