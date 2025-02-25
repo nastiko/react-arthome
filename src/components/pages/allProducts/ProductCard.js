@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import Context from "../../../Context";
+import {ContextCart} from "../../../contextProvider/CartContext";
+import {ContextFavouritesCart} from "../../../contextProvider/FavouritesCartContext";
 
 //icons
 import {IoBagHandleOutline} from "react-icons/io5";
@@ -8,17 +9,19 @@ import {AiOutlinePlus} from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
 import {IoMdHeart} from "react-icons/io";
 
-export default function ProductCard({id, images, name, regular_price, sale_price, on_sale}) {
-    const value = useContext(Context);
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, quantity = 1}) {
+    const cartContext = useContext(ContextCart);
+    const favouriteCartContext = useContext(ContextFavouritesCart);
+
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
-    const isFavourite = value.favouriteItems.some(item => item.id === id);
+    const isFavourite = favouriteCartContext.favouriteItems.some(item => item.id === id);
 
     const onClickCard = () => {
-        value.onAddToCart({id, images, name, regular_price, sale_price});
+        cartContext.onAddToCart({id, images, name, regular_price, sale_price, quantity});
     }
 
     const onClickFavouriteCard = () => {
-        value.ifExists({id, images, name, regular_price, sale_price, on_sale});
+        favouriteCartContext.ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
     return (

@@ -1,17 +1,17 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import Context from "../../../Context";
+import {ContextFavouritesCart} from "../../../contextProvider/FavouritesCartContext";
 
 //icons
 import {AiOutlinePlus} from "react-icons/ai";
 import {IoBagHandleOutline} from "react-icons/io5";
 
 export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale}) {
-    const value = useContext(Context);
+    const favouriteCartContext = useContext(ContextFavouritesCart);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const removeFavouriteCard = () => {
-        value.setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
+        favouriteCartContext.setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
     }
 
     return (

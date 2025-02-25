@@ -10,7 +10,7 @@ import {
     TabPanel,
 } from "@material-tailwind/react";
 
-import Context from "../../Context";
+import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 
 // icons
 import { AiOutlineMinus } from "react-icons/ai";
@@ -21,10 +21,10 @@ import {IoMdHeart} from "react-icons/io";
 
 export default function ProductView() {
     const product = useLoaderData();
-    const value = useContext(Context);
+    const favouriteCartContext = useContext(ContextFavouritesCart);
     const {id, images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
-    const isFavourite = value.favouriteItems.some(item => item.id === id);
+    const isFavourite = favouriteCartContext.favouriteItems.some(item => item.id === id);
 
     //tabs
     const [activeTab, setActiveTab] = useState('tab1');
@@ -43,12 +43,7 @@ export default function ProductView() {
     }
 
     const onClickFavouriteCard = () => {
-        value.ifExists({id, images, name, regular_price, sale_price, on_sale});
-    }
-
-    //add to cart
-    const addToCart = () => {
-        console.log(id)
+        favouriteCartContext.ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
 
@@ -103,7 +98,7 @@ export default function ProductView() {
                                 </button>
                             </div>
                             <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
-                                <button onClick={() => addToCart()} className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
+                                <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
                             </div>
                             <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
                                 <button onClick={onClickFavouriteCard} className="group border border-[#dddddd] w-[46px] h-[46px] flex justify-center items-center">

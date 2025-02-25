@@ -1,15 +1,17 @@
 import {NavLink} from "react-router-dom";
 import {useContext} from "react";
-import Context from "../../Context";
+import {ContextCart} from "../../contextProvider/CartContext";
 
 //icons
 import {IoCloseSharp} from "react-icons/io5";
+import {AiOutlineMinus} from "react-icons/ai";
+import {AiOutlinePlus} from "react-icons/ai";
 
 export default function AddToCart({id, images, name, regular_price, sale_price, setIsOpenBasket}) {
-    const value = useContext(Context)
+    const cartContext = useContext(ContextCart);
 
     const removeCartItem = () => {
-        value.setCartItems((prev) => prev.filter((item) => item.id !== id));
+        cartContext.setCartItems((prev) => prev.filter((item) => item.id !== id));
     }
 
     return (
@@ -24,12 +26,12 @@ export default function AddToCart({id, images, name, regular_price, sale_price, 
                     <div className="flex justify-between">
                         <div className="flex flex-col justify-between gap-y-4">
                             <h6 className="font-normal">{name}</h6>
-                            <h4 className="text-[15px] leading-[26px] font-normal my-0">Qty: {1}</h4>
-                            {/*<div className="w-[120px] h-[30px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
+                            <h4 className="text-[15px] leading-[26px] font-normal my-0">Qty: {cartContext.isQty}</h4>
+                           {/* <div className="w-[120px] h-[30px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
                                 <button className="absolute w-[12px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
                                     <AiOutlineMinus/>
                                 </button>
-                                <input className="w-[100px] text-center placeholder:text-[#000000] focus:outline-0" type="text" placeholder="1"/>
+                                <input className="w-[100px] text-center placeholder:text-[#000000] focus:outline-0" type="text" placeholder="1" value={cartContext.isQty}/>
                                 <button className="absolute w-[12px] leading-[23px] top-1/2 -translate-y-1/2 right-2.5">
                                     <AiOutlinePlus/>
                                 </button>

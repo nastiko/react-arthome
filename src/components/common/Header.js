@@ -1,8 +1,10 @@
-import BasketOffCanvas from "./BasketOffCanvas";
-import MenuOffCanvas from "./MenuOffCanvas";
 import {Input} from "@material-tailwind/react";
 import {Link, useLocation} from "react-router-dom";
 import {useState, useContext} from "react";
+import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
+import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
+import BasketOffCanvas from "./BasketOffCanvas";
+import MenuOffCanvas from "./MenuOffCanvas";
 
 //icons
 import {IoSearchOutline} from "react-icons/io5";
@@ -10,10 +12,10 @@ import {IoMdHeartEmpty} from "react-icons/io";
 
 //logo
 import Logo from "../../image/logo.png";
-import Context from "../../Context";
 
 export default function Header() {
-    const value = useContext(Context);
+    const basketMenuContext = useContext(ContextBasketMenu);
+    const favouriteCartContext = useContext(ContextFavouritesCart);
     let location = useLocation();
 
     const isSpecialPage = ["/products", "/about-us", "/contact-us", "/like"].some(path => location.pathname.includes(path));
@@ -49,7 +51,7 @@ export default function Header() {
                         <Link className="hidden md:block" to="/page/about-us">About Us</Link>
                         <Link className="relative cursor-pointer group z-10" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
-                            <span className={`${value.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{value.favouriteItems?.length > 0 ? value.favouriteItems?.length : 0}</span>
+                            <span className={`${basketMenuContext.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{favouriteCartContext.favouriteItems?.length > 0 ? favouriteCartContext.favouriteItems?.length : 0}</span>
                         </Link>
                         <BasketOffCanvas />
                         <MenuOffCanvas />
