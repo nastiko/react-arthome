@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useContext} from "react";
 import FavouriteCard from "./FavouriteCard";
-import {ContextFavouritesCart} from "../../../contextProvider/FavouritesCartContext";
+import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 
 //icons
 import {RxSlash} from "react-icons/rx";

@@ -7,7 +7,7 @@ import {IoCloseSharp} from "react-icons/io5";
 import {AiOutlineMinus} from "react-icons/ai";
 import {AiOutlinePlus} from "react-icons/ai";
 
-export default function AddToCart({id, images, name, regular_price, sale_price, setIsOpenBasket}) {
+export default function AddToCart({id, images, name, regular_price, sale_price, quantity, setIsOpenBasket}) {
     const cartContext = useContext(ContextCart);
 
     const removeCartItem = () => {
@@ -26,7 +26,7 @@ export default function AddToCart({id, images, name, regular_price, sale_price, 
                     <div className="flex justify-between">
                         <div className="flex flex-col justify-between gap-y-4">
                             <h6 className="font-normal">{name}</h6>
-                            <h4 className="text-[15px] leading-[26px] font-normal my-0">Qty: {cartContext.isQty}</h4>
+                            <h4 className="text-[15px] leading-[26px] font-normal my-0">Qty: {quantity}</h4>
                            {/* <div className="w-[120px] h-[30px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
                                 <button className="absolute w-[12px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
                                     <AiOutlineMinus/>

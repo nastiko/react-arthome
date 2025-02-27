@@ -1,22 +1,32 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import {ContextFavouritesCart} from "../../../contextProvider/FavouritesCartContext";
+import {ContextCart} from "../../contextProvider/CartContext";
+import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 
 //icons
-import {AiOutlinePlus} from "react-icons/ai";
 import {IoBagHandleOutline} from "react-icons/io5";
+import {AiOutlinePlus} from "react-icons/ai";
+import {IoMdHeartEmpty} from "react-icons/io";
+import {IoMdHeart} from "react-icons/io";
 
-export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale}) {
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, quantity = 1}) {
+    const cartContext = useContext(ContextCart);
     const favouriteCartContext = useContext(ContextFavouritesCart);
-    const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
-    const removeFavouriteCard = () => {
-        favouriteCartContext.setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
+    const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+    const isFavourite = favouriteCartContext.favouriteItems.some(item => item.id === id);
+
+    const onClickCard = () => {
+        cartContext.onAddToCart({id, images, name, regular_price, sale_price, quantity});
+    }
+
+    const onClickFavouriteCard = () => {
+        favouriteCartContext.ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
     return (
         <>
-            <div className="flex flex-col justify-between shadow-md">
+            <div className="flex flex-col">
                 <div>
                     <div className="group/items relative">
                         <div>
@@ -32,28 +42,36 @@ export default function FavouriteCard({id, images, name, sale_price, regular_pri
                                 </button>
                             </Link>
                             <div className="group/color">
-                                <button
-                                    className="w-[45px] h-[45px] flex items-center justify-center bg-[#ffffff] rounded-full transition-all duration-5000 delay-150 ease-in-out
+                                <button onClick={onClickCard}
+                                        className="w-[45px] h-[45px] flex items-center justify-center bg-[#ffffff] rounded-full transition-all duration-5000 delay-150 ease-in-out
                                         transform translate-y-20 duration-[.5s] opacity-0 group-hover/block:translate-y-0 group-hover/block:opacity-100">
                                     <IoBagHandleOutline className="w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2"/>
                                 </button>
                             </div>
+                            <div className="group/color">
+                                <button onClick={onClickFavouriteCard} className="w-[45px] h-[45px] flex items-center justify-center bg-[#ffffff] rounded-full transition-all duration-5000 delay-200 ease-in-out
+                                        transform translate-y-20 duration-[.5s] opacity-0 group-hover/block:translate-y-0 group-hover/block:opacity-100">
+                                    {isFavourite ?
+                                        (<IoMdHeart className={`w-[22px] h-[22px] text-[16px] text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2`}/>)
+                                        :
+                                        (<IoMdHeartEmpty className={`w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2`}/>)
+                                    }
+                                </button>
+                            </div>
                         </div>
                     </div>
+
                     <div className="w-full flex flex-col justify-center items-center my-4">
                         <h3 className="text-[16px] font-medium">{name}</h3>
                         {on_sale ? (
                             <>
-                                <div className="flex gap-x-4">
+                                <div>
                                     <p className="text-[18px] leading-[31px] text-[#666666] line-through">£{regular_price}</p>
                                     <p className="text-[18px] leading-[31px] text-[#666666]">£{sale_price}</p>
                                 </div>
                             </>
                         ) : <p className="text-[18px] leading-[31px] text-[#666666]">£{regular_price}</p>}
                     </div>
-                </div>
-                <div className="w-full flex justify-center items-center">
-                    <button onClick={removeFavouriteCard} className="w-full text-[#000000] hover:text-[#ffffff] border-[1px] border-[#000000] hover:bg-[#000000] px-[32px] py-1">Remove</button>
                 </div>
             </div>
         </>

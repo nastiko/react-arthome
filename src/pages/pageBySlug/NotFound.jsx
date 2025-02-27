@@ -1,4 +1,4 @@
-import {extractNotFoundData} from "../../../models/pagesModel"
+import {extractNotFoundData} from "../../models/pagesModel"
 import {Link, useLoaderData} from "react-router-dom";
 
 // icons

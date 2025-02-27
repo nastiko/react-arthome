@@ -9,12 +9,12 @@ import {
 import RootLayout from "./layout/RootLayout";
 
 //pages
-import Homepage from "./components/pages/homepage/Homepage";
-import AllProducts from "./components/pages/allProducts/AllProducts";
-import Like from "./components/pages/favourite/Like";
-import Post from "./components/pages/Post";
-import ProductView from "./components/pages/ProductView";
-import PageBySlug from "./components/pages/pageBySlug/PageBySlug";
+import Homepage from "./pages/homepage/Homepage";
+import AllProducts from "./pages/allProducts/AllProducts";
+import Like from "./pages/favourite/Like";
+import Post from "./pages/post/Post";
+import ProductView from "./pages/allProducts/ProductView";
+import PageBySlug from "./pages/pageBySlug/PageBySlug";
 
 //api
 //import "./server";

@@ -20,7 +20,7 @@ export default function BasketOffCanvas() {
             <div>
                 <div onClick={handleOpenMenu} className="relative cursor-pointer group z-10">
                     <IoBagHandleOutline className={`${basketMenuContext.isOpenBasket ? '' : 'group-hover:text-[#dcb14a]'} text-[24px]`}/>
-                    <span className={`${basketMenuContext.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{cartContext.cartItems?.length > 0 ? cartContext.cartItems.length : 0}</span>
+                    <span className={`${basketMenuContext.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{cartContext.cartItems?.length > 0 ? cartContext.totalItemsBasket() : 0}</span>
                 </div>
 
                 {/*Right Offcanvas Basket*/}

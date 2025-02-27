@@ -3,35 +3,38 @@ import {createContext, useEffect, useState} from "react";
 export const ContextCart = createContext();
 
 export default function CartContext({ children }) {
-
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
     const [cartItems, setCartItems] = useState(storedItems);
-    const [isQty, setIsQty] = useState(1);
-
 
     const onAddToCart = (obj) => {
-        const existingCartItems = cartItems.some((item) => item.id === obj.id);
+        const existingCartItems = cartItems.find((item) => item.id === obj.id);
 
         if(existingCartItems) {
-            obj.quantity = setIsQty(prev => prev + 1);
-            setCartItems(prev => [...prev]);
+            setCartItems(
+                cartItems.map(item => {
+                    return item.id === obj.id ?
+                        {...existingCartItems,
+                            quantity: existingCartItems.quantity + 1,
+                        }
+                        : item;
+                })
+            );
         } else {
-            setCartItems(prev => [...prev, obj]);
+            setCartItems(prev => [...prev, {...obj, quantity: 1}]);
+        }
+    }
+
+    const totalItemsBasket = (obj) => {
+        let totalItemsBasket = 0;
+
+        if(cartItems?.length > 0) {
+            cartItems.map((item) => totalItemsBasket += item.quantity);
+        } else {
+            obj.quantity = 0;
         }
 
-
-        console.log(obj);
+        return totalItemsBasket;
     }
-
-    //qty
-    /*const increaseItem = () => {
-        setIsQty(prev => prev === stock_quantity ? stock_quantity : prev + 1);
-    }
-
-    const decreaseItem = () => {
-        setIsQty(prev => prev <= 1 ? 1 : prev - 1);
-    }*/
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -42,9 +45,9 @@ export default function CartContext({ children }) {
             value={{
                 cartItems,
                 setCartItems,
-                isQty,
-                setIsQty,
-                onAddToCart
+                onAddToCart,
+                totalItemsBasket,
+                calcPriceByQnt,
             }}>
             { children }
         </ContextCart.Provider>
