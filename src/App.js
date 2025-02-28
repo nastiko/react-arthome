@@ -1,3 +1,4 @@
+import React, {lazy, Suspense} from "react"
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -5,24 +6,22 @@ import {
     Route, redirect
 } from "react-router-dom";
 
-//layout
-import RootLayout from "./layout/RootLayout";
-
-//pages
-import Homepage from "./pages/homepage/Homepage";
-import AllProducts from "./pages/allProducts/AllProducts";
-import Like from "./pages/favourite/Like";
-import Post from "./pages/post/Post";
-import ProductView from "./pages/allProducts/ProductView";
-import PageBySlug from "./pages/pageBySlug/PageBySlug";
-
 //api
-//import "./server";
 import {getSlides} from "./models/slidesModel";
 import {getPosts, getPostsById} from "./models/postModel";
 import {getProducts, getProductById, getProductByFeatured} from "./models/productModel";
 import {getAllPages} from "./models/pagesModel";
 
+//layout
+import RootLayout from "./layout/RootLayout";
+import Homepage from "./pages/homepage/Homepage";
+
+//pages
+const AllProducts = lazy(() => import ("./pages/allProducts/AllProducts"));
+const Like = lazy(() => import ("./pages/favourite/Like"));
+const Post = lazy(() => import ("./pages/post/Post"));
+const ProductView = lazy(() => import ("./pages/allProducts/ProductView"));
+const PageBySlug = lazy(() => import ("./pages/pageBySlug/PageBySlug"));
 
 /**
  * Combine loader into one function
@@ -81,7 +80,17 @@ const router = createBrowserRouter(
 
 function App() {
     return (
-        <RouterProvider router={router}/>
+        <Suspense fallback={
+            <div className="flex w-full h-screen justify-center items-center">
+                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#cacaca] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                     role="status">
+                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                        >Loading...</span>
+                </div>
+            </div>
+        }>
+            <RouterProvider router={router}/>
+        </Suspense>
     );
 }
 
