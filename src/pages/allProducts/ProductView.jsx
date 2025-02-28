@@ -21,10 +21,12 @@ import {IoMdHeart} from "react-icons/io";
 
 export default function ProductView() {
     const product = useLoaderData();
-    const favouriteCartContext = useContext(ContextFavouritesCart);
     const {id, images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
+
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
-    const isFavourite = favouriteCartContext.favouriteItems.some(item => item.id === id);
+
+    const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
+    const isFavourite = favouriteItems.some(item => item.id === id);
 
     //tabs
     const [activeTab, setActiveTab] = useState('tab1');
@@ -43,7 +45,7 @@ export default function ProductView() {
     }
 
     const onClickFavouriteCard = () => {
-        favouriteCartContext.ifExists({id, images, name, regular_price, sale_price, on_sale});
+        ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
 
@@ -224,8 +226,6 @@ export default function ProductView() {
                                     </label>
                                 </div>
                                 <button className="bg-[#000000] text-[#ffffff] px-[28px] py-1">Submit</button>
-
-
                             </form>
                         </TabPanel>
                     </TabsBody>

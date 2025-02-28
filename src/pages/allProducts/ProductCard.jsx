@@ -10,18 +10,18 @@ import {IoMdHeartEmpty} from "react-icons/io";
 import {IoMdHeart} from "react-icons/io";
 
 export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, quantity = 1}) {
-    const cartContext = useContext(ContextCart);
-    const favouriteCartContext = useContext(ContextFavouritesCart);
+    const {onAddToCart} = useContext(ContextCart);
+    const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
 
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
-    const isFavourite = favouriteCartContext.favouriteItems.some(item => item.id === id);
+    const isFavourite = favouriteItems.some(item => item.id === id);
 
     const onClickCard = () => {
-        cartContext.onAddToCart({id, images, name, regular_price, sale_price, quantity});
+        onAddToCart({id, images, name, regular_price, sale_price, quantity});
     }
 
     const onClickFavouriteCard = () => {
-        favouriteCartContext.ifExists({id, images, name, regular_price, sale_price, on_sale});
+        ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
 
     return (

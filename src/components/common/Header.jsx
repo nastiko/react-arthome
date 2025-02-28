@@ -14,8 +14,8 @@ import {IoMdHeartEmpty} from "react-icons/io";
 import Logo from "../../image/logo.png";
 
 export default function Header() {
-    const basketMenuContext = useContext(ContextBasketMenu);
-    const favouriteCartContext = useContext(ContextFavouritesCart);
+    const {isOpenBasket} = useContext(ContextBasketMenu);
+    const {favouriteItems} = useContext(ContextFavouritesCart);
     let location = useLocation();
 
     const isSpecialPage = ["/products", "/about-us", "/contact-us", "/like"].some(path => location.pathname.includes(path));
@@ -51,7 +51,7 @@ export default function Header() {
                         <Link className="hidden md:block" to="/page/about-us">About Us</Link>
                         <Link className="relative cursor-pointer group z-10" to="/like">
                             <IoMdHeartEmpty className="text-[24px] group-hover:text-[#dcb14a]"/>
-                            <span className={`${basketMenuContext.isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{favouriteCartContext.favouriteItems?.length > 0 ? favouriteCartContext.favouriteItems?.length : 0}</span>
+                            <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a]'} text-[12px] group-hover:text-[#ffffff] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{favouriteItems?.length > 0 ? favouriteItems?.length : 0}</span>
                         </Link>
                         <BasketOffCanvas />
                         <MenuOffCanvas />

@@ -36,6 +36,16 @@ export default function CartContext({ children }) {
         return totalItemsBasket;
     }
 
+   /* const calcPriceByQnt = () => {
+        let totalPriceByQnt = 0;
+        if(obj.quantity > 1) {
+            totalPriceByQnt = obj.sale_price ? obj.quantity * obj.sale_price : obj.quantity * obj.regular_price;
+        } else {
+            totalPriceByQnt = obj.sale_price ? obj.sale_price : obj.regular_price;
+        }
+        return totalPriceByQnt;
+    }*/
+
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
@@ -47,7 +57,6 @@ export default function CartContext({ children }) {
                 setCartItems,
                 onAddToCart,
                 totalItemsBasket,
-                calcPriceByQnt,
             }}>
             { children }
         </ContextCart.Provider>

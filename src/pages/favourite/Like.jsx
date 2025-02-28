@@ -9,7 +9,7 @@ import {IoMdHeartEmpty} from "react-icons/io";
 import {GoArrowLeft} from "react-icons/go";
 
 export default function Like() {
-    const favouriteCartContext = useContext(ContextFavouritesCart);
+    const {favouriteItems} = useContext(ContextFavouritesCart);
 
     return (
         <>
@@ -31,10 +31,10 @@ export default function Like() {
                     </div>
                 </div>
             </section>
-            {favouriteCartContext.favouriteItems?.length > 0 ? (
+            {favouriteItems?.length > 0 ? (
                 <section className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 py-[80px] mx-auto">
                     {
-                        favouriteCartContext.favouriteItems.map((obj) =>
+                        favouriteItems.map((obj) =>
                             <FavouriteCard
                                 key={obj.id}
                                 {...obj}

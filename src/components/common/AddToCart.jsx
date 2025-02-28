@@ -1,17 +1,19 @@
 import {NavLink} from "react-router-dom";
 import {useContext} from "react";
 import {ContextCart} from "../../contextProvider/CartContext";
+import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 
 //icons
 import {IoCloseSharp} from "react-icons/io5";
 import {AiOutlineMinus} from "react-icons/ai";
 import {AiOutlinePlus} from "react-icons/ai";
 
-export default function AddToCart({id, images, name, regular_price, sale_price, quantity, setIsOpenBasket}) {
-    const cartContext = useContext(ContextCart);
+export default function AddToCart({id, images, name, regular_price, sale_price, quantity}) {
+    const {setCartItems} = useContext(ContextCart);
+    const {setIsOpenBasket} = useContext(ContextBasketMenu);
 
     const removeCartItem = () => {
-        cartContext.setCartItems((prev) => prev.filter((item) => item.id !== id));
+        setCartItems((prev) => prev.filter((item) => item.id !== id));
     }
 
     return (

@@ -7,11 +7,11 @@ import {AiOutlinePlus} from "react-icons/ai";
 import {IoBagHandleOutline} from "react-icons/io5";
 
 export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale}) {
-    const favouriteCartContext = useContext(ContextFavouritesCart);
+    const {setFavouriteItems} = useContext(ContextFavouritesCart);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const removeFavouriteCard = () => {
-        favouriteCartContext.setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
+        setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
     }
 
     return (
