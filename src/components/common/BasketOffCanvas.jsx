@@ -1,12 +1,12 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import AddToCart from "./AddToCart";
 import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 import {ContextCart} from "../../contextProvider/CartContext";
 
 export default function BasketOffCanvas() {
     const {isOpenBasket, setIsOpenBasket, setIsOpenMenu} = useContext(ContextBasketMenu);
-    const {cartItems, totalItemsBasket} = useContext(ContextCart);
+    const {cartItems, totalItemsInBasket, calcSubTotal} = useContext(ContextCart);
 
     const handleOpenMenu = () => {
         setIsOpenBasket(true);
@@ -20,7 +20,7 @@ export default function BasketOffCanvas() {
             <div>
                 <div onClick={handleOpenMenu} className="relative cursor-pointer group z-10">
                     <IoBagHandleOutline className={`${isOpenBasket ? '' : 'group-hover:text-[#dcb14a]'} text-[24px]`}/>
-                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{cartItems?.length > 0 ? totalItemsBasket() : 0}</span>
+                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{cartItems?.length > 0 ? totalItemsInBasket() : 0}</span>
                 </div>
 
                 {/*Right Offcanvas Basket*/}
@@ -49,6 +49,10 @@ export default function BasketOffCanvas() {
                             ) : <h6 className="text-[20px] font-normal">Your cart is currently empty.</h6>
                             }
                         </nav>
+                        <div className="flex justify-between prose prose-h6:text-[24px] prose-h6:font-medium prose-h6:my-0 mr-5">
+                            <h6>Subtotal:</h6>
+                            <h6>£{calcSubTotal()}</h6>
+                        </div>
                     </nav>
                 </div>
                 {/* End Offcanvas Basket*/}

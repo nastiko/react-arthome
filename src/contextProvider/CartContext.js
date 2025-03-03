@@ -2,32 +2,44 @@ import {createContext, useEffect, useState} from "react";
 
 export const ContextCart = createContext();
 
-export default function CartContext({ children }) {
+export default function CartContext({children}) {
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const [cartItems, setCartItems] = useState(storedItems);
 
     const onAddToCart = (obj) => {
         const existingCartItems = cartItems.find((item) => item.id === obj.id);
 
-        if(existingCartItems) {
+        if (existingCartItems) {
             setCartItems(
                 cartItems.map(item => {
                     return item.id === obj.id ?
-                        {...existingCartItems,
-                            quantity: existingCartItems.quantity + 1,
+                        {
+                            ...item,
+                            quantity: item.quantity + 1,
+                            calcPriceByQnt: getItemTotal(item),
                         }
                         : item;
                 })
             );
         } else {
-            setCartItems(prev => [...prev, {...obj, quantity: 1}]);
+            setCartItems(prev => [...prev,
+                {
+                    ...obj,
+                    quantity: 1,
+                    calcPriceByQnt: obj.sale_price ? Number(obj.sale_price) : Number(obj.regular_price)
+                }]
+            );
         }
     }
 
-    const totalItemsBasket = (obj) => {
+   const getItemTotal = (item) => {
+        return item.sale_price ? (item.quantity + 1) * Number(item.sale_price) : (item.quantity + 1) * Number(item.regular_price)
+    };
+
+    const totalItemsInBasket = (obj) => {
         let totalItemsBasket = 0;
 
-        if(cartItems?.length > 0) {
+        if (cartItems?.length > 0) {
             cartItems.map((item) => totalItemsBasket += item.quantity);
         } else {
             obj.quantity = 0;
@@ -36,19 +48,17 @@ export default function CartContext({ children }) {
         return totalItemsBasket;
     }
 
-   /* const calcPriceByQnt = () => {
-        let totalPriceByQnt = 0;
-        if(obj.quantity > 1) {
-            totalPriceByQnt = obj.sale_price ? obj.quantity * obj.sale_price : obj.quantity * obj.regular_price;
-        } else {
-            totalPriceByQnt = obj.sale_price ? obj.sale_price : obj.regular_price;
-        }
-        return totalPriceByQnt;
-    }*/
+    const calcSubTotal = () => {
+        let total = cartItems.reduce((acc, item) => acc + item.calcPriceByQnt, 0);
+
+        console.log(total);
+    }
+
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
+
 
     return (
         <ContextCart.Provider
@@ -56,9 +66,10 @@ export default function CartContext({ children }) {
                 cartItems,
                 setCartItems,
                 onAddToCart,
-                totalItemsBasket,
+                totalItemsInBasket,
+                calcSubTotal
             }}>
-            { children }
+            {children}
         </ContextCart.Provider>
     )
 }

@@ -12,18 +12,20 @@ import ProductCard from "./ProductCard";
 
 export default function AllProducts() {
     const [items, setItems] = useState(useLoaderData()); // Store products
-
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
     const [page, setPage] = useState(2); // Page state
     const [hasMore, setHasMore] = useState(true); // If there are more products to load
 
+    const [isLoadingSkeletonCards, setIsLoadingSkeletonCards] = useState(true);
+
     // "trigger" to load more products when it becomes visible as the user scroll
     const loader = useRef(null);
 
-    const fetchProduct = useCallback(async () => {
+    const fetchProduct = useCallback(async (loadingSkeletonCards = false) => {
         if (isLoading) return; // Avoid multiple calls
         setIsLoading(true);
+        if (loadingSkeletonCards) setIsLoadingSkeletonCards(true);
         setError(null);
 
         try {
@@ -38,6 +40,7 @@ export default function AllProducts() {
             setError("Error fetching products");
         } finally {
             setIsLoading(false);
+            setIsLoadingSkeletonCards(false);
         }
     }, [isLoading, page]);
 
@@ -84,22 +87,26 @@ export default function AllProducts() {
             </section>
             <section className="py-[80px]">
                 <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
-                    {items.map((item, i) =>
-                        <ProductCard
-                            key={item.id}
-                            {...item}
-                            i={i}
-                        />
+                    {isLoadingSkeletonCards ? ([...Array(6)]) : (
+                        items.map((item, i) =>
+                            <ProductCard
+                                key={item.id}
+                                {...item}
+                                i={i}
+                                loading={isLoadingSkeletonCards}
+                            />
+                        )
                     )}
+
                 </div>
                 <div ref={loader} className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">
                     {isLoading &&
                         <div
                             className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#cacaca] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                             role="status">
-                            <span
-                                className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-                            >Loading...</span>
+                            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                                Loading...
+                            </span>
                         </div>
                     }
                     {error && <p>{error}</p>}

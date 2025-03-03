@@ -17,7 +17,7 @@ import RootLayout from "./layout/RootLayout";
 import Homepage from "./pages/homepage/Homepage";
 
 //pages
-const AllProducts = lazy(() => import ("./pages/allProducts/AllProducts"));
+const AllProducts = lazy(() => import("./pages/allProducts/AllProducts"));
 const Like = lazy(() => import ("./pages/favourite/Like"));
 const Post = lazy(() => import ("./pages/post/Post"));
 const ProductView = lazy(() => import ("./pages/allProducts/ProductView"));
