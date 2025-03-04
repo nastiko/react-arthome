@@ -10,7 +10,7 @@ import {AiOutlinePlus} from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
 import {IoMdHeart} from "react-icons/io";
 
-export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, quantity = 1, loading}) {
+export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, stock_quantity, loading}) {
     const {onAddToCart} = useContext(ContextCart);
     const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
 
@@ -18,7 +18,7 @@ export default function ProductCard({id, images, name, regular_price, sale_price
     const isFavourite = favouriteItems.some(item => item.id === id);
 
     const onClickCard = () => {
-        onAddToCart({id, images, name, regular_price, sale_price, quantity});
+        onAddToCart({id, images, name, regular_price, sale_price, stock_quantity});
     }
 
     const onClickFavouriteCard = () => {

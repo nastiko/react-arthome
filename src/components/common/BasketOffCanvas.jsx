@@ -1,5 +1,5 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import AddToCart from "./AddToCart";
 import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 import {ContextCart} from "../../contextProvider/CartContext";
@@ -39,20 +39,24 @@ export default function BasketOffCanvas() {
                         <nav className="flex flex-col gap-y-8 overflow-auto my-[30px]
                                         prose prose-a:text-base prose-a:font-normal prose-a:capitalize prose-a:no-underline">
                             {cartItems?.length > 0 ? (
-                                cartItems.map((obj) =>
-                                    <AddToCart
-                                        key={obj.id}
-                                        {...obj}
-                                        setIsOpenBasket={setIsOpenBasket}
-                                    />
-                                )
-                            ) : <h6 className="text-[20px] font-normal">Your cart is currently empty.</h6>
+                                <>
+                                    <div className="h-screen flex flex-col justify-between">
+                                        <div className="flex flex-col gap-y-8">
+                                            {cartItems.map((obj) =>
+                                                <AddToCart
+                                                    key={obj.id}
+                                                    {...obj}
+                                                />
+                                            )}
+                                        </div>
+                                        <div className="flex justify-between prose prose-h6:text-[24px] prose-h6:font-medium prose-h6:my-0 mr-5">
+                                            <h6>Subtotal:</h6>
+                                            <h6>£{calcSubTotal()}</h6>
+                                        </div>
+                                    </div>
+                                </>) : <h6 className="text-[20px] font-normal">Your cart is currently empty.</h6>
                             }
                         </nav>
-                        <div className="flex justify-between prose prose-h6:text-[24px] prose-h6:font-medium prose-h6:my-0 mr-5">
-                            <h6>Subtotal:</h6>
-                            <h6>£{calcSubTotal()}</h6>
-                        </div>
                     </nav>
                 </div>
                 {/* End Offcanvas Basket*/}

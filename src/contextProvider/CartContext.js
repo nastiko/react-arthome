@@ -32,9 +32,51 @@ export default function CartContext({children}) {
         }
     }
 
-   const getItemTotal = (item) => {
-        return item.sale_price ? (item.quantity + 1) * Number(item.sale_price) : (item.quantity + 1) * Number(item.regular_price)
+    const getItemTotal = (item) => {
+        return item.sale_price ? (item.quantity + 1) * Number(item.sale_price) : (item.quantity + 1) * Number(item.regular_price);
     };
+
+    const handleIncreaseQty = (id) => {
+        const existingCartItems = cartItems.filter((item) => item.id === id);
+        if (existingCartItems) {
+            setCartItems(cartItems.map(item =>
+                item.id === id ?
+                    {
+                        ...item,
+                        quantity: item.quantity + 1,
+                        calcPriceByQnt: getItemTotal(item),
+                    }
+                    : item
+            ));
+        }
+    }
+
+    const handleDecreaseQty = (id) => {
+        const existingCartItems = cartItems.find((item) => item.id === id);
+
+        if (existingCartItems.quantity === 1) {
+            setCartItems(
+                cartItems.filter((item) => item.id !== id)
+            );
+        } else {
+            setCartItems(
+                cartItems.map((item) =>
+                    item.id === id
+                        ? {
+                            ...item,
+                            quantity: item.quantity - 1,
+                            calcPriceByQnt: item.sale_price ? (item.quantity - 1) * Number(item.sale_price) : (item.quantity - 1) * Number(item.regular_price),
+
+                        }
+                        : item
+                )
+            );
+        }
+    }
+
+    /*const checkStockQty = () => {
+
+    }*/
 
     const totalItemsInBasket = (obj) => {
         let totalItemsBasket = 0;
@@ -49,11 +91,12 @@ export default function CartContext({children}) {
     }
 
     const calcSubTotal = () => {
-        let total = cartItems.reduce((acc, item) => acc + item.calcPriceByQnt, 0);
-
-        console.log(total);
+        return cartItems.reduce((acc, item) => acc + item.calcPriceByQnt, 0);
     }
 
+    const removeCartItem = (id) => {
+        setCartItems((prev) => prev.filter((item) => item.id !== id));
+    }
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -66,8 +109,11 @@ export default function CartContext({children}) {
                 cartItems,
                 setCartItems,
                 onAddToCart,
+                handleIncreaseQty,
+                handleDecreaseQty,
                 totalItemsInBasket,
-                calcSubTotal
+                calcSubTotal,
+                removeCartItem
             }}>
             {children}
         </ContextCart.Provider>
