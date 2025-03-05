@@ -5,6 +5,8 @@ export const ContextCart = createContext();
 export default function CartContext({children}) {
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const [cartItems, setCartItems] = useState(storedItems);
+    const [disabledBtn, setDisabledBtn] = useState(false);
+    const [quantity, setQuantity] = useState('');
 
     const onAddToCart = (obj) => {
         const existingCartItems = cartItems.find((item) => item.id === obj.id);
@@ -12,13 +14,11 @@ export default function CartContext({children}) {
         if (existingCartItems) {
             setCartItems(
                 cartItems.map(item => {
-                    return item.id === obj.id ?
-                        {
-                            ...item,
-                            quantity: item.quantity + 1,
-                            calcPriceByQnt: getItemTotal(item),
-                        }
-                        : item;
+                    if (item.id === obj.id) {
+                        item.quantity = quantity + 1;
+                        item.calcPriceByQnt = getItemTotal(item);
+                    }
+                    return item;
                 })
             );
         } else {
@@ -27,27 +27,28 @@ export default function CartContext({children}) {
                     ...obj,
                     quantity: 1,
                     calcPriceByQnt: obj.sale_price ? Number(obj.sale_price) : Number(obj.regular_price)
-                }]
-            );
+                }
+            ]);
         }
     }
 
     const getItemTotal = (item) => {
-        return item.sale_price ? (item.quantity + 1) * Number(item.sale_price) : (item.quantity + 1) * Number(item.regular_price);
-    };
+        return item.quantity * Number(item.sale_price || item.regular_price);
+    }
 
     const handleIncreaseQty = (id) => {
-        const existingCartItems = cartItems.filter((item) => item.id === id);
+        const existingCartItems = cartItems.find((item) => item.id === id);
+
         if (existingCartItems) {
-            setCartItems(cartItems.map(item =>
-                item.id === id ?
-                    {
-                        ...item,
-                        quantity: item.quantity + 1,
-                        calcPriceByQnt: getItemTotal(item),
+            setCartItems(
+                cartItems.map(item => {
+                    if (item.id === id) {
+                        item.quantity += item.stock_quantity === item.quantity ? 0 : 1;
+                        item.calcPriceByQnt = getItemTotal(item);
                     }
-                    : item
-            ));
+                    return item;
+                })
+            );
         }
     }
 
@@ -55,28 +56,17 @@ export default function CartContext({children}) {
         const existingCartItems = cartItems.find((item) => item.id === id);
 
         if (existingCartItems.quantity === 1) {
-            setCartItems(
-                cartItems.filter((item) => item.id !== id)
-            );
+            setCartItems(cartItems.filter((item) => item.id !== id));
         } else {
-            setCartItems(
-                cartItems.map((item) =>
-                    item.id === id
-                        ? {
-                            ...item,
-                            quantity: item.quantity - 1,
-                            calcPriceByQnt: item.sale_price ? (item.quantity - 1) * Number(item.sale_price) : (item.quantity - 1) * Number(item.regular_price),
-
-                        }
-                        : item
-                )
-            );
+            setCartItems(cartItems.map(item => {
+                if(item.id === id) {
+                    item.quantity -= item.quantity === 1 ? 0 : 1;
+                    item.calcPriceByQnt = getItemTotal(item);
+                }
+                return item;
+            }))
         }
     }
-
-    /*const checkStockQty = () => {
-
-    }*/
 
     const totalItemsInBasket = (obj) => {
         let totalItemsBasket = 0;
@@ -111,6 +101,8 @@ export default function CartContext({children}) {
                 onAddToCart,
                 handleIncreaseQty,
                 handleDecreaseQty,
+                disabledBtn,
+                setDisabledBtn,
                 totalItemsInBasket,
                 calcSubTotal,
                 removeCartItem

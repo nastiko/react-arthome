@@ -127,7 +127,7 @@ export default function ProductView() {
                 <Tabs id="product-info"
                       value="tab1"
                       className="max-w-screen-xl py-[95px] px-5 xl:px-0 mx-auto">
-                    <TabsHeader className="flex items-center bg-transparent border-[1px] border-b-[#dddddd] border-t-transparent border-x-transparent rounded-none px-0 pb-5">
+                    <TabsHeader className="flex items-center bg-transparent border-[1px] border-b-[#dddddd] border-t-transparent border-x-transparent rounded-none z-0 px-0 pb-5">
                         <Tab value="tab1"
                              key="1"
                              id="tab"
