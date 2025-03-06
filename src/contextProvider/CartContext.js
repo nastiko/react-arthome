@@ -5,8 +5,6 @@ export const ContextCart = createContext();
 export default function CartContext({children}) {
     const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const [cartItems, setCartItems] = useState(storedItems);
-    const [disabledBtn, setDisabledBtn] = useState(false);
-    const [quantity, setQuantity] = useState('');
 
     const onAddToCart = (obj) => {
         const existingCartItems = cartItems.find((item) => item.id === obj.id);
@@ -15,7 +13,7 @@ export default function CartContext({children}) {
             setCartItems(
                 cartItems.map(item => {
                     if (item.id === obj.id) {
-                        item.quantity = quantity + 1;
+                        item.quantity += 1;
                         item.calcPriceByQnt = getItemTotal(item);
                     }
                     return item;
@@ -92,7 +90,6 @@ export default function CartContext({children}) {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-
     return (
         <ContextCart.Provider
             value={{
@@ -101,11 +98,9 @@ export default function CartContext({children}) {
                 onAddToCart,
                 handleIncreaseQty,
                 handleDecreaseQty,
-                disabledBtn,
-                setDisabledBtn,
                 totalItemsInBasket,
                 calcSubTotal,
-                removeCartItem
+                removeCartItem,
             }}>
             {children}
         </ContextCart.Provider>

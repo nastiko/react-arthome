@@ -1,8 +1,9 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import ContentLoader from "react-content-loader"
+import ContentLoader from "react-content-loader";
 import {ContextCart} from "../../contextProvider/CartContext";
 import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
+import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 
 //icons
 import {IoBagHandleOutline} from "react-icons/io5";
@@ -13,12 +14,14 @@ import {IoMdHeart} from "react-icons/io";
 export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, stock_quantity, loading}) {
     const {onAddToCart} = useContext(ContextCart);
     const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
+    const {popUpAddedToBasket} = useContext(ContextNotificationList);
 
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
     const isFavourite = favouriteItems.some(item => item.id === id);
 
     const onClickCard = () => {
         onAddToCart({id, images, name, regular_price, sale_price, stock_quantity});
+        popUpAddedToBasket({id, name});
     }
 
     const onClickFavouriteCard = () => {
