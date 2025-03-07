@@ -11,13 +11,12 @@ import {
 } from "@material-tailwind/react";
 
 import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
+import {ContextCart} from "../../contextProvider/CartContext";
 
 // icons
-import { AiOutlineMinus } from "react-icons/ai";
-import { AiOutlinePlus } from "react-icons/ai";
-import {IoMdHeartEmpty} from "react-icons/io";
+import {AiOutlineMinus, AiOutlinePlus} from "react-icons/ai";
+import {IoMdHeartEmpty, IoMdHeart} from "react-icons/io";
 import {MdOutlineStarPurple500} from "react-icons/md";
-import {IoMdHeart} from "react-icons/io";
 
 export default function ProductView() {
     const product = useLoaderData();
@@ -26,6 +25,7 @@ export default function ProductView() {
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
+    const {onAddToCart, cartItems, setCartItems, handleIncreaseQty, handleDecreaseQty, getCartItem} = useContext(ContextCart)
     const isFavourite = favouriteItems.some(item => item.id === id);
 
     //tabs
@@ -34,20 +34,23 @@ export default function ProductView() {
         setActiveTab(tab);
     }
 
-    //qty
-    const [isQty, setIsQty] = useState(1);
-    const increaseItem = () => {
-        setIsQty(prev => prev === stock_quantity ? stock_quantity : prev + 1);
+    const onAddToCartClick = (quantity) => {
+        onAddToCart({id, images, name, regular_price, sale_price, stock_quantity, quantity});
     }
 
-    const decreaseItem = () => {
-        setIsQty(prev => prev <= 1 ? 1 : prev - 1);
+    //qty
+    const [quantity, setQuantity] = useState(1);
+    const increaseQty = (id) => {
+        setQuantity(prev => prev === stock_quantity ? stock_quantity : prev + 1);
+    }
+
+    const decreaseQty = () => {
+        setQuantity(prev => prev <= 1 ? 1 : prev - 1);
     }
 
     const onClickFavouriteCard = () => {
         ifExists({id, images, name, regular_price, sale_price, on_sale});
     }
-
 
     return (
         <>
@@ -91,15 +94,15 @@ export default function ProductView() {
                     <div className="flex flex-col">
                         <div className="md:h-[46px] grid grid-cols-3 md:grid-cols-[150px_162px_1fr] grid-rows-1 grid-flow-row-dense gap-x-4 mt-4 mb-2">
                             <div className="h-[46px] flex justify-center items-center border-[1px] border-[#dddddd] relative py-2.5">
-                                <button onClick={() => decreaseItem()} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
-                                    <AiOutlineMinus className={`${isQty <= 1 ? 'text-[#666666]' : 'text-[#000000]'} text-[16px]`}/>
+                                <button onClick={decreaseQty} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
+                                    <AiOutlineMinus className="text-[#000000]"/>
                                 </button>
-                                <input className="w-[50px] text-center placeholder:text-[#000000] focus:outline-0" type="text" placeholder={`${isQty}`}/>
-                                <button onClick={() => increaseItem()} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 right-[4px]">
-                                    <AiOutlinePlus className={`${isQty >= 1 && isQty < stock_quantity ? 'text-[#000000]' : 'text-[#666666]'} text-[16px]`}/>
+                                <input onChange={(e) => e.target.value} className="w-[50px] text-center placeholder:text-[#000000] focus:outline-0" type="text" name="quantity" value={quantity}/>
+                                <button onClick={increaseQty} className="absolute w-[24px] leading-[23px] top-1/2 -translate-y-1/2 right-[4px]">
+                                    <AiOutlinePlus className='text-[#000000]'/>
                                 </button>
                             </div>
-                            <div className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
+                            <div onClick={() => onAddToCartClick(quantity)} className="col-start-1 row-start-2 col-span-3 md:row-auto md:col-auto mt-8 md:mt-0">
                                 <button className="w-full bg-[#000000] text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Add to cart</button>
                             </div>
                             <div className="col-start-2 row-start-1 md:row-auto md:col-auto">
@@ -112,7 +115,7 @@ export default function ProductView() {
                                 </button>
                             </div>
                         </div>
-                        {isQty === stock_quantity && (
+                        {quantity === stock_quantity && (
                             <p className="text-[12px] text-[#ff3860]">We have max {stock_quantity} items in our stock.</p>
                         )}
                     </div>

@@ -3,20 +3,17 @@ import {createContext, useEffect, useState} from "react";
 export const ContextNotificationList = createContext();
 
 export default function PopUpAddedToBasketContext({children}) {
-    const storedNotificationList = JSON.parse(localStorage.getItem("notificationList")) || [];
+    const storedNotificationList = JSON.parse(localStorage.getItem("notificationList")) || {};
     const [notificationList, setNotificationList] = useState(storedNotificationList);
     const [addedItemPopUp, setAddedItemPopUp] = useState(false);
 
     const popUpAddedToBasket = (obj) => {
-        setAddedItemPopUp(true);
-        setNotificationList(prev => [...prev, obj]);
+        setNotificationList(prev => ({...prev, [crypto.randomUUID()]: obj }));
     }
 
-    const removeNotificationItem = (id) => {
-        const existedItem = notificationList.some(item => item.id === id);
-        if(existedItem) {
-            setNotificationList(prev => prev.filter(item => item.id !== id));
-        }
+    const removeNotificationItem = (uuid) => {
+        delete notificationList[uuid];
+        setNotificationList(prev => ({...prev}));
     }
 
     useEffect(() => {

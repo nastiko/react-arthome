@@ -13,7 +13,7 @@ export default function CartContext({children}) {
             setCartItems(
                 cartItems.map(item => {
                     if (item.id === obj.id) {
-                        item.quantity += 1;
+                        item.quantity = (item.quantity || 0) + (obj?.quantity || 1);
                         item.calcPriceByQnt = getItemTotal(item);
                     }
                     return item;
@@ -82,6 +82,10 @@ export default function CartContext({children}) {
         return cartItems.reduce((acc, item) => acc + item.calcPriceByQnt, 0);
     }
 
+    const getCartItem = (id) => {
+        return cartItems.find((item) => item.id === id);
+    }
+
     const removeCartItem = (id) => {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
     }
@@ -99,8 +103,9 @@ export default function CartContext({children}) {
                 handleIncreaseQty,
                 handleDecreaseQty,
                 totalItemsInBasket,
-                calcSubTotal,
                 removeCartItem,
+                calcSubTotal,
+                getCartItem
             }}>
             {children}
         </ContextCart.Provider>

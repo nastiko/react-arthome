@@ -118,21 +118,22 @@ export default function AllProducts() {
                     </div>
                 </section>
                 <div className="fixed top-2.5 right-0 z-10">
-                    {addedItemPopUp &&
-                        notificationList.map(obj => (
+                    {Object.keys(notificationList) && Object.keys(notificationList).map((key) => {
+                        return (
                             <motion.div
-                                key={obj.id}
+                                key={notificationList[key].uuid}
                                 initial={{transform: "translateX(-100px)"}}
                                 animate={{transform: "translateX(0px)"}}
                                 transition={{type: "spring"}}
                             >
                                 <AddedItemPopUp
-                                    id={obj.id}
-                                    name={obj.name}
+                                    uuid={notificationList[key].uuid}
+                                    id={notificationList[key].id}
+                                    name={notificationList[key].name}
                                 />
                             </motion.div>
-                        ))
-
+                        )
+                    })
                     }
                 </div>
             </section>

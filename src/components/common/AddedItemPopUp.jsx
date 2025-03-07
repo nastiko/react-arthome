@@ -3,7 +3,7 @@ import {IoCheckmark, IoCloseSharp} from "react-icons/io5";
 import {useContext} from "react";
 import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 
-export default function AddedItemPopUp({id, name}) {
+export default function AddedItemPopUp({uuid, id, name}) {
     const {removeNotificationItem} = useContext(ContextNotificationList);
 
     return (
@@ -17,7 +17,7 @@ export default function AddedItemPopUp({id, name}) {
                     <p className="text-[14px] text-[#666666]">The "{name}" was added in the basket</p>
                 </div>
                 <div>
-                    <IoCloseSharp onClick={() => removeNotificationItem(id)} className="text-[20px] text-[#cacaca] cursor-pointer"/>
+                    <IoCloseSharp onClick={() => removeNotificationItem(uuid)} className="text-[20px] text-[#cacaca] cursor-pointer"/>
                 </div>
             </div>
 
