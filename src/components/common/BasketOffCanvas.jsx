@@ -1,12 +1,14 @@
 import {IoBagHandleOutline, IoCloseSharp} from "react-icons/io5";
-import {useContext} from "react";
-import AddToCart from "./AddToCart";
+import React, {useContext} from "react";
+import AddToCart from "../addToCart/AddToCart";
 import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 import {ContextCart} from "../../contextProvider/CartContext";
+import {ContextCheckoutModel} from "../../contextProvider/CheckoutModelContext";
 
 export default function BasketOffCanvas() {
     const {isOpenBasket, setIsOpenBasket, setIsOpenMenu} = useContext(ContextBasketMenu);
     const {cartItems, totalItemsInBasket, calcSubTotal} = useContext(ContextCart);
+    const {handleModal} = useContext(ContextCheckoutModel);
 
     const handleOpenMenu = () => {
         setIsOpenBasket(true);
@@ -49,9 +51,14 @@ export default function BasketOffCanvas() {
                                                 />
                                             )}
                                         </div>
-                                        <div className="flex justify-between prose prose-h6:text-[24px] prose-h6:font-medium prose-h6:my-0 mr-5">
-                                            <h6>Subtotal:</h6>
-                                            <h6>£{calcSubTotal()}</h6>
+                                        <div className="flex flex-col gap-y-4 mr-5 mt-10">
+                                            <div className="flex justify-between prose prose-h6:text-[24px] prose-h6:font-medium prose-h6:my-0">
+                                                <h6>Subtotal:</h6>
+                                                <h6>£{calcSubTotal()}</h6>
+                                            </div>
+                                            <div onClick={() => handleModal()} className="w-full flex justify-center items-center bg-[#000000]">
+                                                <button className="text-[#ffffff] px-[42px] h-[46px] leading-[44px]">Checkout</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </>) : <h6 className="text-[20px] font-normal">Your cart is currently empty.</h6>

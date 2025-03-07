@@ -14,7 +14,6 @@ import React from "react";
 export default function AboutUs() {
     let data = useLoaderData();
     data = extractAboutUsData(data);
-    console.log('Data',data)
 
     const iconMap = {
         RiShoppingBag4Line,
