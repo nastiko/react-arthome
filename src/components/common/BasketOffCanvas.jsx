@@ -8,7 +8,7 @@ import {ContextCheckoutModel} from "../../contextProvider/CheckoutModelContext";
 export default function BasketOffCanvas() {
     const {isOpenBasket, setIsOpenBasket, setIsOpenMenu} = useContext(ContextBasketMenu);
     const {cartItems, totalItemsInBasket, calcSubTotal} = useContext(ContextCart);
-    const {handleModal} = useContext(ContextCheckoutModel);
+    const {openModal, handleModal} = useContext(ContextCheckoutModel);
 
     const handleOpenMenu = () => {
         setIsOpenBasket(true);
@@ -22,7 +22,7 @@ export default function BasketOffCanvas() {
             <div>
                 <div onClick={handleOpenMenu} className="relative cursor-pointer group z-10">
                     <IoBagHandleOutline className={`${isOpenBasket ? '' : 'group-hover:text-[#dcb14a]'} text-[24px]`}/>
-                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{cartItems?.length > 0 ? totalItemsInBasket() : 0}</span>
+                    <span className={`${isOpenBasket ? 'bg-[#000000] bg-opacity-50' : 'bg-[#dcb14a] group-hover:text-[#ffffff]'} text-[12px] rounded-full absolute -bottom-[9px] -right-[9px] px-1.5`}>{openModal ? 0 : (cartItems?.length > 0 ? totalItemsInBasket() : 0)}</span>
                 </div>
 
                 {/*Right Offcanvas Basket*/}

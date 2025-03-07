@@ -5,7 +5,9 @@ import {ContextCheckoutModel} from "../../contextProvider/CheckoutModelContext";
 import {IoCloseSharp} from "react-icons/io5";
 
 export default function CheckoutModal() {
-    const {setOpenModal} = useContext(ContextCheckoutModel);
+    const {openModal, setOpenModal} = useContext(ContextCheckoutModel);
+
+    document.body.style.overflow = openModal ? 'hidden' : '';
 
     return (
         <>
