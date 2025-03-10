@@ -8,7 +8,15 @@ export default function PopUpAddedToBasketContext({children}) {
     const [addedItemPopUp, setAddedItemPopUp] = useState(false);
 
     const popUpAddedToBasket = (obj) => {
-        setNotificationList(prev => ({...prev, [obj.uuid]: obj }));
+        setNotificationList(prev => ({...prev, [obj.uuid]: obj}));
+
+        setTimeout(() => {
+            setNotificationList(prev => {
+                const updatedList = { ...prev };
+                delete updatedList[obj.uuid];
+                return updatedList;
+            })
+        }, 15000)
     }
 
     const removeNotificationItem = (uuid) => {
