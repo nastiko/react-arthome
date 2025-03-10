@@ -12,9 +12,11 @@ import {RxSlash} from "react-icons/rx";
 import ProductCard from "./ProductCard";
 import AddedItemPopUp from "../../components/common/AddedItemPopUp";
 import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
+import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 
 export default function AllProducts() {
     const {notificationList} = useContext(ContextNotificationList);
+    const {isOpenBasket} = useContext(ContextBasketMenu);
     const [items, setItems] = useState(useLoaderData()); // Store products
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
@@ -117,7 +119,7 @@ export default function AllProducts() {
                         {error && <p>{error}</p>}
                     </div>
                 </section>
-                <div className="fixed top-2.5 right-0 z-10">
+                <div className={`fixed top-2.5 right-0 ${isOpenBasket ? 'z-[9]' : 'z-10'}`}>
                     {Object.keys(notificationList) && Object.keys(notificationList).map((key) => {
                         return (
                             <motion.div
