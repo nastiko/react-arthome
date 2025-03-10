@@ -13,7 +13,8 @@ export default function CartContext({children}) {
             setCartItems(
                 cartItems.map(item => {
                     if (item.id === obj.id) {
-                        item.quantity = (item.quantity || 0) + (obj?.quantity || 1);
+                        let totalQty = (item.quantity || 0) + (obj?.quantity || 1);
+                        item.quantity = totalQty > item.stock_quantity ? (obj?.quantity || 1) : totalQty;
                         item.calcPriceByQnt = getItemTotal(item);
                     }
                     return item;
@@ -37,6 +38,8 @@ export default function CartContext({children}) {
     const handleIncreaseQty = (id) => {
         const existingCartItems = cartItems.find((item) => item.id === id);
 
+        console.log('handleIncreaseQty', existingCartItems);
+
         if (existingCartItems) {
             setCartItems(
                 cartItems.map(item => {
@@ -52,6 +55,8 @@ export default function CartContext({children}) {
 
     const handleDecreaseQty = (id) => {
         const existingCartItems = cartItems.find((item) => item.id === id);
+
+        console.log('handleDecreaseQty', existingCartItems);
 
         if (existingCartItems.quantity === 1) {
             setCartItems(cartItems.filter((item) => item.id !== id));

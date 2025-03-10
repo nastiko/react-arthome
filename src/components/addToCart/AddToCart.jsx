@@ -29,7 +29,7 @@ export default function AddToCart({id, images, name, stock_quantity, quantity, c
                                     <button onClick={() => handleDecreaseQty(id)} className="absolute w-[12px] leading-[23px] top-1/2 -translate-y-1/2 left-2.5">
                                         <AiOutlineMinus className="text-[#000000]"/>
                                     </button>
-                                    <input onChange={(e) => e.target.value} className="w-[100px] text-center placeholder:text-[#000000] focus:outline-0" type="text" value={quantity}/>
+                                    <input onChange={(e) => e.target.value} className="w-[100px] text-center placeholder:text-[#000000] focus:outline-0" type="text" value={quantity > stock_quantity ? stock_quantity : quantity}/>
                                     <button onClick={() => handleIncreaseQty(id)} className="absolute w-[12px] leading-[23px] top-1/2 -translate-y-1/2 right-2.5">
                                         <AiOutlinePlus className={`${quantity < stock_quantity ? 'text-[#000000]' : 'text-[#666666] cursor-default'}`}/>
                                     </button>

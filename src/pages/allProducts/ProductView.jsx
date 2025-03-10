@@ -25,7 +25,7 @@ export default function ProductView() {
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
-    const {onAddToCart, cartItems, setCartItems, handleIncreaseQty, handleDecreaseQty, getCartItem} = useContext(ContextCart)
+    const {onAddToCart} = useContext(ContextCart)
     const isFavourite = favouriteItems.some(item => item.id === id);
 
     //tabs
@@ -34,18 +34,18 @@ export default function ProductView() {
         setActiveTab(tab);
     }
 
-    const onAddToCartClick = (quantity) => {
-        onAddToCart({id, images, name, regular_price, sale_price, stock_quantity, quantity});
-    }
-
     //qty
     const [quantity, setQuantity] = useState(1);
-    const increaseQty = (id) => {
+    const increaseQty = () => {
         setQuantity(prev => prev === stock_quantity ? stock_quantity : prev + 1);
     }
 
     const decreaseQty = () => {
         setQuantity(prev => prev <= 1 ? 1 : prev - 1);
+    }
+
+    const onAddToCartClick = (quantity) => {
+        onAddToCart({id, images, name, regular_price, sale_price, stock_quantity, quantity});
     }
 
     const onClickFavouriteCard = () => {

@@ -21,7 +21,7 @@ export default function ProductCard({id, images, name, regular_price, sale_price
 
     const onClickCard = () => {
         onAddToCart({id, images, name, regular_price, sale_price, stock_quantity});
-        popUpAddedToBasket({id, name});
+        popUpAddedToBasket({uuid: crypto.randomUUID(), id, name});
     }
 
     const onClickFavouriteCard = () => {

@@ -14,7 +14,7 @@ import AddedItemPopUp from "../../components/common/AddedItemPopUp";
 import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 
 export default function AllProducts() {
-    const {addedItemPopUp, notificationList} = useContext(ContextNotificationList);
+    const {notificationList} = useContext(ContextNotificationList);
     const [items, setItems] = useState(useLoaderData()); // Store products
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
