@@ -1,6 +1,7 @@
 import {Link, useLoaderData} from "react-router-dom";
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
+import ContentLoader from "react-content-loader";
 
 //api
 import {getProducts} from "../../models/productModel";
@@ -17,10 +18,10 @@ import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 export default function AllProducts() {
     const {notificationList} = useContext(ContextNotificationList);
     const {isOpenBasket} = useContext(ContextBasketMenu);
-    const [items, setItems] = useState(useLoaderData()); // Store products
+    const [items, setItems] = useState([]); // Store products
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
-    const [page, setPage] = useState(2); // Page state
+    const [page, setPage] = useState(1); // Page state
     const [hasMore, setHasMore] = useState(true); // If there are more products to load
 
     const [isLoadingSkeletonCards, setIsLoadingSkeletonCards] = useState(true);
@@ -28,47 +29,49 @@ export default function AllProducts() {
     // "trigger" to load more products when it becomes visible as the user scroll
     const loader = useRef(null);
 
-    const fetchProduct = useCallback(async (loadingSkeletonCards = false) => {
+    const fetchProduct = useCallback(async () => {
         if (isLoading) return; // Avoid multiple calls
         setIsLoading(true);
-        if (loadingSkeletonCards) setIsLoadingSkeletonCards(true);
         setError(null);
 
         try {
             const data = await getProducts(page, 6);
+
             setItems(prevItems => [...prevItems, ...data]);
             setPage(prevPage => prevPage + 1);
+            setIsLoadingSkeletonCards(false);
+            setIsLoading(false);
+
             if (data.length === 0) {
                 setHasMore(false);
             }
-
         } catch (error) {
             setError("Error fetching products");
         } finally {
             setIsLoading(false);
-            setIsLoadingSkeletonCards(false);
         }
+
     }, [isLoading, page]);
 
-    // Observer to detect when the loader (at the bottom) is visible
     useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && hasMore) {
-                fetchProduct();
-            }
-        }, {threshold: [0, 0.5, 1]});
-
         if (loader.current) {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    fetchProduct();
+                }
+            }, {threshold: [1]});
+
             observer.observe(loader.current);
         }
 
-        return () => {
-            if (loader.current) {
-                // eslint-disable-next-line react-hooks/exhaustive-deps
-                observer.unobserve(loader.current);
-            }
-        };
-    }, [fetchProduct, hasMore, loader]);
+        // START: ON FIRST PAGE LOAD
+        setIsLoadingSkeletonCards(true);
+        if (!isLoading) { // only to disable double-loading!!
+            setIsLoading(true);
+            fetchProduct();
+        }
+        // END: ON FIRST PAGE LOAD
+    }, []);
 
 
     return (
@@ -94,16 +97,33 @@ export default function AllProducts() {
                 </section>
                 <section className="py-[80px]">
                     <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
-                        {isLoadingSkeletonCards ? ([...Array(6)]) : (
-                            items.map((item, i) =>
-                                <ProductCard
-                                    key={item.id}
-                                    {...item}
-                                    i={i}
-                                    loading={isLoadingSkeletonCards}
-                                />
-                            )
-                        )}
+                        {isLoadingSkeletonCards ?
+                            (
+                                [...Array(6)].map(() =>
+                                    <ContentLoader
+                                        key={crypto.randomUUID()}
+                                        speed={2}
+                                        width={300}
+                                        height={418}
+                                        viewBox="0 0 300 418"
+                                        backgroundColor="#f3f3f3"
+                                        foregroundColor="#ecebeb"
+                                    >
+                                        <rect x="0" y="0" rx="0" ry="0" width="300" height="300"/>
+                                        <rect x="76" y="316" rx="0" ry="0" width="141" height="24"/>
+                                        <rect x="115" y="355" rx="0" ry="0" width="70" height="31"/>
+
+                                    </ContentLoader>
+                                )
+                            ) : (
+                                items.map((item, i) =>
+                                    <ProductCard
+                                        key={crypto.randomUUID()}
+                                        {...item}
+                                        i={i}
+                                    />
+                                )
+                            )}
 
                     </div>
                     <div ref={loader} className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">

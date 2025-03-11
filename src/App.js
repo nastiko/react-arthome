@@ -56,7 +56,7 @@ const router = createBrowserRouter(
 
             <Route path="products"
                    element={<AllProducts/>}
-                   loader={() => getProducts()}/>
+            />
 
             <Route path="products/:id"
                    element={<ProductView/>}
