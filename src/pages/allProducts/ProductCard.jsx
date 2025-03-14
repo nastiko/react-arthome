@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {useContext} from "react";
+import {forwardRef, useContext} from "react";
 import {ContextCart} from "../../contextProvider/CartContext";
 import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
@@ -10,7 +10,7 @@ import {AiOutlinePlus} from "react-icons/ai";
 import {IoMdHeartEmpty} from "react-icons/io";
 import {IoMdHeart} from "react-icons/io";
 
-export default function ProductCard({id, images, name, regular_price, sale_price, on_sale, stock_quantity, loading}) {
+const ProductCard = forwardRef(({ i, id, images, name, regular_price, sale_price, on_sale, stock_quantity }, ref) => {
     const {onAddToCart} = useContext(ContextCart);
     const {favouriteItems, ifExists} = useContext(ContextFavouritesCart);
     const {popUpAddedToBasket} = useContext(ContextNotificationList);
@@ -29,7 +29,7 @@ export default function ProductCard({id, images, name, regular_price, sale_price
 
     return (
         <>
-            <div className="flex flex-col">
+            <div ref={ref} className="flex flex-col min-h-[418px]">
                 <div className="group/items relative">
                     <div>
                         <img src={images[1]?.src || images[0]?.src} alt={name}/>
@@ -76,4 +76,6 @@ export default function ProductCard({id, images, name, regular_price, sale_price
             </div>
         </>
     )
-}
+});
+
+export default ProductCard;
