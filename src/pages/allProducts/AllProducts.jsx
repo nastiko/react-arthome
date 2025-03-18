@@ -22,11 +22,11 @@ export default function AllProducts() {
     const [page, setPage] = useState(1); // Page state
     const [isLoading, setIsLoading] = useState(false); // Loading state
     const [error, setError] = useState(null); // Error state
-    //const [hasMore, setHasMore] = useState(true); // If there are more products to load
+    const [hasMore, setHasMore] = useState(true); // If there are more products to load
     const [isLoadingSkeletonCards, setIsLoadingSkeletonCards] = useState(true);
 
     // "trigger" to load more products when it becomes visible as the user scroll
-    const observer = useRef();
+    const productsBlock = useRef();
 
     const loadMoreProducts = async () => {
         if (isLoading) return;
@@ -34,8 +34,11 @@ export default function AllProducts() {
 
         try {
             const data = await getProducts(page, 6);
+            if(data.length < 6) setHasMore(false);
             setItems(prevProducts => [...prevProducts, ...data]);
+            setIsLoadingSkeletonCards(false);
         } catch (error) {
+            setError(error);
             console.error("Error loading products:", error);
         }
         finally {
@@ -44,24 +47,22 @@ export default function AllProducts() {
     }
 
     useEffect(() => {
-        setIsLoadingSkeletonCards(true);
         loadMoreProducts();
-        setIsLoadingSkeletonCards(false);
     }, [page]);
 
     const lastProductsRef = useCallback((node) => {
-        if (isLoading) return; // Avoid multiple calls
+        if (isLoading || !hasMore) return;
 
-        if (observer.current) observer.current.disconnect();
+        if (productsBlock.current) productsBlock.current.disconnect();
 
-        observer.current = new IntersectionObserver((entries) => {
+        productsBlock.current = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 console.log("Intersection detected, increasing page...");
-                setPage(prevPage => prevPage + 1); // Increment page to fetch more products
+                setPage(prevPage => prevPage + 1);
             }
         }, {threshold: [0.5]});
 
-        if (node) observer.current.observe(node);
+        if (node) productsBlock.current.observe(node);
     }, [isLoading]);
 
     return (
@@ -87,16 +88,6 @@ export default function AllProducts() {
                 </section>
                 <section className="py-[80px]">
                     <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
-                        {/*{
-                            items.map((item, i) =>
-                                <ProductCard
-                                    key={crypto.randomUUID()}
-                                    {...item}
-                                    i={i}
-                                    ref={items.length === i + 1 ? lastProductsRef : null}
-                                />
-                            )
-                        }*/}
                         {isLoadingSkeletonCards ?
                             (
                                 [...Array(6)].map((_, index) =>
@@ -107,13 +98,11 @@ export default function AllProducts() {
                                     <ProductCard
                                         key={crypto.randomUUID()}
                                         {...item}
-                                        i={i}
-                                        ref={i === items.length - 1 ? lastProductsRef : null}
                                     />
                                 )
                             )}
                     </div>
-                    <div className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">
+                    <div ref={lastProductsRef} className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">
                         {isLoading &&
                             <div
                                 className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#cacaca] motion-reduce:animate-[spin_1.5s_linear_infinite]"
