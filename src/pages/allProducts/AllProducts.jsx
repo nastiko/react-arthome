@@ -18,6 +18,7 @@ import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
 export default function AllProducts() {
     const {notificationList} = useContext(ContextNotificationList);
     const {isOpenBasket} = useContext(ContextBasketMenu);
+
     const [items, setItems] = useState([]); // Store products
     const [page, setPage] = useState(1); // Page state
     const [isLoading, setIsLoading] = useState(false); // Loading state
@@ -34,14 +35,13 @@ export default function AllProducts() {
 
         try {
             const data = await getProducts(page, 6);
-            if(data.length < 6) setHasMore(false);
+            if (data.length < 6) setHasMore(false);
             setItems(prevProducts => [...prevProducts, ...data]);
             setIsLoadingSkeletonCards(false);
         } catch (error) {
             setError(error);
             console.error("Error loading products:", error);
-        }
-        finally {
+        } finally {
             setIsLoading(false);
         }
     }
@@ -87,7 +87,8 @@ export default function AllProducts() {
                     </div>
                 </section>
                 <section className="py-[80px]">
-                    <div className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
+                    <div
+                        className="max-w-screen-xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-x-[25px] gap-y-10 px-5 xl:px-0 mx-auto">
                         {isLoadingSkeletonCards ?
                             (
                                 [...Array(6)].map((_, index) =>
@@ -102,12 +103,14 @@ export default function AllProducts() {
                                 )
                             )}
                     </div>
-                    <div ref={lastProductsRef} className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">
+                    <div ref={lastProductsRef}
+                         className="max-w-screen-xl flex justify-center items-center px-5 xl:px-0 mx-auto my-4">
                         {isLoading &&
                             <div
                                 className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#cacaca] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                                 role="status">
-                                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                                <span
+                                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
                                     Loading...
                                 </span>
                             </div>
@@ -135,7 +138,6 @@ export default function AllProducts() {
                     }
                 </div>
             </section>
-
         </>
     )
 }

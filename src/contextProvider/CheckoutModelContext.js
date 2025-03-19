@@ -7,6 +7,7 @@ export const ContextCheckoutModel = createContext();
 export default function CheckoutModelContext({children}) {
     const {setIsOpenBasket} = useContext(ContextBasketMenu);
     const {setCartItems} = useContext(ContextCart);
+
     const [openModal, setOpenModal] = useState(false);
 
     const handleModal = () => {
