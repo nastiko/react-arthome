@@ -1,7 +1,8 @@
+import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
+
 // icons
 import {IoCheckmark, IoCloseSharp} from "react-icons/io5";
 import {useContext} from "react";
-import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 
 export default function AddedItemPopUp({uuid, name}) {
     const {removeNotificationItem} = useContext(ContextNotificationList);

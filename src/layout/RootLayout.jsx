@@ -1,10 +1,12 @@
-import Footer from "../components/common/Footer";
-import CartContext from "../contextProvider/CartContext";
-import FavouritesCartContext from "../contextProvider/FavouritesCartContext";
-import BasketMenuContext from "../contextProvider/BasketMenuContext";
-import PopUpAddedToBasketContext from "../contextProvider/PopUpAddedToBasketContext";
-import CheckoutModelContext from "../contextProvider/CheckoutModelContext";
-import MainContent from "../components/common/MainContent";
+import {
+    Footer,
+    CartContext,
+    FavouritesCartContext,
+    MainContent,
+    BasketMenuContext,
+    PopUpAddedToBasketContext,
+    CheckoutModelContext
+} from "./index"
 
 export default function RootLayout() {
 
@@ -16,7 +18,7 @@ export default function RootLayout() {
                         <PopUpAddedToBasketContext>
                             <CheckoutModelContext>
                                 <div className={`flex h-screen flex-col justify-between`}>
-                                    <MainContent />
+                                    <MainContent/>
                                     <Footer
                                         link1="Term & Condition"
                                         link2="Policy"
