@@ -24,8 +24,8 @@ export default function CartContext({children}) {
             setCartItems(prev => [...prev,
                 {
                     ...obj,
-                    quantity: 1,
-                    calcPriceByQnt: obj.sale_price ? Number(obj.sale_price) : Number(obj.regular_price)
+                    quantity: obj?.quantity || 1,
+                    calcPriceByQnt: obj.sale_price ? ((obj?.quantity || 1) * Number(obj.sale_price)) : ((obj?.quantity || 1) * Number(obj.regular_price)),
                 }
             ]);
         }
