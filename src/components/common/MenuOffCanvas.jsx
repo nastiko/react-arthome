@@ -19,8 +19,10 @@ export default function MenuOffBasket() {
                     <nav className="flex flex-col right-0 w-full fixed top-0 py-28 bg-[#ffffff] h-full overflow-hidden z-[1]">
                         {/*navigation*/}
                         <nav className="flex flex-col px-5 prose prose-a:text-base prose-a:font-normal prose-a:capitalize prose-a:no-underline prose-a:mb-4">
+                            <Link onClick={() => setIsOpenMenu(false)} to="/">Home</Link>
                             <Link onClick={() => setIsOpenMenu(false)} to="/products">All products</Link>
                             <Link onClick={() => setIsOpenMenu(false)} to="/page/about-us">About us</Link>
+                            <Link onClick={() => setIsOpenMenu(false)} to="/page/contact-us">Contact us</Link>
                         </nav>
                     </nav>
                 </div>

@@ -7,6 +7,7 @@ import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext
 import {RxSlash} from "react-icons/rx";
 import {IoMdHeartEmpty} from "react-icons/io";
 import {GoArrowLeft} from "react-icons/go";
+import PopUpNotification from "../../components/common/PopUpNotification";
 
 export default function Like() {
     const {favouriteItems} = useContext(ContextFavouritesCart);
@@ -60,6 +61,7 @@ export default function Like() {
                     </div>
                 </section>
             )}
+            <PopUpNotification />
         </>
     )
 }

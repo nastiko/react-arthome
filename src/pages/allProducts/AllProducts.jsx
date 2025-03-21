@@ -1,6 +1,5 @@
 import {Link} from "react-router-dom";
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
-import {motion} from "framer-motion";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 
 //api
 import {getProducts} from "../../models/productModel";
@@ -10,14 +9,10 @@ import {RxSlash} from "react-icons/rx";
 
 //components for pages
 import ProductCard from "./ProductCard";
-import AddedItemPopUp from "../../components/common/AddedItemPopUp";
 import SkeletonLoader from "../allProducts/SkeletonLoader";
-import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
-import {ContextBasketMenu} from "../../contextProvider/BasketMenuContext";
+import PopUpNotification from "../../components/common/PopUpNotification";
 
 export default function AllProducts() {
-    const {notificationList} = useContext(ContextNotificationList);
-    const {isOpenBasket} = useContext(ContextBasketMenu);
 
     const [items, setItems] = useState([]); // Store products
     const [page, setPage] = useState(1); // Page state
@@ -118,25 +113,7 @@ export default function AllProducts() {
                         {error && <p>{error}</p>}
                     </div>
                 </section>
-                <div className={`fixed top-2.5 right-0 ${isOpenBasket ? 'z-[9]' : 'z-10'}`}>
-                    {Object.keys(notificationList) && Object.keys(notificationList).map((key) => {
-                        return (
-                            <motion.div
-                                key={notificationList[key].uuid}
-                                initial={{transform: "translateX(-100px)"}}
-                                animate={{transform: "translateX(0px)"}}
-                                transition={{type: "spring"}}
-                            >
-                                <AddedItemPopUp
-                                    uuid={notificationList[key].uuid}
-                                    id={notificationList[key].id}
-                                    name={notificationList[key].name}
-                                />
-                            </motion.div>
-                        )
-                    })
-                    }
-                </div>
+                <PopUpNotification />
             </section>
         </>
     )
