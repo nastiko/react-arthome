@@ -24,7 +24,7 @@ export default function ProductCard({ id, images, name, regular_price, sale_pric
     }
 
     const onClickFavouriteCard = () => {
-        ifExists({id, images, name, regular_price, sale_price, on_sale});
+        ifExists({id, images, name, regular_price, sale_price, on_sale, stock_quantity});
     }
 
     return (

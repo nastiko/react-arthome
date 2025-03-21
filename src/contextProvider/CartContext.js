@@ -38,8 +38,6 @@ export default function CartContext({children}) {
     const handleIncreaseQty = (id) => {
         const existingCartItems = cartItems.find((item) => item.id === id);
 
-        console.log('handleIncreaseQty', existingCartItems);
-
         if (existingCartItems) {
             setCartItems(
                 cartItems.map(item => {

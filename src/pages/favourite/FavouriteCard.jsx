@@ -1,7 +1,8 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 import {ContextCart} from "../../contextProvider/CartContext";
+import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
+import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 
 //icons
 import {AiOutlinePlus} from "react-icons/ai";
@@ -10,10 +11,13 @@ import {IoBagHandleOutline} from "react-icons/io5";
 export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale, stock_quantity}) {
     const {onAddToCart} = useContext(ContextCart);
     const {setFavouriteItems} = useContext(ContextFavouritesCart);
+    const {popUpAddedToBasket} = useContext(ContextNotificationList);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
     const onClickCard = () => {
+        console.log(id, stock_quantity);
         onAddToCart({id, images, name, regular_price, sale_price, stock_quantity});
+        popUpAddedToBasket({uuid: crypto.randomUUID(), id, name});
     }
 
     const removeFavouriteCard = () => {

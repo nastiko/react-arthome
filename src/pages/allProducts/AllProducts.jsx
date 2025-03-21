@@ -95,7 +95,7 @@ export default function AllProducts() {
                                     <SkeletonLoader key={index}/>
                                 )
                             ) : (
-                                items.map((item, i) =>
+                                items.map((item) =>
                                     <ProductCard
                                         key={crypto.randomUUID()}
                                         {...item}
