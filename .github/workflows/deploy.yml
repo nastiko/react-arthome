@@ -1,0 +1,44 @@
+name: Deploy to server
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use latest Node.js 
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'latest'
+        cache: 'npm'
+        
+    - run: npm ci
+
+    - run: npm run build --if-present
+      env:
+        CI: false
+
+    - name: Upload by FTP
+      uses: sand4rt/ftp-deployer@v1.8
+      with:
+        sftp: false # optional
+        host: ${{ vars.REMOTE_HOST }} # e.g. ftp.host.com or sftp.host.com (without ftp:// or ftps://)
+        port: 21 # optional, default is: 21
+        username: ${{ vars.REMOTE_NAME }} # FTP username
+        password: ${{ secrets.REMOTE_PASSWORD }} # FTP password
+        remote_folder: ${{ vars.REMOTE_FOLDER }} # optional, remote path of your FTP server
+        local_folder: 'build' # optional, local path, default is: dist
+        cleanup: true # optional, remove existing files inside FTP remote folder
+        passive: true # optional
