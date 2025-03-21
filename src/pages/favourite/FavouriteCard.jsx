@@ -1,14 +1,20 @@
 import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
+import {ContextCart} from "../../contextProvider/CartContext";
 
 //icons
 import {AiOutlinePlus} from "react-icons/ai";
 import {IoBagHandleOutline} from "react-icons/io5";
 
-export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale}) {
+export default function FavouriteCard({id, images, name, sale_price, regular_price, on_sale, stock_quantity}) {
+    const {onAddToCart} = useContext(ContextCart);
     const {setFavouriteItems} = useContext(ContextFavouritesCart);
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
+
+    const onClickCard = () => {
+        onAddToCart({id, images, name, regular_price, sale_price, stock_quantity});
+    }
 
     const removeFavouriteCard = () => {
         setFavouriteItems((prev) => prev.filter((item) => item.id !== id));
@@ -32,7 +38,7 @@ export default function FavouriteCard({id, images, name, sale_price, regular_pri
                                 </button>
                             </Link>
                             <div className="group/color">
-                                <button
+                                <button onClick={onClickCard}
                                     className="w-[45px] h-[45px] flex items-center justify-center bg-[#ffffff] rounded-full transition-all duration-5000 delay-150 ease-in-out
                                         transform translate-y-20 duration-[.5s] opacity-0 group-hover/block:translate-y-0 group-hover/block:opacity-100">
                                     <IoBagHandleOutline className="w-[22px] h-[22px] text-[16px] text-[#000000] group-hover/color:text-[#dcb14a] absolute inset-0 transform translate-y-1/2 translate-x-1/2"/>
