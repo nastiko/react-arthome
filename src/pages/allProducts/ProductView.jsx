@@ -10,6 +10,8 @@ import {
     TabPanel,
 } from "@material-tailwind/react";
 
+import PopUpNotification from "../../components/common/PopUpNotification";
+import {ContextNotificationList} from "../../contextProvider/PopUpAddedToBasketContext";
 import {ContextFavouritesCart} from "../../contextProvider/FavouritesCartContext";
 import {ContextCart} from "../../contextProvider/CartContext";
 
@@ -21,6 +23,7 @@ import {MdOutlineStarPurple500} from "react-icons/md";
 export default function ProductView() {
     const product = useLoaderData();
     const {id, images, sale_price, regular_price, on_sale, name, short_description, sku, categories, tags, description, weight, dimensions, stock_quantity} = product;
+    const {popUpAddedToBasket} = useContext(ContextNotificationList);
 
     const discount = Math.ceil((regular_price - sale_price) / regular_price * 100);
 
@@ -46,6 +49,7 @@ export default function ProductView() {
 
     const onAddToCartClick = (quantity) => {
         onAddToCart({id, images, name, regular_price, sale_price, stock_quantity, quantity});
+        popUpAddedToBasket({uuid: crypto.randomUUID(), id, name});
     }
 
     const onClickFavouriteCard = () => {
@@ -234,6 +238,7 @@ export default function ProductView() {
                     </TabsBody>
                 </Tabs>
             </section>
+            <PopUpNotification />
         </>
     )
 }
