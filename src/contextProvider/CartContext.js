@@ -54,8 +54,6 @@ export default function CartContext({children}) {
     const handleDecreaseQty = (id) => {
         const existingCartItems = cartItems.find((item) => item.id === id);
 
-        console.log('handleDecreaseQty', existingCartItems);
-
         if (existingCartItems.quantity === 1) {
             setCartItems(cartItems.filter((item) => item.id !== id));
         } else {
