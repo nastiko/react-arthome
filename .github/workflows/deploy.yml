@@ -36,18 +36,6 @@ jobs:
       env:
         CI: false
 
-    - name: Move .env file into build folder
-      run: |
-        mv "${GITHUB_WORKSPACE}/.env" "${GITHUB_WORKSPACE}/build/.env"
-
-    - name: List file in root folder
-      run: |
-        ls -la "${GITHUB_WORKSPACE}/"
-
-    - name: List file in build folder
-      run: |
-        ls -la "${GITHUB_WORKSPACE}/build/"
-
     - name: Upload by FTP
       uses: sand4rt/ftp-deployer@v1.8
       with:
@@ -60,5 +48,3 @@ jobs:
         local_folder: 'build' # optional, local path, default is: dist
         cleanup: true # optional, remove existing files inside FTP remote folder
         passive: true # optional
-        include: '["*.*"]' # optional, e.g. '['dist']'
-        exclude: '[]' # optional, e.g. '['node_modules/**', '.git/**', '*.env']'
