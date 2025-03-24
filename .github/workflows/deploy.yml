@@ -40,6 +40,14 @@ jobs:
       run: |
         mv "${GITHUB_WORKSPACE}/.env" "${GITHUB_WORKSPACE}/build/.env"
 
+    - name: List file in root folder
+      run: |
+        ls -la "${GITHUB_WORKSPACE}/"
+
+    - name: List file in build folder
+      run: |
+        ls -la "${GITHUB_WORKSPACE}/build/"
+
     - name: Upload by FTP
       uses: sand4rt/ftp-deployer@v1.8
       with:
