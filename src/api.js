@@ -1,4 +1,5 @@
-import axios from 'axios';
+import Axios from 'axios';
+import {setupCache} from 'axios-cache-interceptor';
 
 const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
 const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
@@ -9,15 +10,17 @@ const URL_WC_API_BASE = '/wc/v3';
 
 const token = btoa(`${consumerKey}:${consumerSecret}`);
 
-const wpApi = axios.create({
+const wpApiInstance = Axios.create({
     baseURL: `${URL_WP_BASE}${URL_WP_API_BASE}`
 });
+const wpApi = setupCache(wpApiInstance);
 
-const wcApi = axios.create({
+const wcApiInstance = Axios.create({
     baseURL: `${URL_WP_BASE}${URL_WC_API_BASE}`,
     headers: {
         'Authorization': `Basic ${token}`,
     }
 });
+const wcApi = setupCache(wcApiInstance);
 
 export {wpApi, wcApi}
