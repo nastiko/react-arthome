@@ -1,4 +1,4 @@
-import { wpApi } from "../api";
+import {wpApi} from "../api";
 
 /**
  * Get all slides from WP API

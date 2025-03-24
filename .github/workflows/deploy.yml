@@ -17,7 +17,13 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
-    
+
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v2.0
+      with:
+        envkey_REACT_APP_WC_CONSUMER_KEY: ${{ secrets.REACT_APP_WC_CONSUMER_KEY }}
+        envkey_REACT_APP_WC_CONSUMER_SECRET: ${{ secrets.REACT_APP_WC_CONSUMER_SECRET }}
+
     - name: Use latest Node.js 
       uses: actions/setup-node@v4
       with:

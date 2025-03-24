@@ -40,7 +40,7 @@ export default function PopUpAddedToBasketContext({children}) {
                 delete updatedList[obj.uuid];
                 return updatedList;
             });
-        }, 7500)
+        }, 7500);
     }
 
     const removeNotificationItem = (uuid) => {
