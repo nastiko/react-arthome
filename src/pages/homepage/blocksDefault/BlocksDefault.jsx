@@ -58,9 +58,9 @@ export default function BlocksDefault() {
                         {error && <p>{error}</p>}
                     </div>
                 )}
-                <div onClick={handleLoadMore}
+                <div
                      className={`${hasMore ? 'flex' : 'hidden'} w-full items-center justify-center pt-[90px]`}>
-                    <button
+                    <button onClick={handleLoadMore}
                         className="w-max text-[15px] text-[#ffffff] font-normal border-[1px] border-[#000000] bg-[#000000] px-[32px] py-1 my-0">Load
                         more
                     </button>
