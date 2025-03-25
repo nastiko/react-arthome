@@ -23,7 +23,7 @@ export default function RootLayout() {
                                         link1="Term & Condition"
                                         link2="Policy"
                                         link3="Contact Us"
-                                        author="© 2025 Anastasia Hrynkevich."
+                                        author="© 2025 Anastasia Hrynkevich"
                                         text="Follow us on social"
                                     />
                                 </div>
