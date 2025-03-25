@@ -34,11 +34,11 @@ jobs:
 
     - run: npm run build --if-present
       env:
-
+        CI: false
 
     - name: Copy .htaccess file into build folder
       run: |
-        cp "${GITHUB_WORKSPACE}/.htaccess" "${GITHUB_WORKSPACE}/build/.htaccess"    
+        cp "${GITHUB_WORKSPACE}/.htaccess" "${GITHUB_WORKSPACE}/build/.htaccess" 
 
     - name: Upload by FTP
       uses: sand4rt/ftp-deployer@v1.8
